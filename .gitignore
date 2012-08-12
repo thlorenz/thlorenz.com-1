@@ -11,7 +11,9 @@ lib-cov
 pids
 logs
 results
-css
+static/css
+spikes
+
 
 node_modules
 npm-debug.log
