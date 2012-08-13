@@ -1,34 +1,55 @@
 var fs = require('fs')
+  , path = require('path')
   , log = require('npmlog')
-  , crypto = require('crypto')
   , config = require('../config')
   , utl = require('../utl')
   ;
 
-function getfavicon() {
-  log.verbose('root', 'get', 'favicon');
-  log.info('root', arguments);
+function getImgMime(file) {
+  return path.extname(file).slice(1);
+}
 
-  var res = this.res
-    , maxAge = 86400 // 1 day
-    ;
+function getfavicon () {
+  get('favicon.ico', { imgMime: 'x-img' });
+}
 
-  fs.readFile(config().paths.images + '/favicon.ico', function (err, data) {
-    var icon = {
+function get (file, optsArg) {
+  log.verbose('root', 'get', file);
+
+  var res          =  this.res
+    , opts         =  optsArg || { };
+
+  opts.maxAge  =  opts.maxAge || 86400; // 1 day
+  opts.imgMime =  opts.imgMime || getImgMime(file);
+
+  function onError (err) {
+    log.error('images', err);
+    res.writeHead(500);
+    res.end();
+  }
+
+  function onSuccess (data) {
+    var img = {
         headers: { 
-            'Content-Type'   :  'image/x-icon'
+            'Content-Type'   :  'image/' + opts.imgMime
           , 'Content-Length' :  data.length
           , 'ETag'           :  '"' + utl.md5(data) + '"'
-          , 'Cache-Control'  :  'public, max-age=' + maxAge.toString()
+          , 'Cache-Control'  :  'public, max-age=' + opts.maxAge.toString()
           }
         , body: data
         };
 
-    res.writeHead(200, icon.headers);
-    res.end(icon.body);
+    res.writeHead(200, img.headers);
+    res.end(img.body);
+  }
+
+  fs.readFile(config().paths.images + '/' + file, function (err, data) {
+    if (err) onError(err);
+    else onSuccess(data);
   });
 }
 
 module.exports = {
-  getfavicon: getfavicon
+    get: get
+  , getfavicon: getfavicon
 };

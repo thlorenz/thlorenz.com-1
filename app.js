@@ -16,6 +16,7 @@ function serveSite() {
       '/'            :  { get :  routes.root.get          }
     , '/favicon.ico' :  { get :  routes.images.getfavicon }
     , '/css/:file'   :  { get :  routes.css.get           }
+    , '/images/:file':  { get :  routes.images.get        }
   });
 
   var server = http.createServer(function (req, res) {
