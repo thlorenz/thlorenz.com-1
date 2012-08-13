@@ -13,8 +13,9 @@ log.level = config().logLevel;
 
 function serveSite() {
   var router = new director.http.Router({
-      '/'          :  { get :  routes.root.get }
-    , '/css/:file' :  { get :  routes.css.get }
+      '/'            :  { get :  routes.root.get          }
+    , '/favicon.ico' :  { get :  routes.images.getfavicon }
+    , '/css/:file'   :  { get :  routes.css.get           }
   });
 
   var server = http.createServer(function (req, res) {

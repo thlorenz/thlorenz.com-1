@@ -1,4 +1,6 @@
-module.exports = {
-    css: require('./css')
-  , root: require('./root')
-};
+var reqall = require('require-all');
+
+module.exports = reqall({
+    dirname: __dirname
+  , filter: /(.+)\.js$/
+  });

@@ -6,7 +6,7 @@ var config =  require('../config')
   ;
 
 function convertToCss (stylusFile, cb) {
-  fs.readFile(config.paths.stylus + '/' + stylusFile, 'utf-8', function (err, data) {
+  fs.readFile(config().paths.stylus + '/' + stylusFile, 'utf-8', function (err, data) {
     if (err) cb(err);
     else { 
       stylus(data)
@@ -31,7 +31,8 @@ function getStaticCss(file, cb) {
 }
 
 function getDynamicCss(file, cb) {
-  convertToCss (file, cb);
+  var stylusFile = file.replace(path.extname(file), '') + '.styl';
+  convertToCss (stylusFile, cb);
 }
 
 function get(file) {
@@ -55,7 +56,7 @@ function get(file) {
     else onSuccess(data);
   }
 
-  return config.isDev ?  getDynamicCss(file, respond) : getStaticCss(file, respond);
+  return config().isDev ?  getDynamicCss(file, respond) : getStaticCss(file, respond);
 }
 
 module.exports = {

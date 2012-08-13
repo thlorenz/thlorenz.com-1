@@ -15,6 +15,7 @@ function getProps() {
         stylus    :  path.join(__dirname, 'stylus')
       , css       :  path.join(__dirname, 'static', 'css')
       , templates :  path.join(__dirname, 'templates')
+      , images    :  path.join(__dirname, 'static', 'images')
       }
   };
   return def;
