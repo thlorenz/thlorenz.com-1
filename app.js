@@ -11,7 +11,8 @@ var path       =  require('path')
 
 config.setEnv({ devEnvironment: 'dev' });
 log.level = config().logLevel;
-log.addLevel('silly', -Infinity, { fg: 'grey' });
+log.addLevel('verbose', 1000, { fg: 'blue' }, 'verb');
+log.addLevel('silly', -Infinity, { fg: 'grey' }, 'sill');
 
 function serveSite() {
   var router = new director.http.Router({
