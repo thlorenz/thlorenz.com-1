@@ -11,6 +11,7 @@ var path       =  require('path')
 
 config.setEnv({ devEnvironment: 'dev' });
 log.level = config().logLevel;
+log.addLevel('silly', -Infinity, { fg: 'grey' });
 
 function serveSite() {
   var router = new director.http.Router({
@@ -23,7 +24,7 @@ function serveSite() {
   var server = http.createServer(function (req, res) {
 
     log.info('app','%s %s', req.method, req.url);
-    log.verbose('headers', req.headers);     
+    log.silly('headers', req.headers);     
 
     router.dispatch(req, res, function (err) {
       if (err) {
