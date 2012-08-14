@@ -10,14 +10,13 @@ function getImgMime(file) {
 }
 
 function getfavicon () {
-  get('favicon.ico', { imgMime: 'x-img' });
+  get.call(this, 'favicon.ico', { imgMime: 'x-img' });
 }
 
 function get (file, optsArg) {
-  log.verbose('root', 'get', file);
-
-  var res          =  this.res
-    , opts         =  optsArg || { };
+  var res  =  this.res
+    , req  =  this.req
+    , opts =  optsArg || { };
 
   opts.maxAge  =  opts.maxAge || 86400; // 1 day
   opts.imgMime =  opts.imgMime || getImgMime(file);

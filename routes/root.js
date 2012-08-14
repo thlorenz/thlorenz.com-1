@@ -4,8 +4,6 @@ var hotplates = require('hotplates')
   ;
 
 function get(file) {
-  log.verbose('root', 'get', file);
-
   var res = this.res;
 
   var html = hotplates.oven.index(models);

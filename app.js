@@ -1,4 +1,5 @@
 var path       =  require('path')
+  , util = require('util')
   , http       =  require('http')
   , director   =  require('director')
   , handlebars =  require('handlebars')
@@ -20,6 +21,10 @@ function serveSite() {
   });
 
   var server = http.createServer(function (req, res) {
+
+    log.info('app','%s %s', req.method, req.url);
+    log.verbose('headers', req.headers);     
+
     router.dispatch(req, res, function (err) {
       if (err) {
         log.error('app', err);

@@ -36,8 +36,6 @@ function getDynamicCss(file, cb) {
 }
 
 function get(file) {
-  log.verbose('css', 'get', file);
-
   var res = this.res;
 
   function onError (err) {
