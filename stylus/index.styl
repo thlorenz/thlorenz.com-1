@@ -2,9 +2,60 @@
 
 global-reset()
 
-body
-  background: green
+widget-border(radius, padding) 
+  background-color: rgba(2, 2, 2, 0.3);
+  border-radius: radius 
+  padding: padding
 
+engrave-text()
+  text-shadow: rgba(253, 204, 197, 0.4) 1px 1px 0px
+
+h1 
+  font-size   :  30px
+
+header
+  widget-border(10px, 20px)
+  engrave-text()
+  margin: 15px
+  color: #350808
+  float: top
+  height: 90px
+
+  h1
+    padding: 10px
+    line-height: 30px
+    text-align: left
+    
+  
+body
+  width: 100%
+  image: '/images/noise.png'
+  background-color: rgba(150, 144, 100, 0.9);
+
+nav
+  widget-border(5px, 15px 0px 15px 0px)
+  engrave-text()
+  margin     :  15px
+  width      :  150px
+  height     :  110px
+  text-align :  center
+  float      :  left
+
+  ul
+    float: top
+
+    li
+      cursor     :  pointer
+      margin     :  8px
+      transition :  font-size 200ms 0ms ease-in
+      font-size  :  16px
+
+      &:hover
+        transition: font-size 200ms 0ms ease-in
+        font-size: 20px
+      
 .avatar
-  float: left
-  image: '/images/avatar.jpeg'
+  padding: 2px
+  border: 1px solid #DDD
+  border-radius: 3px
+  float: right
