@@ -10,6 +10,7 @@ var path       =  require('path')
   ;
 
 config.setEnv({ devEnvironment: 'dev' });
+
 log.level = config().logLevel;
 log.addLevel('verbose', 1000, { fg: 'blue' }, 'verb');
 log.addLevel('silly', -Infinity, { fg: 'grey' }, 'sill');

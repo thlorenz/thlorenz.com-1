@@ -10,7 +10,7 @@ function getProps() {
 
   var def = {
       isDev: isDev
-    , logLevel: env.loglevel || (isDev ? 'silly' : 'info')
+    , logLevel: env.loglevel || (isDev ? 'verbose' : 'info')
     , paths: {
         stylus    :  path.join(__dirname, 'stylus')
       , css       :  path.join(__dirname, 'static', 'css')

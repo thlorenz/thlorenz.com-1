@@ -2,58 +2,78 @@
 
 global-reset()
 
-widget-border(radius, padding) 
+widget-border(radius = 5px, padding = 10px, margin = 5px) 
   background-color: rgba(2, 2, 2, 0.3);
   border-radius: radius 
   padding: padding
+  margin: margin
 
 engrave-text()
   text-shadow: rgba(253, 204, 197, 0.4) 1px 1px 0px
 
+sidebar-width       =  150px
+sidebar-margin-left =  10px
+sidebar-left        =  sidebar-margin-left + sidebar-width + 12px
+
+main-height = 500px
+
+
 h1 
   font-size   :  30px
 
-header
-  widget-border(10px, 20px)
-  engrave-text()
-  margin: 15px
-  color: #350808
-  float: top
-  height: 90px
+a 
+  color:  #040449
+  cursor     :  pointer
 
-  h1
-    padding: 10px
-    line-height: 30px
-    text-align: left
-    
-  
 body
   width: 100%
   image: '/images/noise.png'
   background-color: rgba(150, 144, 100, 0.9);
 
-nav
-  widget-border(5px, 15px 0px 15px 0px)
+header
+  widget-border(5px    5px    0px    0px,
+                10px   10px   10px   0px,
+                10px   10px   0px    10px)
   engrave-text()
-  margin     :  15px
-  width      :  150px
-  height     :  110px
-  text-align :  center
-  float      :  left
+  color: #350808
+  height:  110px
+  float: top
 
-  ul
-    float: top
+  nav
+    width      :  sidebar-width
+    text-align :  center
+    float: left
 
-    li
-      cursor     :  pointer
-      margin     :  8px
-      transition :  font-size 200ms 0ms ease-in
-      font-size  :  16px
+    ul
+      li
+        margin     :  8px
+        font-size  :  16px
+        transition :  font-size 100ms 0ms ease-in
 
-      &:hover
-        transition: font-size 200ms 0ms ease-in
-        font-size: 20px
-      
+        &:hover
+          transition: font-size 100ms 0ms ease-in
+          font-size: 18px
+        
+  h1
+    padding: 10px
+    line-height: 30px
+    text-align: center
+  
+article
+  widget-border(0px    0px    5px    5px,
+                10px   10px   10px   0px,
+                2px    10px   10px   10px)
+  engrave-text()
+  float: top
+  min-height: main-height 
+
+  nav
+    float: left
+
+  section 
+    padding: 10px
+    float: left
+
 .avatar
   padding: 2px
   border: 1px solid #DDD
