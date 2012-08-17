@@ -2,17 +2,31 @@ var request = require('request')
   , marked = require('marked')
   , apiurl ='https://api.github.com'
   , fs = require('fs')
+  , cache = require('./cache')
   ;
 
-function getRepos() {
-  request.get(apiurl + '/users/thlorenz/repos', function (err, res, body) {
-    var repos = JSON.parse(body)
-      , infos = repos.map(function (repo) {
-          return { name: repo.name, url: repo.url, htmlUrl: repo.html_url };
-        });
+function getRepos(cb) {
+  var cached = cache.get('github.repos');
+  if (cached) cb(cached); 
+  else {
+    request.get(apiurl + '/users/thlorenz/repos', function (err, res, body) {
+      var repos = JSON.parse(body)
+        , infos = repos.map(function (repo) {
+            return { 
+                name        :  repo.name
+              , url         :  repo.url
+              , htmlUrl     :  repo.html_url
+              , watchers    :  repo.watchers_count
+              , forks       :  repo.forksCount
+              , pushedAt    :  repo.pushed_at
+              , description :  repo.description
+            };
+          });
 
-      return infos;
-  });
+      cache.put('github.repos', infos, 60);
+      cb(infos);
+    });
+  }
 }
 
 function getReadmeMarked () {
@@ -28,7 +42,13 @@ function getReadmeAllGithub () {
   });
 }
 
-//getReadmeAllGithub();
+
+getRepos(function (repos) {
+  console.log(repos);  
+});
+
+
+/*
 ///<article>.+?<\/article>/
 var body = fs.readFileSync('./t.html').toString()
   //, regex = /<article +class="markdown-body.*".+?>.+?<\/article>/
@@ -40,3 +60,4 @@ if (matchData) {
 } else {
   console.log('nope');
 }
+*/
