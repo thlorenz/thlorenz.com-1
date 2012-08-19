@@ -16,6 +16,7 @@ function getProps() {
       , css       :  path.join(__dirname, 'static', 'css')
       , templates :  path.join(__dirname, 'templates')
       , images    :  path.join(__dirname, 'static', 'images')
+      , js        :  path.join(__dirname, 'static', 'js')
       }
   };
   return def;

@@ -7,6 +7,7 @@ var request = require('request')
 
 function getRepos(cb) {
   var cached = cache.get('github.repos');
+
   if (cached) cb(cached); 
   else {
     request.get(apiurl + '/users/thlorenz/repos', function (err, res, body) {
@@ -41,12 +42,6 @@ function getReadmeAllGithub () {
     console.log(article);
   });
 }
-
-
-getRepos(function (repos) {
-  console.log(repos);  
-});
-
 
 /*
 ///<article>.+?<\/article>/

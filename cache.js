@@ -19,9 +19,6 @@ function put(key, value, expiryTimeInMinutes) {
 function get(key) {
   return !expired(key) ? cache[key] : undefined;
 }
-
-[ 'github.repos' ].forEach(createNew);
-
 module.exports = {
     expired: expired
   , put: put

@@ -21,6 +21,8 @@ function serveSite() {
     , '/favicon.ico' :  { get :  routes.images.getfavicon }
     , '/css/:file'   :  { get :  routes.css.get           }
     , '/images/:file':  { get :  routes.images.get        }
+    , '/js/:file'    :  { get :  routes.js.get            }
+    , '/js/lib/:file':  { get :  routes.js.getLib         }
   });
 
   var server = http.createServer(function (req, res) {
