@@ -22,7 +22,7 @@ function serveSite() {
     , '/css/:file'   :  { get :  routes.css.get           }
     , '/images/:file':  { get :  routes.images.get        }
     , '/js/:file'    :  { get :  routes.js.get            }
-    , '/js/lib/:file':  { get :  routes.js.getLib         }
+    , '/js/:dir/:file': { get :  routes.js.getFrom        }
   });
 
   var server = http.createServer(function (req, res) {

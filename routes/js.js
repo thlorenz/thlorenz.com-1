@@ -34,12 +34,12 @@ function get (jspath) {
   });
 }
 
-function getLib(file) {
-  get.call(this, path.join('lib', file));
+function getFrom(dir, file) {
+  get.call(this, path.join(dir, file));
 }
 
   
 module.exports = { 
     get    :  get
-  , getLib :  getLib
+  , getFrom :  getFrom
 };
