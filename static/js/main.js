@@ -8,4 +8,4 @@ requirejs.config ({
     }
 });
 
-require( ['github-projects']);
+require( ['github-projects', 'github-readme']);
