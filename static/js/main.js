@@ -10,4 +10,11 @@ requirejs.config ({
     }
 });
 
-require( ['github-index', 'github-content']);
+require( 
+  [ 'github-index'
+  , 'github-content'
+  , 'blog-index'
+  , 'stackoverflow-index'
+  , 'contact-index'
+  ]
+);
