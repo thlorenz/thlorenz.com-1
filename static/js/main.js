@@ -10,4 +10,4 @@ requirejs.config ({
     }
 });
 
-require( ['github-projects', 'github-readme']);
+require( ['github-index', 'github-content']);
