@@ -1,4 +1,6 @@
-var crypto = require('crypto');
+var crypto = require('crypto')
+  , path = require('path')
+  ;
 
 
 /**
@@ -26,4 +28,8 @@ exports.md5 = function(str, encoding){
     .createHash('md5')
     .update(str)
     .digest(encoding || 'hex');
+};
+
+exports.removeExtension = function (filename) {
+  return filename.substr(0, filename.length - path.extname(filename).length);
 };

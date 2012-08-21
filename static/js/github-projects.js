@@ -1,4 +1,5 @@
-require(['jquery'], function($) {
-  console.log('github-projects', $);
-  console.log('hello');
+require(['jquery', 'event-emitter'], function($, ee) {
+  var $navigation = $('article > nav');
+  console.log($navigation);
+  console.log(ee);
 });

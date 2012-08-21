@@ -17,12 +17,12 @@ log.addLevel('silly', -Infinity, { fg: 'grey' }, 'sill');
 
 function serveSite() {
   var router = new director.http.Router({
-      '/'            :  { get :  routes.root.get          }
-    , '/favicon.ico' :  { get :  routes.images.getfavicon }
-    , '/css/:file'   :  { get :  routes.css.get           }
-    , '/images/:file':  { get :  routes.images.get        }
-    , '/js/:file'    :  { get :  routes.js.get            }
-    , '/js/:dir/:file': { get :  routes.js.getFrom        }
+      '/'                     :  { get :  routes.root.get          }
+    , '/favicon.ico'          :  { get :  routes.images.getfavicon }
+    , '/css/:file'            :  { get :  routes.css.get           }
+    , '/images/:file'         :  { get :  routes.images.get        }
+    , '/js/:file'             :  { get :  routes.js.get            }
+    , '/js/:dir/:file'        :  { get :  routes.js.getFrom        }
   });
 
   var server = http.createServer(function (req, res) {
