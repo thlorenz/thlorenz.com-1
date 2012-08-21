@@ -1,16 +1,12 @@
-define(['jquery', 'event-emitter'], function($, EventEmitter) {
+define(['jquery', 'router', 'event-emitter'], function($, router, EventEmitter) {
   var self = this
     , emitter = new EventEmitter()
     , $navigation = $('article > nav')
     ;
 
-  ee = emitter;
-  //console.log(emitter.emit);
-  setTimeout(function () { 
-      emitter.emit('select', 'me'); 
-    }
-    , 1000);
-  return { 
-    on: function () { emitter.on.apply(emitter, arguments); }
-  };
+  router.on('/github', function () {
+    console.log('linkto github');
+  });
+
+  return emitter;
 });
