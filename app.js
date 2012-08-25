@@ -9,6 +9,7 @@ var path       =  require('path')
   , config     =  require('./config')
   ;
 
+
 config.setEnv({ devEnvironment: 'dev' });
 
 log.level = config().logLevel;
@@ -16,6 +17,7 @@ log.addLevel('verbose', 1000, { fg: 'blue' }, 'verb');
 log.addLevel('silly', -Infinity, { fg: 'grey' }, 'sill');
 
 function serveSite() {
+
   var router = new director.http.Router({
       '/'                     :  { get :  routes.root.get          }
     , '/favicon.ico'          :  { get :  routes.images.getfavicon }
@@ -45,6 +47,15 @@ function serveSite() {
 }
 
 hotplates
+  .preheat(
+    { amd: true
+    , handlebarsSrc: 'handlebars'
+    , target: path.join(__dirname, 'static', 'js', 'handlebars-templates.js')
+    }
+  , function (err, data) {
+      if (err) log.error(err);
+      else log.verbose('app', 'precompiled templates'); 
+  })
   .on('templateCompiled', function (fileInfo, name) { 
     log.verbose('app', 'compiled: \t%s as %s', fileInfo.path, name); 
   })

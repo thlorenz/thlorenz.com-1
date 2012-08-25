@@ -12,6 +12,7 @@ pids
 logs
 results
 static/css
+static/js/handlebars-templates.js
 spikes
 
 
