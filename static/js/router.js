@@ -1,9 +1,16 @@
-define(['director', 'event-emitter'], function (director, EventEmitter) { 
-  var emitter = new EventEmitter()
-    , routes = { 
-        '*': function (resource) { emitter.emit('/' + resource); }
+define(
+  [ 'director'
+  , 'github-index' 
+  , 'blog-index'
+  , 'stackoverflow-index'
+  , 'contact-index'
+  ], function (director, github, blog, stackoverflow, contact) { 
+
+  var routes = { 
+        '/github'        :  function () { github.init(); }
+      , '/blog'          :  function () { blog.init(); }
+      , '/stackoverflow' :  function () { stackoverflow.init(); }
+      , '/contact'       :  function () { contact.init(); }
       }
     , router = window.Router(routes).init();
-
-  return emitter;
 });

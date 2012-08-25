@@ -14,10 +14,6 @@ requirejs.config ({
 
 require( 
   [ 'handlebars-templates' 
-  , 'github-index'
-  , 'github-content'
-  , 'blog-index'
-  , 'stackoverflow-index'
-  , 'contact-index'
+  , 'router'
   ]
 );

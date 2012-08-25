@@ -1,12 +1,15 @@
-define(['jquery', 'router', 'event-emitter'], function($, router, EventEmitter) {
+define(['jquery', 'event-emitter'], function($, EventEmitter) {
   var self = this
     , emitter = new EventEmitter()
     , $navigation = $('article > nav')
     ;
 
-  router.on('/stackoverflow', function () {
+  function init() {
     console.log('linkto stackoverflow');
-  });
+  }
 
-  return emitter;
+  return {
+      init: init
+    , events: emitter
+  };
 });
