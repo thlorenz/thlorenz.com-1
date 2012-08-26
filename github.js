@@ -10,7 +10,8 @@ function getRepos(cb) {
 
   if (cached) cb(cached); 
   else {
-    request.get(apiurl + '/users/thlorenz/repos', function (err, res, body) {
+    // request.get(apiurl + '/users/thlorenz/repos', function (err, res, body) {
+    fs.readFile('./tmp/github-repos.json', 'utf-8', function (err, body) {
       var repos = JSON.parse(body)
         , infos = repos.map(function (repo) {
             return { 
@@ -42,6 +43,11 @@ function getReadmeAllGithub () {
     console.log(article);
   });
 }
+
+
+module.exports = { 
+    getRepos: getRepos
+};
 
 /*
 ///<article>.+?<\/article>/
