@@ -1,31 +1,40 @@
 define(['jquery', 'underscore', 'handlebars', 'event-emitter'], function($, _, Handlebars, EventEmitter) {
   var self = this
     , emitter = new EventEmitter()
-    , $navigation = $('article > nav')
+    , $nav= $('article > nav > ul')
     , repos
     ;
 
-  function fetchRepos() {
+  function fetchRepos(cb) {
+    if (!repos || !repos.length) cb(repos);
     $.ajax({
         url: 'github/index'
       , dataType: 'json'
     })
     .error(function (err) {
       console.log('Error ', err);  
-      repos = [];
+      cb([]);
     })
     .success(function (data) {
       repos = _(data.value)
         .sortBy(function (x) {
           return -x.watchers;
         });
+      cb(repos);
     });
   }
 
   function init() {
-    if (!repos || !repos.length) fetchRepos();
-
-    console.log(repos);
+    fetchRepos(function (repos) {
+      _(repos).chain()
+        .map(function (repo) {
+          var html = Handlebars.partials['github-nav'](repo);
+          return $(html);
+        })
+        .forEach(function ($item) {
+          $nav.append($item);
+        });
+    });
   }
 
   return {

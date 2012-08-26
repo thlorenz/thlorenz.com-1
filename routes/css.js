@@ -11,6 +11,7 @@ function convertToCss (stylusFile, cb) {
     else { 
       stylus(data)
         .include(require('nib').path)
+        .include(config().paths.stylus)
         .render(function (err, css) {
           if (err) cb(err);
           else cb(null, css);
