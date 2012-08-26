@@ -14,10 +14,9 @@ engrave-text()
 
 sidebar-width       =  250px
 sidebar-margin-left =  10px
-sidebar-right        =  sidebar-margin-left + sidebar-width + 12px
+sidebar-right        =  sidebar-margin-left + sidebar-width + 11px
 
-header-height = 110px
-
+header-height = 90px
 main-height = 500px
 
 h1 h2 h3 h4 
@@ -29,7 +28,7 @@ h2
 h3
   font-size   :  24px
 h3
-  font-size   :  22px
+  font-size   :  18px
 
 a 
   color:  #040449
@@ -43,14 +42,13 @@ a
 body
   width: 100%
   image: '/images/noise.png'
-  background-color: rgba(150, 144, 100, 0.9);
-
+  background-color: rgba(198, 223, 247, 0.9)
 header
   widget-border(0px    5px    0px    0px,
                 10px   10px   10px   0px,
                 10px   10px   0px    sidebar-right)
   engrave-text()
-  color: #350808
+  color: #222429
   height:  header-height
   float: top
 
@@ -65,10 +63,6 @@ nav
       font-size  :  16px
       transition :  font-size 100ms 0ms ease-in
 
-      &:hover
-        transition: font-size 100ms 0ms ease-in
-        font-size: 18px
-        
   h1
     padding: 10px
     line-height: 30px
@@ -76,9 +70,14 @@ nav
 
 body > nav
   widget-border(5px    0px    0px    0px,
-                10px   10px   0px   0px,
+                0px   10px   0px   0px,
                 0px    10px   0px  10px)
-  height: header-height + 10px
+  height: header-height + 20px
+
+  ul li:hover
+        transition: font-size 100ms 0ms ease-in
+        font-size: 18px
+        
 
 article > nav
   widget-border(0px    0px    0px    5px,
