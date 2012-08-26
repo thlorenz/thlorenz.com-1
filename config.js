@@ -1,5 +1,14 @@
 var path = require('path')
-  , env;
+  , paths = {
+      stylus    :  path.join(__dirname, 'stylus')
+    , css       :  path.join(__dirname, 'static', 'css')
+    , templates :  path.join(__dirname, 'templates')
+    , images    :  path.join(__dirname, 'static', 'images')
+    , js        :  path.join(__dirname, 'static', 'js')
+    }
+  , env
+  ;
+  
 
 function setEnv(envArg) {
   env = envArg;
@@ -11,14 +20,9 @@ function getProps() {
   var def = {
       isDev: isDev
     , logLevel: env.loglevel || (isDev ? 'verbose' : 'info')
-    , paths: {
-        stylus    :  path.join(__dirname, 'stylus')
-      , css       :  path.join(__dirname, 'static', 'css')
-      , templates :  path.join(__dirname, 'templates')
-      , images    :  path.join(__dirname, 'static', 'images')
-      , js        :  path.join(__dirname, 'static', 'js')
-      }
-  };
+    , paths: paths  
+    };
+
   return def;
 }
 

@@ -1,10 +1,14 @@
 requirejs.config ({
-    shim: {  'handlebars': { exports: 'Handlebars' } }
+    shim: {  
+      'handlebars': { exports: 'Handlebars' } 
+    }
   , paths: {
+      'jquery'               :  'lib/jquery-1.8.0'
       // 'jquery' : 'https://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min'
+    // ,  'underscore': 'lib/underscore-min'
     
       // using unminified versions during development
-      'jquery'               :  'lib/jquery-1.8.0'
+    , 'underscore'           :  'node_modules/underscore'
     , 'director'             :  'lib/director-1.1.3'
 
     , 'handlebars'           :  'lib/handlebars.runtime'

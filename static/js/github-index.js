@@ -1,21 +1,31 @@
-define(['jquery', 'event-emitter'], function($, EventEmitter) {
+define(['jquery', 'underscore', 'handlebars', 'event-emitter'], function($, _, Handlebars, EventEmitter) {
   var self = this
     , emitter = new EventEmitter()
     , $navigation = $('article > nav')
     , repos
     ;
 
-  function init() {
-    console.log('linkto github');
+  function fetchRepos() {
     $.ajax({
-      url: 'github/index'
+        url: 'github/index'
+      , dataType: 'json'
     })
     .error(function (err) {
       console.log('Error ', err);  
+      repos = [];
     })
     .success(function (data) {
-      console.log(data);
+      repos = _(data.value)
+        .sortBy(function (x) {
+          return -x.watchers;
+        });
     });
+  }
+
+  function init() {
+    if (!repos || !repos.length) fetchRepos();
+
+    console.log(repos);
   }
 
   return {
