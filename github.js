@@ -3,9 +3,18 @@ var request = require('request')
   , apiurl ='https://api.github.com'
   , fs = require('fs')
   , cache = require('./cache')
+  , repos = {}
+  , articleRegex = /<article +class="markdown-body.*".*>(.|[\n\r])+?<\/article>/m
   ;
 
-function getRepos(cb) {
+function hashRepos (infos) {
+  repos = {};
+  infos.forEach(function (info) {
+    repos[info.name] = info;
+  });
+}
+
+function requestRepos(cb) {
   var cached = cache.get('github.repos');
 
   if (cached) cb(cached); 
@@ -25,40 +34,56 @@ function getRepos(cb) {
             };
           });
 
-      cache.put('github.repos', infos, 60);
+      hashRepos(infos);
       cb(infos);
+      cache.put('github.repos', infos, 60);
     });
   }
 }
 
-function getReadmeMarked () {
-  request.get('https://raw.github.com/thlorenz/proxyquire/master/README.md', function (err, res, body) {
-    var html = marked.parse(body);
-    console.log(html);
-  });
+function requestReadmeByUrl (repoUrl, cb) {
+  var cached = cache.get(repoUrl);
+  if (cached) cb(null, cached); 
+  else {
+    request.get(repoUrl, function (err, res, body) {
+      var html = marked.parse(body)
+        , matchData = body.match(articleRegex)
+        ;
+
+      if (!matchData) cb(new Error('No readme found'));
+      else {
+        var article = matchData[0];
+
+        cb(null, article);
+        cache.put(repoUrl, article, 60);
+      }
+    });
+  }
 }
 
-function getReadmeAllGithub () {
-  request.get('https://github.com/thlorenz/proxyquire/blob/master/README.md', function (err, res, body) {
-    console.log(article);
-  });
-}
+function requestReadmeByName (name, cb) {
+  var repo = repos[name];
 
+  function processRepo() {
+    requestReadmeByUrl(repo.htmlUrl, cb);
+  }
+
+  if (!repo) {
+
+    requestRepos(function () {
+      repo = repos[name];  
+      if (!repo) cb(new Error('No readme found'));
+      else processRepo();
+    });
+
+  } else {
+    processRepo();
+  }
+    
+}
 
 module.exports = { 
-    getRepos: getRepos
+    requestRepos: requestRepos
+  , requestReadmeByUrl: requestReadmeByUrl
+  , requestReadmeByName: requestReadmeByName
 };
-
-/*
-///<article>.+?<\/article>/
-var body = fs.readFileSync('./t.html').toString()
-  //, regex = /<article +class="markdown-body.*".+?>.+?<\/article>/
-  , regex = /<article +class="markdown-body.*".*>(.|[\n\r])+?<\/article>/m
-  , matchData = body.match(regex);
-if (matchData) {
-  var article = matchData[0];
-  fs.writeFileSync('./article.html', article);
-} else {
-  console.log('nope');
-}
-*/

@@ -28,7 +28,8 @@ function serveSite() {
     , '/images/:file'     :  { get :  routes.images.get        }
     , '/js/:file'         :  { get :  routes.js.get            }
     , '/js/:dir/:file'    :  { get :  routes.js.getFrom        }
-    , '/github/:resource' :  { get :  routes.github.get        }
+    , '/github/index'     :  { get :  routes.github.get        }
+    , '/github/repo/:name':  { get :  routes.github.getRepo    }
   });
 
   var server = http.createServer(function (req, res) {

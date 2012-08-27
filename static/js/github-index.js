@@ -1,7 +1,7 @@
-define(['jquery', 'underscore', 'handlebars', 'event-emitter'], function($, _, Handlebars, EventEmitter) {
+define(['jquery', 'underscore', 'handlebars', 'event-emitter', 'element'], 
+function($, _, Handlebars, EventEmitter, el) {
   var self = this
     , emitter = new EventEmitter()
-    , $nav= $('article > nav > ul')
     , repos
     ;
 
@@ -32,7 +32,7 @@ define(['jquery', 'underscore', 'handlebars', 'event-emitter'], function($, _, H
           return $(html);
         })
         .forEach(function ($item) {
-          $nav.append($item);
+          el.sidebarList.append($item);
         });
     });
   }
