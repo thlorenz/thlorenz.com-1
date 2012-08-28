@@ -1,10 +1,11 @@
-var request = require('request')
-  , marked = require('marked')
-  , apiurl ='https://api.github.com'
-  , fs = require('fs')
-  , cache = require('./cache')
-  , repos = {}
-  , articleRegex = /<article +class="markdown-body.*".*>(.|[\n\r])+?<\/article>/m
+var request      =  require('request')
+  , marked       =  require('marked')
+  , log          =  require('npmlog')
+  , apiurl       =  'https://api.github.com'
+  , fs           =  require('fs')
+  , cache        =  require('./cache')
+  , repos        =  {}
+  , articleRegex =  /<article +class="markdown-body.*".*>(.|[\n\r])+?<\/article>/m
   ;
 
 function hashRepos (infos) {
@@ -43,8 +44,9 @@ function requestRepos(cb) {
 
 function requestReadmeByUrl (repoUrl, cb) {
   var cached = cache.get(repoUrl);
-  if (cached) cb(null, cached); 
-  else {
+  if (cached) { 
+    cb(null, cached.value); 
+  } else {
     request.get(repoUrl, function (err, res, body) {
       var html = marked.parse(body)
         , matchData = body.match(articleRegex)
