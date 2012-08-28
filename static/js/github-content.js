@@ -1,20 +1,31 @@
 define(['jquery', 'element'], function($, el) {
+  var $currentContent;
+
   function show (html) {
+
+    $currentContent = $(html);
+    $currentContent.hide();
+
     el.content
       .empty()
-      .append(html)
-      .fadeIn(200);
+      .append($currentContent);
+
+    $currentContent.fadeIn(500);
   }
 
   function hide () {
-    el.content.fadeOut(200);  
+    if ($currentContent) 
+      $currentContent
+        .clearQueue()
+        .fadeOut(200);
+
   }
 
   function init (repoName) {
-    console.log('getting', repoName);
     $.ajax({
         url: '/github/repo/' + repoName
       , dataType: 'html'
+      , beforeSend: hide
     })
     .error(function (err) {
       console.log('Error ', err);  
