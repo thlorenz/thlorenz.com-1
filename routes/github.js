@@ -1,5 +1,7 @@
 var github = require('../github')
   , log = require('npmlog')
+  , utl = require('../utl')
+  , config = require('../config')
   ;
 
 function notFound (res, err) {
@@ -11,14 +13,17 @@ function notFound (res, err) {
 function get () {
   var req = this.req
     , res = this.res
+    , maxAge = config().caching.maxAge.github.index
     ;
 
   github.requestRepos(function (json) {
     var data = JSON.stringify(json)
       , repos = {
           headers: {
-              'Content-Type'  : 'text/json' 
-            , 'Content-Length' : data.length
+              'Content-Type'   :  'text/json'
+            , 'Content-Length' :  data.length
+            , 'ETag'           :  '"' + utl.md5(data) + '"'
+            , 'Cache-Control'  :  'public, max-age=' + maxAge.toString()
             }
           , body: data
         };
@@ -31,6 +36,7 @@ function get () {
 function getRepo (repoName) {
   var req = this.req
     , res = this.res
+    , maxAge = config().caching.maxAge.github.repo
     ;
 
   log.verbose('github', 'getting repo', repoName);
@@ -40,8 +46,10 @@ function getRepo (repoName) {
     else {
       var readme = {
           headers: {
-              'Content-Type': 'text/html'
-            , 'Content-Length': html.length
+              'Content-Type'   :  'text/html'
+            , 'Content-Length' :  html.length
+            , 'ETag'           :  '"' + utl.md5(html) + '"'
+            , 'Cache-Control'  :  'public, max-age=' + maxAge.toString()
           }
         ,  body: html
       };

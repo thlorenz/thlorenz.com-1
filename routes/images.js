@@ -13,13 +13,13 @@ function getfavicon () {
   get.call(this, 'favicon.ico', { imgMime: 'x-img' });
 }
 
-function get (file, optsArg) {
-  var res  =  this.res
-    , req  =  this.req
-    , opts =  optsArg || { };
+function get (file) {
+  var res     =  this.res
+    , req     =  this.req
+    , imgMime =  getImgMime(file)
+    , maxAge  =  config().caching.maxAge.image
+    ;
 
-  opts.maxAge  =  opts.maxAge || 86400; // 1 day
-  opts.imgMime =  opts.imgMime || getImgMime(file);
 
   function onError (err) {
     log.error('images', err);
@@ -30,10 +30,10 @@ function get (file, optsArg) {
   function onSuccess (data) {
     var img = {
         headers: { 
-            'Content-Type'   :  'image/' + opts.imgMime
+            'Content-Type'   :  'image/' + imgMime
           , 'Content-Length' :  data.length
           , 'ETag'           :  '"' + utl.md5(data) + '"'
-          , 'Cache-Control'  :  'public, max-age=' + opts.maxAge.toString()
+          , 'Cache-Control'  :  'public, max-age=' + maxAge.toString()
           }
         , body: data
         };

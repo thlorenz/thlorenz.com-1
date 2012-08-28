@@ -18,8 +18,9 @@ function hashRepos (infos) {
 function requestRepos(cb) {
   var cached = cache.get('github.repos');
 
-  if (cached) cb(cached); 
-  else {
+  if (cached) { 
+    cb(cached.value); 
+  } else {
     // request.get(apiurl + '/users/thlorenz/repos', function (err, res, body) {
     fs.readFile('./tmp/github-repos.json', 'utf-8', function (err, body) {
       var repos = JSON.parse(body)

@@ -1,10 +1,22 @@
 var path = require('path')
+  , oneDay = 86400
+  , oneHour = 3600
+  , defaultMaxAge = oneHour
   , paths = {
       stylus    :  path.join(__dirname, 'stylus')
     , css       :  path.join(__dirname, 'static', 'css')
     , templates :  path.join(__dirname, 'templates')
     , images    :  path.join(__dirname, 'static', 'images')
     , js        :  path.join(__dirname, 'static', 'js')
+    }
+  , caching = {
+      maxAge: {
+          github : {
+              index: defaultMaxAge
+            , repo: defaultMaxAge 
+          }
+        , image : oneDay
+      }
     }
   , env
   ;
@@ -21,6 +33,7 @@ function getProps() {
       isDev: isDev
     , logLevel: env.loglevel || (isDev ? 'verbose' : 'info')
     , paths: paths  
+    , caching: caching
     };
 
   return def;

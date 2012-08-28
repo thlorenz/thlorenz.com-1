@@ -2,11 +2,9 @@ define(['jquery', 'underscore', 'handlebars', 'event-emitter', 'element'],
 function($, _, Handlebars, EventEmitter, el) {
   var self = this
     , emitter = new EventEmitter()
-    , repos
     ;
 
   function fetchRepos(cb) {
-    if (!repos || !repos.length) cb(repos);
     $.ajax({
         url: 'github/index'
       , dataType: 'json'
@@ -16,7 +14,7 @@ function($, _, Handlebars, EventEmitter, el) {
       cb([]);
     })
     .success(function (data) {
-      repos = _(data.value)
+      repos = _(data)
         .sortBy(function (x) {
           return -x.watchers;
         });
