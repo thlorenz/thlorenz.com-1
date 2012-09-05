@@ -13,7 +13,7 @@ function getfavicon () {
   get.call(this, 'favicon.ico', { imgMime: 'x-img' });
 }
 
-function get (file) {
+function get (file, dir) {
   var res     =  this.res
     , req     =  this.req
     , imgMime =  getImgMime(file)
@@ -42,7 +42,7 @@ function get (file) {
     res.end(img.body);
   }
 
-  fs.readFile(config().paths.images + '/' + file, function (err, data) {
+  fs.readFile(dir || config().paths.images + '/' + file, function (err, data) {
     if (err) onError(err);
     else onSuccess(data);
   });

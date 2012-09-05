@@ -1,19 +1,20 @@
 var path       =  require('path')
+  , fs         =  require('fs')
   , util       =  require('util')
   , http       =  require('http')
   , director   =  require('director')
   , handlebars =  require('handlebars')
   , hotplates  =  require('hotplates')
-  , dog        =  require('dog')
   , log        =  require('npmlog')
   , routes     =  require('./routes')
   , config     =  require('./config')
+  , blog       =  require('./blog')
   ;
 
 
 config.setEnv({ 
     devEnvironment: 'dev' 
-  // , loglevel: 'silly'
+   , loglevel: 'silly'
 });
 
 log.level = config().logLevel;
@@ -31,6 +32,10 @@ function serveSite() {
     , '/js/:dir/:file'    :  { get :  routes.js.getFrom        }
     , '/github/index'     :  { get :  routes.github.get        }
     , '/github/repo/:name':  { get :  routes.github.getRepo    }
+    , '/blog/index'       :  { get :  routes.blog.get          }
+    , '/blog/:post'       :  { get :  routes.blog.getPost      }
+
+    , '/blog/assets/images/:file': { get: function (file) { routes.images.get(file, config().paths.blog.images); } }
   });
 
   var server = http.createServer(function (req, res) {
@@ -52,7 +57,7 @@ function serveSite() {
   });
 }
 
-function initHotplates () {
+function initHotplates (initialized) {
   hotplates
     .preheat(
       { amd: true
@@ -78,11 +83,19 @@ function initHotplates () {
         { root: path.join(config().paths.templates, 'partials') }
       , watch: true
       }
-    , serveSite);
+    , initialized);
 }
 
-function initBlog () {
-  initHotplates();
+function initBlog (cb) {
+  blog.init(function (err) {
+    if (err) { cb(err); return; }
+    cb(); 
+  });
 }
 
-initBlog();
+initBlog(function (err) {
+  if (err) { log.error('app', err); return; }
+  log.info('app', 'blog initialized');
+
+  initHotplates(serveSite);
+});

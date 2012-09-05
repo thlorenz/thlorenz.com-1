@@ -1,13 +1,21 @@
-var path = require('path')
-  , oneDay = 86400
-  , oneHour = 3600
-  , defaultMaxAge = oneHour
-  , paths = {
-      stylus    :  path.join(__dirname, 'stylus')
-    , css       :  path.join(__dirname, 'static', 'css')
-    , templates :  path.join(__dirname, 'templates')
-    , images    :  path.join(__dirname, 'static', 'images')
-    , js        :  path.join(__dirname, 'static', 'js')
+var path          =  require('path')
+  , oneDay        =  86400
+  , oneHour       =  3600
+  , defaultMaxAge =  oneHour
+  , blog          =  path.join(__dirname, 'blog')
+  , staticp       =  path.join(__dirname, 'static')
+  , css           =  path.join(staticp, 'css')
+  , paths         =  {
+      templates :  path.join(__dirname, 'templates')
+    , stylus    :  path.join(__dirname, 'stylus')
+    , css       :  css
+    , images    :  path.join(staticp, 'images')
+    , js        :  path.join(staticp, 'js')
+    , blog      :  {
+          root     :  blog
+        , images   :  path.join(blog, 'assets', 'images')
+        , blog_css :  path.join(css, 'blog.css')
+      }
     }
   , caching = {
       maxAge: {
@@ -15,10 +23,16 @@ var path = require('path')
               index: defaultMaxAge
             , repo: defaultMaxAge 
           }
+        , blog : {
+              index: defaultMaxAge
+            , post: defaultMaxAge 
+          }
         , image : oneDay
       }
     }
-  , env
+  , env = {
+      devEnvironment: 'dev'
+    }
   ;
   
 
