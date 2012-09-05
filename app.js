@@ -1,9 +1,10 @@
 var path       =  require('path')
-  , util = require('util')
+  , util       =  require('util')
   , http       =  require('http')
   , director   =  require('director')
   , handlebars =  require('handlebars')
   , hotplates  =  require('hotplates')
+  , dog        =  require('dog')
   , log        =  require('npmlog')
   , routes     =  require('./routes')
   , config     =  require('./config')
@@ -51,30 +52,37 @@ function serveSite() {
   });
 }
 
-hotplates
-  .preheat(
-    { amd: true
-    , handlebarsSrc: 'handlebars'
-    , target: path.join(__dirname, 'static', 'js', 'handlebars-templates.js')
-    }
-  , function (err, data) {
-      if (err) log.error(err);
-      else log.verbose('app', 'precompiled templates'); 
-  })
-  .on('templateCompiled', function (fileInfo, name) { 
-    log.verbose('app', 'compiled: \t%s as %s', fileInfo.path, name); 
-  })
-  .on('partialRegistered', function (fileInfo, name) { 
-    log.verbose('app', 'registered:\t%s as %s', fileInfo.path, name); 
-  })
-  .heat(
-    { templates:
-      { root: config().paths.templates
-      , directoryFilter: '!partials' 
+function initHotplates () {
+  hotplates
+    .preheat(
+      { amd: true
+      , handlebarsSrc: 'handlebars'
+      , target: path.join(__dirname, 'static', 'js', 'handlebars-templates.js')
       }
-    , partials:
-      { root: path.join(config().paths.templates, 'partials') }
-    , watch: true
-    }
-  , serveSite);
+    , function (err, data) {
+        if (err) log.error(err);
+        else log.verbose('app', 'precompiled templates'); 
+    })
+    .on('templateCompiled', function (fileInfo, name) { 
+      log.verbose('app', 'compiled: \t%s as %s', fileInfo.path, name); 
+    })
+    .on('partialRegistered', function (fileInfo, name) { 
+      log.verbose('app', 'registered:\t%s as %s', fileInfo.path, name); 
+    })
+    .heat(
+      { templates:
+        { root: config().paths.templates
+        , directoryFilter: '!partials' 
+        }
+      , partials:
+        { root: path.join(config().paths.templates, 'partials') }
+      , watch: true
+      }
+    , serveSite);
+}
 
+function initBlog () {
+  initHotplates();
+}
+
+initBlog();
