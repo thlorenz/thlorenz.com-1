@@ -29,7 +29,7 @@
     "require-all": "0.0.4",
     "eventemitter2": "~0.4.9",
     "hotplates": "~0.5.0",
-    "dog": "0.0.6"
+    "dog": "~0.0.6"
   },
   "devDependencies": {
     "should": "~1.1.0",
