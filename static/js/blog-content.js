@@ -1,4 +1,7 @@
 define(['jquery', 'element'], function($, el) {
+  
+  // TODO: 90% same code as github-content -> extract commonalities
+  
   var $currentContent;
 
   function show (html) {
@@ -20,22 +23,21 @@ define(['jquery', 'element'], function($, el) {
         .fadeOut(200);
   }
 
-  function init (repoName) {
+  function init (postName) {
     $.ajax({
-        url: '/github/repo/' + repoName
-      , dataType: 'html'
+        url: '/blog/post/' + postName
+      , dataType: 'json'
       , beforeSend: hide
     })
     .error(function (err) {
       console.log('Error ', err);  
     })
-    .success(function (html) {
-      show(html);
+    .success(function (data) {
+      show(data.html);
     });
   }
 
   return {
     init: init
   };
-
 });

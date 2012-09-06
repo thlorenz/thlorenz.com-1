@@ -63,7 +63,20 @@ function init(initialized) {
   }
 }
 
+function getMetadata () {
+  return Object.keys(posts)
+    .map(function (key) {
+      return posts[key].metadata;
+    });
+}
+
+function getPost (postName) {
+  return posts[postName];
+}
+
 module.exports = {
-  init: init
+    init        :  init
+  , getMetadata :  getMetadata
+  , getPost     :  getPost
 };
 

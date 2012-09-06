@@ -14,7 +14,7 @@ var path       =  require('path')
 
 config.setEnv({ 
     devEnvironment: 'dev' 
-   , loglevel: 'silly'
+//   , loglevel: 'silly'
 });
 
 log.level = config().logLevel;
@@ -33,7 +33,7 @@ function serveSite() {
     , '/github/index'     :  { get :  routes.github.get        }
     , '/github/repo/:name':  { get :  routes.github.getRepo    }
     , '/blog/index'       :  { get :  routes.blog.get          }
-    , '/blog/:post'       :  { get :  routes.blog.getPost      }
+    , '/blog/post/:post'  :  { get :  routes.blog.getPost      }
 
     , '/blog/assets/images/:file': { get: function (file) { routes.images.get(file, config().paths.blog.images); } }
   });

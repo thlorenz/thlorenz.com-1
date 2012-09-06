@@ -5,14 +5,17 @@ define(
   , 'stackoverflow-index'
   , 'contact-index'
   , 'github-content'
-  ], function (director, github, blog, stackoverflow, contact, githubContent) { 
+  , 'blog-content'
+  ], 
+function (director, github, blog, stackoverflow, contact, githubContent, blogContent) { 
 
   var routes = { 
-        '/github'        :  function () { github.init(); }
-      , '/blog'          :  function () { blog.init(); }
-      , '/stackoverflow' :  function () { stackoverflow.init(); }
-      , '/contact'       :  function () { contact.init(); }
-      , '/github/repo/:name' : function (name) { githubContent.init(name); }
+        '/github'            :  function ()     { github.init(); }
+      , '/blog'              :  function ()     { blog.init(); }
+      , '/stackoverflow'     :  function ()     { stackoverflow.init(); }
+      , '/contact'           :  function ()     { contact.init(); }
+      , '/github/repo/:name' :  function (name) { githubContent.init(name); }
+      , '/blog/post/:name'   :  function(name)  { blogContent.init(name); }
       }
     , router = window.Router(routes).init();
 });

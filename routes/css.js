@@ -1,9 +1,15 @@
-var config =  require('../config')
-  , stylus =  require('stylus')
-  , fs     =  require('fs')
-  , path   =  require('path')
-  , log    =  require('npmlog')
+var config  =  require('../config')
+  , stylus  =  require('stylus')
+  , fs      =  require('fs')
+  , path    =  require('path')
+  , log     =  require('npmlog')
+  , cssOnly =  ['blog.css']
   ;
+
+function isCssOnly (file) {
+  return cssOnly.indexOf(path.basename(file)) > -1;
+}
+
 
 function convertToCss (stylusFile, cb) {
   fs.readFile(config().paths.stylus + '/' + stylusFile, 'utf-8', function (err, data) {
@@ -55,8 +61,10 @@ function get(file) {
     else onSuccess(data);
   }
 
-  return config().isDev ?  getDynamicCss(file, respond) : getStaticCss(file, respond);
+  return (config().isDev && !isCssOnly(file)) ? getDynamicCss(file, respond) : getStaticCss(file, respond);
 }
+
+
 
 module.exports = {
   get: get

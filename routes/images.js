@@ -10,7 +10,7 @@ function getImgMime(file) {
 }
 
 function getfavicon () {
-  get.call(this, 'favicon.ico', { imgMime: 'x-img' });
+  get.call(this, 'favicon.ico');
 }
 
 function get (file, dir) {
@@ -42,6 +42,7 @@ function get (file, dir) {
     res.end(img.body);
   }
 
+  log.info('images', 'dir', dir);
   fs.readFile(dir || config().paths.images + '/' + file, function (err, data) {
     if (err) onError(err);
     else onSuccess(data);

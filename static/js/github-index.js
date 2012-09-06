@@ -11,6 +11,7 @@ function($, _, Handlebars, EventEmitter, el) {
     })
     .error(function (err) {
       console.log('Error ', err);  
+
       cb([]);
     })
     .success(function (data) {
@@ -18,20 +19,22 @@ function($, _, Handlebars, EventEmitter, el) {
         .sortBy(function (x) {
           return -x.watchers;
         });
+
       cb(repos);
     });
   }
 
   function init() {
     fetchRepos(function (repos) {
-      _(repos).chain()
+      var html = _(repos)
         .map(function (repo) {
-          var html = Handlebars.partials['github-nav'](repo);
-          return $(html);
+          return Handlebars.partials['github-nav'](repo);
         })
-        .forEach(function ($item) {
-          el.sidebarList.append($item);
-        });
+        .join('\n');
+
+        el.sidebarList
+          .empty()
+          .append(html);
     });
   }
 
