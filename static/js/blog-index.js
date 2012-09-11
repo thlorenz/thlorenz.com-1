@@ -30,7 +30,12 @@ function($, Handlebars, EventEmitter, el) {
     fetchPosts(function (posts) {
       var html = _(posts)
         .map(function (post) {
-          return Handlebars.partials['blog-nav'](post);
+          var extract = { 
+              name    :  post.name
+            , title   :  post.title
+            , created :  new Date(post.created).toLocaleDateString()
+          };
+          return Handlebars.partials['blog-nav'](extract);
         })
         .join('\n');
 
