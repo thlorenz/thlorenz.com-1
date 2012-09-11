@@ -6,6 +6,7 @@ var config     =  require('./config')
   , root       =  config().paths.blog.root
   , postsNames
   , posts
+  , firstPost
   ;
 
 function init(initialized) {
@@ -54,8 +55,11 @@ function init(initialized) {
           posts[meta.name] = meta;
           log.verbose('blog', 'Providing: %s\n', meta.name, meta.metadata);
         });
-
         log.info('blog', 'initialized posts', postsNames);
+
+        // TODO: get newest post here (e.g., sort by date first)
+        firstPost = metadata[0];
+        log.verbose('blog', 'first post is %s', firstPost.name);
 
         initialized();
       });
@@ -71,7 +75,9 @@ function getMetadata () {
 }
 
 function getPost (postName) {
-  return posts[postName];
+  post = (postName && posts[postName]) ? posts[postName] : firstPost;
+  log.info('blog', 'returning for post: %s', post);
+  return post;
 }
 
 module.exports = {

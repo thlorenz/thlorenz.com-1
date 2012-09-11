@@ -20,16 +20,17 @@ function (director, github, blog, stackoverflow, contact, githubContent, blogCon
   function updateNav (nav) {
     if (currentNav !== nav) {
       navs[nav]();
+      currenNav = nav;
     }
   }
 
   var routes = { 
-        '/github'            :  function ()     { updateNav('github');        }
-      , '/blog'              :  function ()     { updateNav('blog');          }
+        '/github'            :  function ()     { updateNav('github'); githubContent.init(); }
+      , '/blog'              :  function ()     { updateNav('blog');   blogContent.init();   }
       , '/stackoverflow'     :  function ()     { updateNav('stackoverflow'); }
       , '/contact'           :  function ()     { updateNav('contact');       }
       , '/github/repo/:name' :  function (name) { updateNav('github'); githubContent.init(name); }
-      , '/blog/post/:name'   :  function(name)  { updateNav('blog');   blogContent.init(name); }
+      , '/blog/post/:name'   :  function (name) { updateNav('blog');   blogContent.init(name); }
       }
     , router = window.Router(routes).init();
 });

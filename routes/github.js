@@ -39,6 +39,7 @@ function getRepo (repoName) {
     , maxAge = config().caching.maxAge.github.repo
     ;
 
+  log.info('github', 'getting repo [%s]', repoName);
   github.requestReadmeByName(repoName, function (err, html) {
     if (err) notFound(res, err);
     else {
