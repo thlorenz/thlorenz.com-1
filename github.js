@@ -5,6 +5,7 @@ var request      =  require('request')
   , fs           =  require('fs')
   , cache        =  require('./cache')
   , repos        =  {}
+  , mostPopular  
   , articleRegex =  /<article +class="markdown-body.*".*>(.|[\n\r])+?<\/article>/m
   ;
 
@@ -12,6 +13,8 @@ function hashRepos (infos) {
   repos = {};
   infos.forEach(function (info) {
     repos[info.name] = info;
+    if (!mostPopular || mostPopular.watchers < info.watchers)
+      mostPopular = info;
   });
 }
 
@@ -19,10 +22,12 @@ function requestRepos(cb) {
   var cached = cache.get('github.repos');
 
   if (cached) { 
-    cb(cached.value); 
+    cb(null, cached.value); 
   } else {
     // request.get(apiurl + '/users/thlorenz/repos', function (err, res, body) {
     fs.readFile('./tmp/github-repos.json', 'utf-8', function (err, body) {
+      if (err) { cb(err); return; }
+      
       var repos = JSON.parse(body)
         , infos = repos.map(function (repo) {
             return { 
@@ -37,10 +42,35 @@ function requestRepos(cb) {
           });
 
       hashRepos(infos);
-      cb(infos);
       cache.put('github.repos', infos, 60);
+
+      cb(null, infos);
     });
   }
+}
+
+function requestMostPopular (cb) {
+  if (mostPopular) { 
+    requestReadmeByName(mostPopular.name, cb); 
+    return; 
+  }
+
+  requestRepos(function (err, infos) {
+
+    if (err) { cb(err); return; }
+
+    log.verbose('github', 'most popular', mostPopular);
+    if (mostPopular) {
+      requestReadmeByName(mostPopular.name, cb); 
+      return; 
+    }
+
+    if (infos && infos.length > 0) {
+      requestReadmeByName(infos[0].name, cb);
+      return;
+    }
+    cb(new Error('No repos available'));
+  });
 }
 
 function requestReadmeByUrl (repoUrl, cb) {
@@ -72,21 +102,25 @@ function requestReadmeByName (name, cb) {
   }
 
   if (!repo) {
-
-    requestRepos(function () {
+    requestRepos(function (err, infos) {
+      if (err) { cb(err); return; }
+      
       repo = repos[name];  
-      if (!repo) cb(new Error('No readme found'));
-      else processRepo();
-    });
 
+      if (!repo) {
+        cb(new Error('No readme found for ' + name));
+      } else { 
+        processRepo();
+      }
+    });
   } else {
     processRepo();
   }
-    
 }
 
 module.exports = { 
-    requestRepos: requestRepos
-  , requestReadmeByUrl: requestReadmeByUrl
-  , requestReadmeByName: requestReadmeByName
+    requestRepos        :  requestRepos
+  , requestMostPopular  :  requestMostPopular
+  , requestReadmeByUrl  :  requestReadmeByUrl
+  , requestReadmeByName :  requestReadmeByName
 };
