@@ -41,13 +41,20 @@ h3
 em 
   font-style: italic
 a 
-  color:  #040449
+  color: #131392
   cursor:  pointer
-  text-decoration: none
   engrave-text()
+  text-decoration: none
+  &:hover
+    text-decoration: underline
 
+nav a
+  color:  #040449
   &:hover
     text-decoration: inherit
+
+ul li
+  list-style: initial
 
 html
   height: 100%
