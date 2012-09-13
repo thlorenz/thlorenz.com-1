@@ -19,7 +19,7 @@
   "author": "Thorsten Lorenz <thlorenz@gmx.de> (http://thorstenlorenz/wordpress.com)",
   "license": "MIT",
   "dependencies": {
-    "handlebars": "~1.0.6-2",
+    "handlebars": "~1.0.6",
     "stylus": "~0.28.2",
     "nib": "~0.7.0",
     "request": "~2.10.0",
