@@ -29,6 +29,6 @@ function (director, github, blog, about, githubContent, blogContent) {
       , '/github/repo/:name' :  function (name) { updateNav('github'); githubContent.init(name); }
       , '/blog/post/:name'   :  function (name) { updateNav('blog');   blogContent.init(name); }
       }
-    , router = window.Router(routes).init();
+    , router = window.Router(routes).init('/blog');
 });
 
