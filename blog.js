@@ -17,7 +17,7 @@ function init(initialized) {
   function gitPull () {
     log.info('blog', 'git pull', 'started');
 
-    exec('cd ' + root + ' && git pull', function (err, res) {
+    exec('cd ' + root + ' && git pull origin master', function (err, res) {
       if (err) { log.error('blog', 'git pull', err); initialized(err); return; }
       
       log.info('blog', 'git pull', res); 
