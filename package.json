@@ -3,6 +3,10 @@
   "version": "0.0.0",
   "description": "Source of thlorenz.com website.",
   "main": "app.js",
+  "engines": {
+    "node": "~0.8.8",
+    "npm": "~1.1.50"
+  },
   "scripts": {
     "test": "mocha"
   },
