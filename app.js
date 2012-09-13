@@ -9,6 +9,7 @@ var path       =  require('path')
   , routes     =  require('./routes')
   , config     =  require('./config')
   , blog       =  require('./blog')
+  , PORT       =  process.env.PORT || 3000
   ;
 
 
@@ -52,8 +53,8 @@ function serveSite() {
     });
   });
 
-  server.listen(3000, function () {
-    log.info('app', 'server listening on ', 3000);
+  server.listen(PORT, function () {
+    log.info('app', 'server listening on ', PORT);
   });
 }
 

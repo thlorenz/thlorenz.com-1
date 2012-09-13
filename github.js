@@ -24,8 +24,8 @@ function requestRepos(cb) {
   if (cached) { 
     cb(null, cached.value); 
   } else {
-    // request.get(apiurl + '/users/thlorenz/repos', function (err, res, body) {
-    fs.readFile('./tmp/github-repos.json', 'utf-8', function (err, body) {
+    request.get(apiurl + '/users/thlorenz/repos', function (err, res, body) {
+    // fs.readFile('./tmp/github-repos.json', 'utf-8', function (err, body) {
       if (err) { cb(err); return; }
       
       var repos = JSON.parse(body)
