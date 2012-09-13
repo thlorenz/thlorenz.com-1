@@ -1,6 +1,7 @@
 requirejs.config ({
     shim: {  
-      'handlebars': { exports: 'Handlebars' } 
+        'handlebars': { exports: 'Handlebars' } 
+      , 'underscore': { exports: '_' }
     }
   , paths: {
       'jquery'               :  'lib/jquery-1.8.0'
