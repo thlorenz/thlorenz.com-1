@@ -1,6 +1,6 @@
 define(['jquery'], function($) {
-  var sidebar     =  $('.sidebar > nav')
-    , content     =  $('body > article > section')
+  var sidebar     =  $('body > nav')
+    , content     =  $('body > section')
     , sidebarList =  sidebar.find('ul')
     ;
 
