@@ -37,6 +37,7 @@ function serveSite() {
     , '/blog/post/:post'  :  { get :  routes.blog.getPost      }
 
     , '/blog/assets/images/:file': { get: function (file) { routes.images.get(file, config().paths.blog.images); } }
+    , '/blog/pushed'      :  { post: routes.blog.pushed }
   });
 
   var server = http.createServer(function (req, res) {

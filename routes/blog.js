@@ -47,8 +47,18 @@ function getPost(post) {
   res.end(jsonRes.body);
 }
 
+function pushed () {
+  var req      =  this.req
+    , res      =  this.res;
+  log.info('blog', 'article was pushed');
+  log.info('blog', this.req.body);
+
+  res.end();
+}
+
 module.exports = {
     get     :  get
   , getPost :  getPost
+  , pushed  :  pushed
 };
 
