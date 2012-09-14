@@ -1,7 +1,9 @@
 # Blog
   
-  - columns scroll separately
-  - columns stretch same height
   - blog git commit hook
   - find WebToInk repo
   - improve colors
+
+  - possibly allow hiding sidebar (switch to full screen for better mobile experience)
+
+  - make work in IE (maybe)
