@@ -1,4 +1,7 @@
 # Blog
   
-  - [remove submodule](http://stackoverflow.com/questions/1260748/how-do-i-remove-a-git-submodule)
-  - add it back in as readonly
+  - columns scroll separately
+  - columns stretch same height
+  - blog git commit hook
+  - find WebToInk repo
+  - improve colors
