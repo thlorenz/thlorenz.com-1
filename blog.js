@@ -38,8 +38,6 @@ function initStyles (cb) {
 }
 
 function handlePostUpdate (metadata) {
-    posts = {};
-
     metadata.forEach(function (meta) {
       postsNames.push(meta.name);
       posts[meta.name] = meta;
@@ -56,6 +54,7 @@ function handlePostUpdate (metadata) {
 function initPosts (cb) {
   log.info('blog', 'init posts', 'started');
 
+  posts = {};
   postsNames = [];
   
   provider.provideAll(function (err, metadata) {
