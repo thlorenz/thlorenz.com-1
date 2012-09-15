@@ -4,8 +4,6 @@ var log    =  require('npmlog')
   , config =  require('../config')
   ;
 
-// TODO: lots of common code with github.js - extract
-
 function getJsonRes(metadata, maxAge) {
   var data = JSON.stringify(metadata);
   return {
@@ -50,10 +48,19 @@ function getPost(post) {
 function pushed () {
   var req      =  this.req
     , res      =  this.res;
-  log.info('blog', 'article was pushed');
-  log.info('blog', this.req.body);
 
-  res.end();
+  log.info('blog', 'blog post was pushed');
+  blog.update(function (err) {
+    if (err) { 
+      log.error('blog', err); 
+      res.writeHead(500);
+      res.end();
+      return;
+    }
+
+    res.writeHead(200, { 'Content-Length': 0 });
+    res.end();
+  });
 }
 
 module.exports = {
