@@ -3,6 +3,7 @@ var fs = require('fs')
   , log = require('npmlog')
   , config = require('../config')
   , utl = require('../utl')
+  , blog = require('../blog')
   ;
 
 function getImgMime(file) {
@@ -43,13 +44,18 @@ function get (file, dir) {
   }
 
   log.info('images', 'dir', dir);
-  fs.readFile(dir || config().paths.images + '/' + file, function (err, data) {
+  fs.readFile((dir || config().paths.images) + '/' + file, function (err, data) {
     if (err) onError(err);
     else onSuccess(data);
   });
 }
 
+function getForPost (file) {
+  get.apply (this, [ file, config().paths.blog.images ]);
+}
+
 module.exports = {
-    get: get
-  , getfavicon: getfavicon
+    get        :  get
+  , getForPost :  getForPost
+  , getfavicon :  getfavicon
 };

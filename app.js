@@ -25,16 +25,17 @@ log.addLevel('silly', -Infinity, { fg: 'grey' }, 'sill');
 function serveSite() {
 
   var router = new director.http.Router({
-      '/'                 :  { get :  routes.root.get          }
-    , '/favicon.ico'      :  { get :  routes.images.getfavicon }
-    , '/css/:file'        :  { get :  routes.css.get           }
-    , '/images/:file'     :  { get :  routes.images.get        }
-    , '/js/:file'         :  { get :  routes.js.get            }
-    , '/js/:dir/:file'    :  { get :  routes.js.getFrom        }
-    , '/github/index'     :  { get :  routes.github.get        }
-    , '/github/repo/:name':  { get :  routes.github.getRepo    }
-    , '/blog/index'       :  { get :  routes.blog.get          }
-    , '/blog/post/:post'  :  { get :  routes.blog.getPost      }
+      '/'                   :  { get :  routes.root.get          }
+    , '/favicon.ico'        :  { get :  routes.images.getfavicon }
+    , '/css/:file'          :  { get :  routes.css.get           }
+    , '/images/:file'       :  { get :  routes.images.get        }
+    , '/js/:file'           :  { get :  routes.js.get            }
+    , '/js/:dir/:file'      :  { get :  routes.js.getFrom        }
+    , '/github/index'       :  { get :  routes.github.get        }
+    , '/github/repo/:name'  :  { get :  routes.github.getRepo    }
+    , '/blog/index'         :  { get :  routes.blog.get          }
+    , '/blog/post/:post'    :  { get :  routes.blog.getPost      }
+    , '/assets/images/:file' :  { get :  routes.images.getForPost }
 
     , '/blog/assets/images/:file': { get: function (file) { routes.images.get(file, config().paths.blog.images); } }
     , '/blog/pushed'      :  { post: routes.blog.pushed }
