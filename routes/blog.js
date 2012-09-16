@@ -8,8 +8,9 @@ function getJsonRes(metadata, maxAge) {
   var data = JSON.stringify(metadata);
   return {
       headers: {
-          'Content-Type'   :  'text/json'
-        , 'Content-Length' :  data.length
+          'Content-Type'   :  'application/json'
+        // FIXME: Setting Content-Length explicitly causes problems with large posts
+        //, 'Content-Length' :  data.length
         , 'ETag'           :  '"' + utl.md5(data) + '"'
         , 'Cache-Control'  :  'public, max-age=' + maxAge.toString()
         }
