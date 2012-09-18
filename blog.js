@@ -1,15 +1,32 @@
 var config     =  require('./config')
   , fs         =  require('fs')
+  , path = require('path')
   , exec       =  require('child_process').exec
   , log        =  require('npmlog')
   , runnel     =  require('runnel')
   , provider   =  require('dog').provider
+  , exists     =  fs.exists || path.exists
   , root       =  config().paths.blog.root
   , lastUpdate 
   , postsNames
   , posts
   , firstPost
   ;
+
+function gitClone (cb) {
+  log.info('blog', 'git clone', 'started');
+
+  fs.exists(root, function (exists) {
+    if (exists) { cb(); return; }
+
+    exec('git clone git://github.com/thlorenz/thlorenz.com-blog.git', function (err, res) {
+      if (err) { log.error('blog', 'git clone', err); cb(err); return; }
+      
+      log.info('blog', 'git clone', res); 
+      cb();
+    });
+  });
+}
 
 function gitPull (cb) {
   log.info('blog', 'git pull', 'started');
@@ -74,9 +91,9 @@ function updatePosts (cb) {
   });
 }
 
-function pullAndRefresh (refreshPosts, refreshed) {
+function syncRefresh (sync, refreshPosts, refreshed) {
   runnel(
-      gitPull
+      sync
     , initStyles
     , refreshPosts
     , refreshed
@@ -85,11 +102,11 @@ function pullAndRefresh (refreshPosts, refreshed) {
 
 function init (initialized) {
   provider.provideFrom(config().paths.blog.root);
-  pullAndRefresh(initPosts, initialized);
+  syncRefresh(gitClone, initPosts, initialized);
 }
 
 function update (updated) {
-  pullAndRefresh(updatePosts, updated);
+  syncRefresh(gitPull, updatePosts, updated);
 }
 
 function getMetadata () {
