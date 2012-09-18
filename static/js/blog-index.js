@@ -17,7 +17,7 @@ function($, Handlebars, EventEmitter, el) {
       cb([]);
     })
     .success(function (data) {
-      posts = _(data)
+      var posts = _(data)
         .sortBy(function (x) {
           return -x.created;
         });
