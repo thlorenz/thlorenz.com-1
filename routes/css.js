@@ -61,7 +61,7 @@ function get(file) {
     else onSuccess(data);
   }
 
-  return (config().isDev && !isCssOnly(file)) ? getDynamicCss(file, respond) : getStaticCss(file, respond);
+  return (!config().optimizeCss && !isCssOnly(file)) ? getDynamicCss(file, respond) : getStaticCss(file, respond);
 }
 
 

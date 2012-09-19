@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var path       =  require('path')
   , fs         =  require('fs')
   , util       =  require('util')
@@ -10,13 +12,12 @@ var path       =  require('path')
   , config     =  require('./config')
   , blog       =  require('./blog')
   , PORT       =  process.env.PORT || 3000
+  , envName    =  process.argv[2] || 'prod'
   ;
 
 
-config.setEnv({ 
-    devEnvironment: 'dev' 
-//   , loglevel: 'silly'
-});
+// Environments: debug, dev, prod
+config.setEnv({ name: envName });
 
 log.level = config().logLevel;
 log.addLevel('verbose', 1000, { fg: 'blue' }, 'verb');
@@ -25,25 +26,25 @@ log.addLevel('silly', -Infinity, { fg: 'grey' }, 'sill');
 function serveSite() {
 
   var router = new director.http.Router({
-      '/'                   :  { get :  routes.root.get          }
-    , '/favicon.ico'        :  { get :  routes.images.getfavicon }
-    , '/css/:file'          :  { get :  routes.css.get           }
-    , '/images/:file'       :  { get :  routes.images.get        }
-    , '/js/:file'           :  { get :  routes.js.get            }
-    , '/js/:dir/:file'      :  { get :  routes.js.getFrom        }
-    , '/github/index'       :  { get :  routes.github.get        }
-    , '/github/repo/:name'  :  { get :  routes.github.getRepo    }
-    , '/blog/index'         :  { get :  routes.blog.get          }
-    , '/blog/post/:post'    :  { get :  routes.blog.getPost      }
-    , '/assets/images/:file' :  { get :  routes.images.getForPost }
+      '/'                         :  { get  :  routes.root.get          }
+    , '/favicon.ico'              :  { get  :  routes.images.getfavicon }
+    , '/css/:file'                :  { get  :  routes.css.get           }
+    , '/images/:file'             :  { get  :  routes.images.get        }
+    , '/js/:file'                 :  { get  :  routes.js.get            }
+    , '/js/:dir/:file'            :  { get  :  routes.js.getFrom        }
+    , '/github/index'             :  { get  :  routes.github.get        }
+    , '/github/repo/:name'        :  { get  :  routes.github.getRepo    }
+    , '/blog/index'               :  { get  :  routes.blog.get          }
+    , '/blog/post/:post'          :  { get  :  routes.blog.getPost      }
+    , '/assets/images/:file'      :  { get  :  routes.images.getForPost }
 
-    , '/blog/assets/images/:file': { get: function (file) { routes.images.get(file, config().paths.blog.images); } }
-    , '/blog/pushed'      :  { post: routes.blog.pushed }
+    , '/blog/assets/images/:file' :  { get  :  function (file) { routes.images.get(file, config().paths.blog.images); } }
+    , '/blog/pushed'              :  { post :  routes.blog.pushed }
   });
 
   var server = http.createServer(function (req, res) {
 
-    log.info('app','%s %s', req.method, req.url);
+    log.verbose('app','%s %s', req.method, req.url);
     log.silly('headers', req.headers);     
 
     router.dispatch(req, res, function (err) {

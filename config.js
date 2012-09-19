@@ -2,6 +2,8 @@ var path          =  require('path')
   , oneDay        =  86400
   , oneHour       =  3600
   , defaultMaxAge =  oneHour
+  , envs          =  [ 'debug', 'dev', 'prod' ]
+  , loglevels     =  [ 'silly', 'verbose', 'info' ]
   , blog          =  path.join(__dirname, 'thlorenz.com-blog')
   , staticp       =  path.join(__dirname, 'static')
   , css           =  path.join(staticp, 'css')
@@ -31,28 +33,31 @@ var path          =  require('path')
       }
     }
   , env = {
-      devEnvironment: 'dev'
+      name: 'dev'
     }
   ;
   
-
-function setEnv(envArg) {
-  env = envArg;
+function envIndex (name) {
+  return envs.indexOf(name);
 }
 
-function getProps() {
-  var isDev = env.devEnvironment === 'dev';
+function currentEnvIndex (name) {
+  return envIndex(env.name);
+}
 
-  var def = {
-      isDev: isDev
-    , logLevel: env.loglevel || (isDev ? 'verbose' : 'info')
+function setEnv(env_) {
+  env = env_;
+}
+
+function getConfig() {
+  return {
+      logLevel: env.loglevel || loglevels[ currentEnvIndex() ]
+    , optimizeCss: false // currentEnvIndex() >= envIndex('prod')
+    , optimizeJs: currentEnvIndex() >= envIndex('prod')
     , paths: paths  
     , caching: caching
     };
-
-  return def;
 }
 
-getProps.setEnv = setEnv;
-
-module.exports = getProps;
+module.exports = getConfig;
+module.exports.setEnv = setEnv;
