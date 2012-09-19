@@ -33,7 +33,7 @@ function (director, github, blog, about, githubContent, blogContent) {
         .configure({
           // track pageviews manually since this is a single page app
           // See: http://akahn.net/2010/11/12/tracking-events-with-google-analytics.html
-          before: function () { _gaq.push(['_trackPageview']); }
+          before: function (route) { _gaq.push(['_trackPageview', route || '/']); }
         })
         .init('/blog');
 });
