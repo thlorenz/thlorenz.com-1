@@ -22,18 +22,49 @@ function (director, github, blog, about, githubContent, blogContent) {
     }
   }
 
+  function track (route) {
+    // track pageviews manually since this is a single page app
+    // See: http://akahn.net/2010/11/12/tracking-events-with-google-analytics.html
+    _gaq.push(['_trackPageview', route || '/']);
+  }
+
+  function getGithub () {
+    track('github');
+    updateNav('github'); 
+    githubContent.init();
+  }
+
+  function getGithubRepo (name) {
+    track('github/repo/' + name);
+    updateNav('github'); 
+    githubContent.init(name);
+  }
+
+  function getBlog () {
+    track('blog');
+    updateNav('blog');
+    blogContent.init();   
+  }
+
+  function getBlogPost (name) {
+    track('blog/post/' + name);
+    updateNav('blog');
+    blogContent.init(name); 
+  }
+  
+  function getAbout () {
+    track('about');
+    updateNav('about');      
+  }
+
   var routes = { 
-        '/github'            :  function ()     { updateNav('github'); githubContent.init(); }
-      , '/blog'              :  function ()     { updateNav('blog');   blogContent.init();   }
-      , '/about'             :  function ()     { updateNav('about');       }
-      , '/github/repo/:name' :  function (name) { updateNav('github'); githubContent.init(name); }
-      , '/blog/post/:name'   :  function (name) { updateNav('blog');   blogContent.init(name); }
+        '/github'            : getGithub 
+      , '/blog'              : getBlog
+      , '/about'             : getAbout 
+      , '/github/repo/:name' : getGithubRepo 
+      , '/blog/post/:name'   : getBlogPost 
       }
-    , router = window.Router(routes)
-        .configure({
-          // track pageviews manually since this is a single page app
-          // See: http://akahn.net/2010/11/12/tracking-events-with-google-analytics.html
-          before: function (route) { _gaq.push(['_trackPageview', route || '/']); }
-        })
-        .init('/blog');
+    , router = window.Router(routes).init('/blog');
+
+
 });
