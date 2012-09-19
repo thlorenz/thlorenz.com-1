@@ -51,9 +51,9 @@ function setEnv(env_) {
 
 function getConfig() {
   return {
-      logLevel    :  env.loglevel || loglevels[ currentEnvIndex() ]
-    , optimizeCss :  false //currentEnvIndex() >= envIndex('prod')
-    , optimizeJs  :  currentEnvIndex() >= envIndex('prod')
+      logLevel    :  env.loglevel         || loglevels[ currentEnvIndex() ]
+    , optimizeCss :  env.forceOptimizeCss || currentEnvIndex() >= envIndex('prod')
+    , optimizeJs  :  env.forceOptimizeJs  || currentEnvIndex() >= envIndex('prod')
     , paths       :  paths
     , caching     :  caching
     };

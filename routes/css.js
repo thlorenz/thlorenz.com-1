@@ -6,6 +6,7 @@ var config  =  require('../config')
   ;
 
 function getStaticCss(file, cb) {
+  log.verbose('css', 'getting static css from', file);
   fs.readFile(config().paths.css + '/' + file, 'utf-8', cb);
 }
 

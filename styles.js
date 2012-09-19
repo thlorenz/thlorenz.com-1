@@ -17,6 +17,7 @@ function convertToCss (stylusFile, cb) {
       stylus(data)
         .include(require('nib').path)
         .include(config().paths.stylus)
+        .set('compress', config().optimizeCss)
         .render(function (err, css) {
           if (err) cb(err);
           else cb(null, css);
@@ -36,7 +37,7 @@ function generateCss (stylusFile, cb) {
 function init (cb) {
   var conf = config();
   if (!conf.optimizeCss) return cb(null);
-  generateCss(path.join(conf.paths.stylus, 'index.styl'), cb);
+  generateCss('index.styl', cb);
 }
 
 module.exports = {

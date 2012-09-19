@@ -8,18 +8,21 @@ var path       =  require('path')
   , handlebars =  require('handlebars')
   , hotplates  =  require('hotplates')
   , log        =  require('npmlog')
-  , runnel     = require('runnel')
+  , runnel     =  require('runnel')
   , routes     =  require('./routes')
   , config     =  require('./config')
   , blog       =  require('./blog')
   , styles     =  require('./styles')
-  , PORT       =  process.env.PORT || 3000
-  , envName    =  process.argv[2] || 'prod'
+
+  , PORT    =  process.env.PORT || 3000
+  , envName =  process.argv[2] || 'prod'
+  , optcss  =  process.argv.indexOf('optcss') > 0
+  , optjs   =  process.argv.indexOf('optjs') > 0
   ;
 
 
 // Environments: debug, dev, prod
-config.setEnv({ name: envName });
+config.setEnv({ name: envName, forceOptimizeCss: optcss, forceOptimizeJs: optjs });
 
 log.level = config().logLevel;
 log.addLevel('verbose', 1000, { fg: 'blue' }, 'verb');
