@@ -29,6 +29,11 @@ function (director, github, blog, about, githubContent, blogContent) {
       , '/github/repo/:name' :  function (name) { updateNav('github'); githubContent.init(name); }
       , '/blog/post/:name'   :  function (name) { updateNav('blog');   blogContent.init(name); }
       }
-    , router = window.Router(routes).init('/blog');
+    , router = window.Router(routes)
+        .configure({
+          // track pageviews manually since this is a single page app
+          // See: http://akahn.net/2010/11/12/tracking-events-with-google-analytics.html
+          before: function () { _gaq.push(['_trackPageview']); }
+        })
+        .init('/blog');
 });
-
