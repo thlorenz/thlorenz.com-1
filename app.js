@@ -8,9 +8,11 @@ var path       =  require('path')
   , handlebars =  require('handlebars')
   , hotplates  =  require('hotplates')
   , log        =  require('npmlog')
+  , runnel     = require('runnel')
   , routes     =  require('./routes')
   , config     =  require('./config')
   , blog       =  require('./blog')
+  , styles     =  require('./styles')
   , PORT       =  process.env.PORT || 3000
   , envName    =  process.argv[2] || 'prod'
   ;
@@ -97,9 +99,17 @@ function initBlog (cb) {
   });
 }
 
-initBlog(function (err) {
-  if (err) { log.error('app', err); return; }
-  log.info('app', 'blog initialized');
+function handleError(err) {
+  if (err) { 
+    log.error('app', err); 
+    process.exit(1);
+  }
+}
 
-  initHotplates(serveSite);
-});
+runnel (
+    initBlog
+  , initHotplates
+  , styles.init
+  , serveSite
+  , handleError
+);

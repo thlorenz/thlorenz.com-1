@@ -51,11 +51,11 @@ function setEnv(env_) {
 
 function getConfig() {
   return {
-      logLevel: env.loglevel || loglevels[ currentEnvIndex() ]
-    , optimizeCss: false // currentEnvIndex() >= envIndex('prod')
-    , optimizeJs: currentEnvIndex() >= envIndex('prod')
-    , paths: paths  
-    , caching: caching
+      logLevel    :  env.loglevel || loglevels[ currentEnvIndex() ]
+    , optimizeCss :  false //currentEnvIndex() >= envIndex('prod')
+    , optimizeJs  :  currentEnvIndex() >= envIndex('prod')
+    , paths       :  paths
+    , caching     :  caching
     };
 }
 
