@@ -1,13 +1,14 @@
 var config     =  require('./config')
   , fs         =  require('fs')
-  , path = require('path')
+  , path       =  require('path')
   , exec       =  require('child_process').exec
   , log        =  require('npmlog')
   , runnel     =  require('runnel')
   , provider   =  require('dog').provider
+  , styles     =  require('./styles')
   , exists     =  fs.exists || path.exists
   , root       =  config().paths.blog.root
-  , lastUpdate 
+  , lastUpdate
   , postsNames
   , posts
   , firstPost
@@ -42,15 +43,9 @@ function gitPull (cb) {
 function initStyles (cb) {
   log.info('blog', 'init styles', 'started');
   provider.concatenateStyles(function (err, css) {
+    if (err) { log.error('blog', 'init styles',  err); return cb(err); }
 
-    if (err) { log.error('blog', 'init styles',  err); cb(err); return; }
-
-    fs.writeFile(config().paths.blog.blog_css, css, 'utf8', function (err) {
-      if (err) { log.error('blog', 'init styles',  err); initialized(err); return; }
-      log.info('blog', 'initialized styles');
-
-      cb();
-    });
+    styles.loadCss(css, 'blog.css', cb);
   });
 }
 

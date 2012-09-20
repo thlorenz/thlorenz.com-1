@@ -65,7 +65,7 @@ function getRepo (repoName) {
     res.end(readme.body);
   }
 
-  log.info('github', 'getting repo [%s]', repoName);
+  log.verbose('github', 'getting repo [%s]', repoName);
 
   if (repoName && repoName.length > 0 && repoName !== 'undefined') {
     log.silly('github', 'getting ', repoName);

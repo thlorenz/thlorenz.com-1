@@ -4,7 +4,7 @@ var config   =  require('./config')
   , path     =  require('path')
   , log      =  require('npmlog')
   , utl      =  require('./utl')
-  , cssOnly  =  ['blog.css']
+  , cssOnly  =  [ 'blog.css' ]
   , cssStore =  { }
   ;
 
@@ -28,23 +28,6 @@ function convertToCss (stylusFile, cb) {
   });
 }
 
-function loadCss (cssFile, cb) {
-  log.info('styles', 'loading css from', cssFile);
-  var fullPath = path.join(config().paths.css, cssFile);
-
-  fs.readFile(fullPath, 'utf-8', function (err, css) {
-    if (err) return cb(err);
-
-    stylus(css)
-      .set('compress', config().optimizeCss)
-      .render(function (err, css) {
-        if (err) return cb(err);
-        cssStore[cssFile] = css;
-        cb();
-      });
-  });
-}
-
 function generateCss (stylusFile, cb) {
   log.info('styles', 'generating css from', stylusFile);
   convertToCss(stylusFile, function (err, css) {
@@ -55,15 +38,30 @@ function generateCss (stylusFile, cb) {
   });
 }
 
+function loadCss (css, fileName, cb) {
+  stylus(css)
+    .set('compress', config().optimizeCss)
+    .render(function (err, css) {
+      if (err) return cb(err);
+      cssStore[fileName] = css;
+      cb();
+    });
+}
+
+function loadCssFromFile (cssFile, cb) {
+  log.info('styles', 'loading css from', cssFile);
+  var fullPath = path.join(config().paths.css, cssFile);
+
+  fs.readFile(fullPath, 'utf-8', function (err, css) {
+    if (err) return cb(err);
+    loadCss(css, cb);
+  });
+}
 
 function init (cb) {
   if (!config().optimizeCss) return cb(null);
 
-  generateCss('index.styl',  function (err) {
-    if (err) return cb(err);
-
-    loadCss('blog.css', cb);
-  });
+  generateCss('index.styl', cb);
 }
 
 function provide(file) {
@@ -71,9 +69,11 @@ function provide(file) {
 }
 
 module.exports = {
-    init         :  init
-  , isCssOnly    :  isCssOnly
-  , convertToCss :  convertToCss
-  , generateCss  :  generateCss
-  , provide      :  provide
+    init            :  init
+  , isCssOnly       :  isCssOnly
+  , convertToCss    :  convertToCss
+  , generateCss     :  generateCss
+  , loadCssFromFile :  loadCssFromFile
+  , loadCss         :  loadCss
+  , provide         :  provide
 };
