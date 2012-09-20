@@ -31,13 +31,18 @@ function convertToCss (stylusFile, cb) {
 function loadCss (cssFile, cb) {
   log.info('styles', 'loading css from', cssFile);
   var fullPath = path.join(config().paths.css, cssFile);
+
   fs.readFile(fullPath, 'utf-8', function (err, css) {
     if (err) return cb(err);
 
-    cssStore[cssFile] = css;
-    cb();
+    stylus(css)
+      .set('compress', config().optimizeCss)
+      .render(function (err, css) {
+        if (err) return cb(err);
+        cssStore[cssFile] = css;
+        cb();
+      });
   });
-  
 }
 
 function generateCss (stylusFile, cb) {
