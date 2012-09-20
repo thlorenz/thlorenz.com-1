@@ -5,9 +5,9 @@ var config  =  require('../config')
   , styles  =  require('../styles')
   ;
 
-function getStaticCss(file, cb) {
+function getStaticCss(file) {
   log.verbose('css', 'getting static css from', file);
-  fs.readFile(config().paths.css + '/' + file, 'utf-8', cb);
+  return styles.provide(file);
 }
 
 function getDynamicCss(file, cb) {
@@ -34,7 +34,9 @@ function get(file) {
     else onSuccess(data);
   }
 
-  return (!config().optimizeCss && !styles.isCssOnly(file)) ? getDynamicCss(file, respond) : getStaticCss(file, respond);
+  return (!config().optimizeCss && !styles.isCssOnly(file)) ? 
+    getDynamicCss(file, respond) : 
+    respond(null, getStaticCss(file));
 }
 
 module.exports = {
