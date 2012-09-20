@@ -29,31 +29,31 @@ function (director, github, blog, about, githubContent, blogContent) {
   }
 
   function getGithub () {
-    track('github');
+    track('#/github');
     updateNav('github'); 
     githubContent.init();
   }
 
   function getGithubRepo (name) {
-    track('github/repo/' + name);
+    track('#/github/repo/' + name);
     updateNav('github'); 
     githubContent.init(name);
   }
 
   function getBlog () {
-    track('blog');
+    track('#/blog');
     updateNav('blog');
     blogContent.init();   
   }
 
   function getBlogPost (name) {
-    track('blog/post/' + name);
+    track('#/blog/post/' + name);
     updateNav('blog');
     blogContent.init(name); 
   }
   
   function getAbout () {
-    track('about');
+    track('#/about');
     updateNav('about');      
   }
 
