@@ -1,6 +1,5 @@
-define(['jquery', 'event-emitter'], function($, EventEmitter) {
+define(['jquery'], function($) {
   var self = this
-    , emitter = new EventEmitter()
     , $navigation = $('article > nav')
     ;
 
@@ -10,6 +9,5 @@ define(['jquery', 'event-emitter'], function($, EventEmitter) {
 
   return {
       init: init
-    , events: emitter
   };
 });

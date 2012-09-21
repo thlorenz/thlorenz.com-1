@@ -1,7 +1,6 @@
-define(['jquery', 'handlebars', 'event-emitter', 'element'], 
-function($, Handlebars, EventEmitter, el) {
+define(['jquery', 'handlebars', 'element'], 
+function($, Handlebars, el) {
   var self = this
-    , emitter = new EventEmitter()
     , $navigation = $('article > nav')
     ;
 
@@ -47,6 +46,5 @@ function($, Handlebars, EventEmitter, el) {
 
   return {
       init: init
-    , events: emitter
   };
 });

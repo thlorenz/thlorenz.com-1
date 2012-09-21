@@ -1,8 +1,6 @@
-define(['jquery', 'underscore', 'handlebars', 'event-emitter', 'element'], 
-function($, _, Handlebars, EventEmitter, el) {
-  var self = this
-    , emitter = new EventEmitter()
-    ;
+define(['jquery', 'underscore', 'handlebars', 'element'], 
+function($, _, Handlebars, el) {
+  var self = this;
 
   function fetchRepos(cb) {
     $.ajax({
@@ -40,6 +38,5 @@ function($, _, Handlebars, EventEmitter, el) {
 
   return {
       init: init
-    , events: emitter
   };
 });
