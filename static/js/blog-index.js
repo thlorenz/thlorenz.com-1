@@ -1,5 +1,5 @@
-define(['jquery', 'handlebars', 'element'], 
-function($, Handlebars, el) {
+define(['jquery', 'underscore', 'handlebars', 'element'], 
+function($, _, Handlebars, el) {
   var self = this
     , $navigation = $('article > nav')
     ;
