@@ -1,5 +1,6 @@
-var requirejs = require('requirejs')
-  , fs = require('fs');
+var requirejs =  require('requirejs')
+  , fs        =  require('fs')
+  , log       =  require('npmlog');
 
 var config = {
       baseUrl: './static/js'
@@ -17,7 +18,7 @@ var config = {
       }
 };
 
-requirejs.optimize(config, function (buildResponse) {
-    console.log(buildResponse);
-    var contents = fs.readFileSync(config.out, 'utf8');
+requirejs.optimize(config, function (res) {
+  log.info('requirejs', res);
+  //var contents = fs.readFileSync(config.out, 'utf8');
 });
