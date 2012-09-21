@@ -25,7 +25,7 @@ function (director, github, blog, about, githubContent, blogContent) {
   function track (route) {
     // track pageviews manually since this is a single page app
     // See: http://akahn.net/2010/11/12/tracking-events-with-google-analytics.html
-    _gaq.push(['_trackPageview', route || '/']);
+    _gaq && _gaq.push(['_trackPageview', route || '/']);
   }
 
   function getGithub () {
