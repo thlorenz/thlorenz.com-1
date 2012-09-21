@@ -20,6 +20,7 @@ var path       =  require('path')
   , optjs   =  process.argv.indexOf('optjs') > 0
   ;
 
+require('./requirejs');
 
 // Environments: debug, dev, prod
 config.setEnv({ name: envName, forceOptimizeCss: optcss, forceOptimizeJs: optjs });
