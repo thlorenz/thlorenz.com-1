@@ -14,7 +14,7 @@ function isCssOnly (file) {
 
 function store(filename, css) {
   if (config().optimizeCss) {
-    cssStore['_main_.css'] += [ '', '/*', '* ' + filename, '*/', css ].join('\n');
+    cssStore['_main_.css'] += [ '', '/*', ' *' + filename, ' */', css ].join('\n');
   } else {
     cssStore[filename] = css;
   }
