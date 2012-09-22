@@ -28,6 +28,6 @@ if (typeof requirejs !== 'undefined' && typeof requirejs.config === 'function') 
 }
 
 // when called by our own requirejs module in order to retrieve config
-if (module && module.exports) {
+if (typeof module !== 'undefined' && module.exports) {
   module.exports.config = config;
 }
