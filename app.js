@@ -109,6 +109,8 @@ function handleError(err) {
   }
 }
 
+log.info('app', 'starting thlorenz.com');
+
 runnel (
     initBlog
   , initHotplates
