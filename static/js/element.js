@@ -1,7 +1,7 @@
 define(['jquery'], function($) {
-  var sidebar     =  $('body > nav')
-    , content     =  $('body > section')
-    , sidebarList =  sidebar.find('ul')
+  var sidebar     =  $($('.wrapper > nav:first'))
+    , content     =  $($('.wrapper > section:first'))
+    , sidebarList =  $(sidebar.find('ul:first'))
     ;
 
   return {

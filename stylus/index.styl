@@ -26,7 +26,7 @@ left-column-width  =  250px
 right-column-width =  900px
 header-height      =  130px
 gutter             =  10px
-panel-margin       =  23px
+panel-margin       =  21px
 
 h1 h2 h3 h4
   font-weight :  bold
@@ -84,9 +84,14 @@ body
   image: '/images/noise.png'
   background-color: rgba(198, 223, 247, 0.9)
 
+.wrapper
+  width: left-column-width + right-column-width + panel-margin + gutter
+  margin: 10px auto 10px auto
+  position: relative
+
 header
   panel(5px 0px 0px 0px)
-  left: gutter
+  left: 0
   top: gutter
   width: left-column-width
   height:  header-height
@@ -114,28 +119,24 @@ header
           transition: font-size 100ms 0ms ease-in
           font-size: 18px
 
-body > nav
-  panel(0px 0px 0px 5px)
-  left: gutter
-  top: gutter + header-height + panel-margin
-  bottom: gutter
-  width: left-column-width
-  overflow-y: auto
-
+.wrapper > nav
   engrave-text()
   color: #222429
 
+  left: 0
+  top: gutter + header-height + panel-margin
+
+  panel(0px 0px 0px 5px)
+  width: left-column-width
   ul
     li
       margin:  5px 0px 5px 0px
 
-body > section
+.wrapper > section
   panel(0px 5px 5px 0px)
-  left: gutter + left-column-width + panel-margin
+  left: 0 + left-column-width + panel-margin
   top: gutter 
-  bottom: gutter
   width: right-column-width
-  overflow-y: auto
 
   engrave-text()
 
