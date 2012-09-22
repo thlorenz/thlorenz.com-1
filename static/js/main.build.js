@@ -2,6 +2,7 @@ var config = {
       baseUrl: './static/js'
     , name: 'main.build'
     , out: './static/js/main.built.js'
+
     , shim: {  
         'handlebars': { exports: 'Handlebars' } 
       , 'underscore': { exports: '_' }

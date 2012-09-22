@@ -1,7 +1,5 @@
 # Blog
   
-  - blog git commit hook
-  - environments via command line args
   - find WebToInk repo
   - improve colors
 
