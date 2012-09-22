@@ -1,8 +1,9 @@
-var fs     =  require('fs')
-  , path   =  require('path')
-  , log    =  require('npmlog')
-  , config =  require('../config')
-  , utl    =  require('../utl')
+var fs      =  require('fs')
+  , path    =  require('path')
+  , log     =  require('npmlog')
+  , config  =  require('../config')
+  , utl     =  require('../utl')
+  , jsStore =  { }
   ;
 
 function onError (res, err, status) {
@@ -27,11 +28,21 @@ function onSuccess (res, data) {
 function get (jspath) {
   var res = this.res
     , req = this.req
+    , fullPath = config().paths.js + '/' + jspath
     ;
 
-  fs.readFile(config().paths.js + '/' + jspath, function (err, data) {
-    if (err) onError(res, err, 404);
-    else onSuccess(res, data);
+  if (jsStore[fullPath]) { 
+    log.verbose('js', 'serving %s from store', jspath);
+    return onSuccess(res, jsStore[fullPath]);
+  }
+
+  fs.readFile(fullPath, function (err, data) {
+    if (err) return onError(res, err, 404);
+    
+    if (config().optimizeJs) 
+      jsStore[fullPath] = data;
+
+    onSuccess(res, data);
   });
 }
 
@@ -52,14 +63,22 @@ function getModule(name) {
 
   try {
     resolvedPath = require.resolve(name);
+
+    if (jsStore[resolvedPath]) { 
+      log.verbose('js', 'serving module %s from store', name);
+      return onSuccess(res, jsStore[resolvedPath]);
+    }
   } catch (err) {
-    onError(res, err, 404);
-    return;
+    return onError(res, err, 404);
   }
   
   fs.readFile(resolvedPath, function (err, data) {
-    if (err) onError(res, err);
-    else onSuccess(res, data);
+    if (err) return onError(res, err);
+
+    if (config().optimizeJs) 
+      jsStore[resolvedPath] = data;
+
+    onSuccess(res, data);
   });
 }
 
