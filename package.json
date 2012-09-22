@@ -1,6 +1,6 @@
 {
   "name": "thlorenz.com",
-  "version": "0.0.0-11",
+  "version": "0.1.0",
   "description": "Source of thlorenz.com website.",
   "main": "app.js",
   "engines": {
@@ -14,7 +14,7 @@
   ],
   "scripts": {
     "test": "mocha",
-    "start": "app.js"
+    "start": "app.js dev"
   },
   "repository": {
     "type": "git",
