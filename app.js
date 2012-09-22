@@ -13,14 +13,13 @@ var path       =  require('path')
   , config     =  require('./config')
   , blog       =  require('./blog')
   , styles     =  require('./styles')
+  , requirejs  =  require('./requirejs') 
 
   , PORT    =  process.env.PORT || 3000
   , envName =  process.argv[2] || 'prod'
   , optcss  =  process.argv.indexOf('optcss') > 0
   , optjs   =  process.argv.indexOf('optjs') > 0
   ;
-
-require('./requirejs');
 
 // Environments: debug, dev, prod
 config.setEnv({ name: envName, forceOptimizeCss: optcss, forceOptimizeJs: optjs });
@@ -114,6 +113,7 @@ runnel (
     initBlog
   , initHotplates
   , styles.init
+  , requirejs.init
   , serveSite
   , handleError
 );
