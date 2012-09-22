@@ -5,11 +5,19 @@ var config   =  require('./config')
   , log      =  require('npmlog')
   , utl      =  require('./utl')
   , cssOnly  =  [ 'blog.css' ]
-  , cssStore =  { }
+  , cssStore =  { '_main_.css': '' }
   ;
 
 function isCssOnly (file) {
   return cssOnly.indexOf(path.basename(file)) > -1;
+}
+
+function store(filename, css) {
+  if (config().optimizeCss) {
+    cssStore['_main_.css'] += [ '', '/*', '* ' + filename, '*/', css ].join('\n');
+  } else {
+    cssStore[filename] = css;
+  }
 }
 
 function convertToCss (stylusFile, cb) {
@@ -33,17 +41,18 @@ function generateCss (stylusFile, cb) {
   convertToCss(stylusFile, function (err, css) {
     if (err) return cb(err); 
 
-    cssStore[utl.removeExtension(stylusFile) + '.css'] = css;
+    store(utl.removeExtension(stylusFile) + '.css', css);
     cb();
   });
 }
 
-function loadCss (css, fileName, cb) {
+function loadCss (css, filename, cb) {
+  var optimize = config().optimizeCss;
   stylus(css)
-    .set('compress', config().optimizeCss)
+    .set('compress', optimize)
     .render(function (err, css) {
       if (err) return cb(err);
-      cssStore[fileName] = css;
+      store(filename, css);
       cb();
     });
 }
