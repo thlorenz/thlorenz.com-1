@@ -1,17 +1,13 @@
-var requirejs   =  require('requirejs')
-  , fs          =  require('fs')
-  , log         =  require('npmlog')
-  , buildConfig =  require('./static/js/main.build').config
-  , config      =  require('./config')
-  ;
+var config = require('./config');
 
 function init (cb) {
   if (!config().optimizeJs) return cb();
 
-  requirejs.optimize(buildConfig, function (res) {
-    log.info('requirejs', res);
-    cb();
-  });
+  require('requirejs')
+    .optimize(require('./static/js/main.build').config, function (res) {
+      require('npmlog').info('requirejs', res);
+      cb();
+    });
 }
 
 module.exports = {
