@@ -1,4 +1,4 @@
-define(['jquery', 'element'], function($, el) {
+define(['jquery', 'element', 'content-transition'], function($, el, transition) {
   
   var discussHtml = [
       ' <div id="disqus_thread"></div>'
@@ -14,46 +14,21 @@ define(['jquery', 'element'], function($, el) {
     , ' <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>'
   ].join('\n');
 
-  // TODO: 90% same code as github-content -> extract commonalities
-  
-  var $currentContent;
-
-  function show (html) {
-
-    $currentContent = $(html);
-    $currentContent.hide();
-
-    el.content
-      .empty()
-      .append($currentContent);
-
-    $currentContent.fadeIn(500);
-  }
-
-  function hide () {
-    if ($currentContent) 
-      $currentContent
-        .clearQueue()
-        .fadeOut(200);
-  }
-
   function init (postName) {
     $.ajax({
         url: '/blog/post/' + postName
       , dataType: 'json'
-      , beforeSend: hide
+      , beforeSend: transition.hide
     })
     .error(function (err) {
       console.log('Error ', err);  
     })
     .success(function (data) {
-      show(data.html);
+      transition.show(data.html);
     });
   }
 
-  el.sidebar.on('click', '.blog-nav a', function () {
-      $('html, body').animate({scrollTop: 0}, 200);
-  });
+  transition.init('.blog-nav a');
 
   return {
     init: init
