@@ -1,9 +1,6 @@
 define(['jquery', 'underscore', 'handlebars', 'element'], 
 function($, _, Handlebars, el) {
-  var self = this
-    , $navigation = $('article > nav')
-    ;
-
+  var self = this;
 
   function fetchPosts (cb) {
     $.ajax({

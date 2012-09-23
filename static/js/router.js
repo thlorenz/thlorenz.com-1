@@ -59,12 +59,19 @@ function (director, github, blog, about, githubContent, blogContent, aboutConten
     aboutContent.init();
   }
 
+  function getAboutPage (name) {
+    track('#/about/' + name);
+    updateNav('about');      
+    aboutContent.init(name);
+  }
+
   var routes = { 
         '/github'            : getGithub 
       , '/blog'              : getBlog
       , '/about'             : getAbout 
       , '/github/repo/:name' : getGithubRepo 
       , '/blog/post/:name'   : getBlogPost 
+      , '/about/:path'       : getAboutPage
       }
     , router = window.Router(routes).init('/blog');
 });

@@ -1,0 +1,29 @@
+<article class="about-site">
+  <section>
+    <h4>thlorenz.com runs on nodejs and uses the following libraries</h4>
+    <ul>
+      {{#each libraries}}
+        <li>
+          <a href="{{ link }}">{{ name }}</a>
+        </li>
+      {{/each}}
+    </ul>
+  </section>
+  <section>
+    <h4>its blog is powered by dog, the Developer blOGging engine</h4>
+    <ul>
+        <li>
+          <p>dog</p>
+          <a href="http://github.com/thlorenz/dog">source on github</a>
+        </li>
+        <li>
+          <p>getting started with dog</p>
+          <a href="#/blog/post/dog-tutorial">tutorial</a>
+        </li>
+        <li>
+          <p>thlorenz.com-blog</p>
+          <a href="http://github.com/thlorenz/thlorenz.com-blog">source on github</a>
+        </li>
+    </ul>
+  </section>
+</article>
