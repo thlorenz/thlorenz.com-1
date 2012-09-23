@@ -5,8 +5,9 @@ define(
   , 'about-index'
   , 'github-content'
   , 'blog-content'
+  , 'about-content'
   ], 
-function (director, github, blog, about, githubContent, blogContent) { 
+function (director, github, blog, about, githubContent, blogContent, aboutContent) { 
   var currentNav = null
     , navs = {
           github        :  github.init
@@ -55,6 +56,7 @@ function (director, github, blog, about, githubContent, blogContent) {
   function getAbout () {
     track('#/about');
     updateNav('about');      
+    aboutContent.init();
   }
 
   var routes = { 
@@ -65,6 +67,4 @@ function (director, github, blog, about, githubContent, blogContent) {
       , '/blog/post/:name'   : getBlogPost 
       }
     , router = window.Router(routes).init('/blog');
-
-
 });
