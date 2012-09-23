@@ -34,6 +34,10 @@ define(['jquery', 'element'], function($, el) {
     });
   }
 
+  el.sidebar.on('click', '.github-nav a', function () {
+      $('html, body').animate({scrollTop: 0}, 200);
+  });
+
   return {
     init: init
   };
