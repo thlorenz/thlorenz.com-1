@@ -111,11 +111,14 @@ function handleError(err) {
 
 log.info('app', 'starting thlorenz.com');
 
+// bring server up immediately to keep nodejitsu from complaining about slow startup
+serveSite();
+
 runnel (
     initBlog
   , initHotplates
   , styles.init
   , requirejs.init
-  , serveSite
   , handleError
 );
+
