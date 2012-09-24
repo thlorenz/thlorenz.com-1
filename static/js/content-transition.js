@@ -10,7 +10,7 @@ define(['jquery', 'element'], function($, el) {
             $('html, body').animate({scrollTop: 0}, 200);
         });
       }
-    , show: function (html) {
+    , show: function (html, cb) {
         if (self._$currentContent) 
           self._$currentContent
             .clearQueue()
@@ -23,9 +23,12 @@ define(['jquery', 'element'], function($, el) {
           .empty()
           .append(self._$currentContent);
 
-        self._$currentContent.fadeIn(500);
+        self._$currentContent.fadeIn(500, cb);
       }
     , hide: function hide () {
+        // always hide disqus right away
+        el.disqus.hide();
+
         if (self._$currentContent) 
           self._$currentContent
             .clearQueue()
