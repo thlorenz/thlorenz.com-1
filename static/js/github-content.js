@@ -1,4 +1,4 @@
-define(['jquery', 'element', 'content-transition'], function($, el, transition) {
+define(['jquery', 'handlebars', 'element', 'content-transition'], function($, Handlebars, el, transition) {
 
   function init (repoName) {
     $.ajax({
@@ -10,7 +10,8 @@ define(['jquery', 'element', 'content-transition'], function($, el, transition) 
       console.log('Error ', err);  
     })
     .success(function (html) {
-      transition.show(html);
+      var forkme = Handlebars.partials['github-forkme-banner'](repoName);
+      transition.show(html + '\n' + forkme);
     });
   }
 
