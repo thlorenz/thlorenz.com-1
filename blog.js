@@ -101,7 +101,7 @@ function init (initialized) {
 }
 
 function update (updated) {
-  syncRefresh(gitClone, updatePosts, updated);
+  syncRefresh(gitPull, updatePosts, updated);
 }
 
 function getMetadata () {
