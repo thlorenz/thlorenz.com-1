@@ -15,7 +15,7 @@ static/js/handlebars-templates.js
 spikes
 tmp
 
-thlorenz.com-blog
+thlorenz.com-blog/
 
-node_modules
+node_modules/
 npm-debug.log
