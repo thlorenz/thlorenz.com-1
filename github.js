@@ -29,17 +29,21 @@ function requestRepos(cb) {
       if (err) { cb(err); return; }
       
       var repos = JSON.parse(body)
-        , infos = repos.map(function (repo) {
-            return { 
-                name        :  repo.name
-              , url         :  repo.url
-              , htmlUrl     :  repo.html_url
-              , watchers    :  repo.watchers_count
-              , forks       :  repo.forksCount
-              , pushedAt    :  repo.pushed_at
-              , description :  repo.description
-            };
-          });
+        , infos = repos
+            .filter(function (repo) {
+              return !repo.fork;
+            })
+            .map(function (repo) {
+              return { 
+                  name        :  repo.name
+                , url         :  repo.url
+                , htmlUrl     :  repo.html_url
+                , watchers    :  repo.watchers_count
+                , forks       :  repo.forksCount
+                , pushedAt    :  repo.pushed_at
+                , description :  repo.description
+              };
+            });
 
       hashRepos(infos);
       cache.put('github.repos', infos, 60);

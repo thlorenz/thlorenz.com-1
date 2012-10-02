@@ -1,6 +1,6 @@
 {
   "name": "thlorenz.com",
-  "version": "0.1.0-7",
+  "version": "0.1.0-9",
   "description": "Source of thlorenz.com website.",
   "main": "app.js",
   "engines": {
@@ -43,6 +43,5 @@
     "dog": "0.0.12",
     "requirejs": "~2.0.0"
   },
-  "devDependencies": {
-  }
+  "devDependencies": {}
 }
