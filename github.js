@@ -19,37 +19,55 @@ function hashRepos (infos) {
 }
 
 function requestRepos(cb) {
-  var cached = cache.get('github.repos');
+  var cached = cache.get('github.repos')
+    , getRepoTries = 3;
 
-  if (cached) { 
-    cb(null, cached.value); 
-  } else {
+  function getRepos() {
     request.get(apiurl + '/users/thlorenz/repos', function (err, res, body) {
     // fs.readFile('./tmp/github-repos.json', 'utf-8', function (err, body) {
       if (err) { cb(err); return; }
       
-      var repos = JSON.parse(body)
-        , infos = repos
-            .filter(function (repo) {
-              return !repo.fork;
-            })
-            .map(function (repo) {
-              return { 
-                  name        :  repo.name
-                , url         :  repo.url
-                , htmlUrl     :  repo.html_url
-                , watchers    :  repo.watchers_count
-                , forks       :  repo.forksCount
-                , pushedAt    :  repo.pushed_at
-                , description :  repo.description
-              };
-            });
+      var repos = JSON.parse(body);
+      // github craps out at times and returns the following object:
+      // body: {
+      //  "message": "Server Error"
+      // }
+      if (!Array.isArray(repos)) {
+        log.silly('github', 'repos: %s', repos);
+        
+        // try again
+        if (body.message === 'Server Error' && (--getRepoTries > 0))
+          return setTimeout(getRepos, 500); 
+
+        return cb(new Error('Expected an Array, but got ' + repos));
+      }
+
+      var infos = repos
+        .filter(function (repo) {
+          return !repo.fork;
+        })
+        .map(function (repo) {
+          return { 
+              name        :  repo.name
+            , url         :  repo.url
+            , htmlUrl     :  repo.html_url
+            , watchers    :  repo.watchers_count
+            , forks       :  repo.forksCount
+            , pushedAt    :  repo.pushed_at
+            , description :  repo.description
+          };
+        });
 
       hashRepos(infos);
       cache.put('github.repos', infos, 60);
 
       cb(null, infos);
     });
+  }
+  if (cached) { 
+    cb(null, cached.value); 
+  } else {
+      getRepos();
   }
 }
 
@@ -87,7 +105,11 @@ function requestReadmeByUrl (repoUrl, cb) {
         , matchData = body.match(articleRegex)
         ;
 
-      if (!matchData) cb(new Error('No readme found'));
+
+      if (!matchData) { 
+        log.silly('github', 'body', body);
+        cb(new Error('No readme found'));
+      }
       else {
         var article = matchData[0];
 
