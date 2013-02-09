@@ -150,3 +150,9 @@ require('bootstrap');
 At this point we are ready to build out the website.
 
 You can [browse the code at this stage](https://github.com/thlorenz/thlorenz.com/tree/449c8c9616ecb13dae10fba9ad2d2af4557716fb).
+
+## Creating proper routes
+
+Pull all `app.get` invocations into separate modules inside a `routes` folder.
+
+
