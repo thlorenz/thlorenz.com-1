@@ -1,0 +1,32 @@
+{
+  "name": "thlorenz.com",
+  "version": "0.1.0-10",
+  "description": "Source of thlorenz.com website.",
+  "main": "app.js",
+  "engines": {
+    "node": "~0.8.0",
+    "npm": "~1.1.40"
+  },
+  "subdomain": "thlorenz",
+  "domains": [
+    "thlorenz.com",
+    "www.thlorenz.com"
+  ],
+  "scripts": {
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/thlorenz/thlorenz.com.git"
+  },
+  "keywords": [
+    "website",
+    "github",
+    "blog",
+    "stackoverflow"
+  ],
+  "author": "Thorsten Lorenz <thlorenz@gmx.de> (http://thlorenz.com)",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {}
+}
