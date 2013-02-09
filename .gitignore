@@ -10,12 +10,10 @@ lib-cov
 
 pids
 logs
-results
-static/js/handlebars-templates.js
-spikes
 tmp
 
 thlorenz.com-blog/
 
+/public/js/build
 node_modules/
 npm-debug.log

@@ -31,7 +31,8 @@
     "express": "~3.1.0",
     "browserify": "~1.17.3",
     "npmlog": "0.0.2",
-    "hbs": "~2.0.1"
+    "hbs": "~2.0.1",
+    "browserify-shim": "~0.6.0"
   },
   "devDependencies": {}
 }
