@@ -29,7 +29,7 @@ Since we want to be able to `require` non-commonJS modules, we will need to shim
 
 ## Logger
 
-`npm -S i npm log`
+`npm -S i npmlog`
 
 
 # Building app
