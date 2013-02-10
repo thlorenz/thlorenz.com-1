@@ -20,6 +20,7 @@ app
 
 require('./routes/index')(app);
 require('./routes/bundle')(app);
+require('./routes/favicon')(app);
 
 // Fall back to static file server only after all our custom matches failed
 app.use(express.static(path.join(__dirname, 'public')));
