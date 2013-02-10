@@ -12,6 +12,7 @@ require('./views/init')();
 app
   .set('view engine', 'hbs')
   .set('views', path.join(__dirname, 'views'))
+  .use(require('./middleware/log-request'))
   ;
 
 require('./routes/index')(app);

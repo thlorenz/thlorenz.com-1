@@ -249,3 +249,42 @@ Since there is not much going on on our page at this point our `index.hbs` becom
 ```
 
 For more details [browse the code at that stage](https://github.com/thlorenz/thlorenz.com/tree/7a18542a360c4b3cdb3bc60118f92f4e849ccce0).
+
+
+## Adding request logging
+
+While developing, we want to log all server requests.
+
+We will use different colors for the different request methods, so lets: `npm -S i ansicolors`.
+
+Here is our log-request middleware:
+
+```js
+'use strict';
+var log = require('npmlog')
+  , colors = require('ansicolors');
+
+function renderMethod(m) {
+  m = m.toUpperCase();
+  switch(m) {
+    case 'GET': return colors.green(m);
+    case 'POST': return colors.blue('POS');
+    case 'PUT': return colors.brightBlue(m);
+    case 'DELETE': return colors.red('DEL');
+  }
+}
+
+module.exports = function logRequest(req, res, next) {
+  log.http('request', renderMethod(req.method), req.url);
+  next();
+};
+```
+
+We'll use it in our app as follows:
+
+```js
+app
+  .set('view engine', 'hbs')
+  .set('views', path.join(__dirname, 'views'))
+  .use(require('./middleware/log-request'))
+```
