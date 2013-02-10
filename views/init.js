@@ -11,7 +11,7 @@ function getPartialName(filepath) {
   var filename = path.basename(filepath)
     , extension = path.extname(filename);
 
-  return filename.slice(0, -extension.length);
+  return filename.slice(0, -extension.length).replace(/[. \-]/g, '_');
 }
 
 module.exports = function initViews() {
