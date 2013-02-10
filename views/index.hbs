@@ -24,10 +24,13 @@
   <section class="row">
       <nav class="sidebar offset1 span3">
         <ul class="nav">
-        {{#if blog }}
+        {{#if model.blog }}
           {{> blog_nav }}
         {{/if}}
-        {{#if about }}
+        {{#if model.github }}
+          {{> github_nav }}
+        {{/if}}
+        {{#if model.about }}
           {{> about_nav }}
         {{/if}}
         </ul>

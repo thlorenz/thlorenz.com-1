@@ -1,8 +1,8 @@
 'use strict';
 
 module.exports = function (app) {
-  app.get('/blog', function (req, res) {
-    res.locals.model.blog = { };
+  app.get('/github', function (req, res) {
+    res.locals.model.github = { };
     res.render('index');
   });
 };
