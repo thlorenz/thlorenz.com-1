@@ -1,0 +1,14 @@
+nav .avatar img {
+  margin-left :  50px;
+}
+
+nav .main {
+  padding-top: 20px;
+}
+
+section .sidebar {
+  border-right: 1px solid #eee;
+}
+section .sidebar li {
+  padding: 3px
+}
