@@ -31,6 +31,18 @@ Since we want to be able to `require` non-commonJS modules, we will need to shim
 
 `npm -S i npmlog`
 
+## Clone
+
+We'll need this later to pass around a copy of our config.
+
+`npm -S i clone`
+
+## Nodemon
+
+For development we use nodemon in order to restart the server automatically on every edit. Our `npm start` script will
+make use of `nodemon` later on:
+
+`npm -D i nodemon`
 
 # Building app
 
@@ -294,3 +306,85 @@ app
 
 [browse code at this stage](https://github.com/thlorenz/thlorenz.com/tree/2fc64a50f6fa71f96465a3fb7966d64029b8fe41)
 
+## Adding a rendering strategy
+
+We add more partials (an `x_nav` and an `x_content` for each of our content types, blog, github and about'
+
+Then we add a handlebars helper to make rendering these consistent:
+
+```js
+'use strict';
+var hbs = require('hbs')
+  , log = require('npmlog')
+  , config = require('../../config')
+  , compiledPartials = {};
+
+function compilePartial(name) {
+  var partial = hbs.handlebars.partials[name];
+
+  log.verbose('compile-partial', 'compiling partial', name);
+
+  if (!partial) {
+    log.error('compile-partial', 'Partial [%s] was not found', name);
+    return function () { return '<p> partial ' + name + ' not found</p>'; };
+  }
+  return compiledPartials[name] = hbs.handlebars.compile(partial);
+}
+
+hbs.registerHelper('compile', function (name, model) {
+  var compiled = (config.mode !== 'dev' && compiledPartials[name]) || compilePartial(name);
+  return compiled(model); 
+});
+```
+
+It takes care of compiling partials it sees for the first time (unless in dev mode where we want to recompile them
+always to see effects of our edits).
+
+We use this inside our index file like this:
+
+```html
+<section class="row">
+    <nav class="sidebar offset1 span3">
+      <ul class="nav">
+        {{{ compile sidebar model.sidebar }}}
+      </ul>
+    </nav>
+    <article class="span5">
+      {{{ compile content model.content }}}
+    </article>
+  </div>
+</section>
+```
+
+This allows us to simply specify partial names and models in our routes like in our blog route:
+
+```js
+'use strict';
+
+module.exports = function (app) {
+  app.get('/blog', function (req, res) {
+    res.locals.sidebar = 'blog_nav';
+    res.locals.content = 'blog_content';
+    res.render('index');
+  });
+};
+```
+
+The next step is to initialize sidebar and content data in our model, which is initialized in a middleware inside
+`init-locals.js`:
+
+```js
+'use strict';
+
+var config = require('../config')
+  , clone = require('clone');
+
+module.exports = function initLocals(req, res, next) {
+  // clone here to prevent config to be affected by additions/changes to res.locals inside routes
+  res.locals = clone(config[config.mode], false);
+  res.locals.model = { sidebar: { }, content: { }};
+  next();
+};
+```
+
+The code now [looks like this](https://github.com/thlorenz/thlorenz.com/tree/d0710545dc52ccdbd2b2122989af42c68e35a622).
