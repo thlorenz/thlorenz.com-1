@@ -155,4 +155,5 @@ You can [browse the code at this stage](https://github.com/thlorenz/thlorenz.com
 
 Pull all `app.get` invocations into separate modules inside a `routes` folder.
 
+This simplifies `app.js` and results in a clear project structure, [browse code after the change](https://github.com/thlorenz/thlorenz.com/tree/b88e696017edc652845787dfa22e7085c72ddb30).
 

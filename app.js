@@ -7,6 +7,8 @@ var path    =  require('path')
   , app     =  express()
   , PORT    =  3000;
 
+require('./views/init')();
+
 app
   .set('view engine', 'hbs')
   .set('views', path.join(__dirname, 'views'))
