@@ -13,9 +13,9 @@
         <h1 class="offset3">Thorsten Lorenz</h1>
         <div class="offset4">
           <ul class="nav main">
-            <li> <a href="#">Blog</a> </li>
-            <li> <a href="#">Github</a> </li>
-            <li> <a href="#">About</a> </li>
+            <li> <a href="/blog">Blog</a> </li>
+            <li> <a href="/github">Github</a> </li>
+            <li> <a href="/about">About</a> </li>
           </ul>
         </div>
     </div>
@@ -24,7 +24,12 @@
   <section class="row">
       <nav class="sidebar offset1 span3">
         <ul class="nav">
-        {{> blog_nav }}
+        {{#if blog }}
+          {{> blog_nav }}
+        {{/if}}
+        {{#if about }}
+          {{> about_nav }}
+        {{/if}}
         </ul>
       </nav>
       <article class="span5">

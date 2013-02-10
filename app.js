@@ -15,12 +15,14 @@ require('./views/init')();
 app
   .set('view engine', 'hbs')
   .set('views', path.join(__dirname, 'views'))
+  .use(require('./middleware/init-locals'))
   .use(require('./middleware/log-request'))
   ;
 
 require('./routes/index')(app);
 require('./routes/bundle')(app);
 require('./routes/favicon')(app);
+require('./routes/blog')(app);
 
 // Fall back to static file server only after all our custom matches failed
 app.use(express.static(path.join(__dirname, 'public')));
