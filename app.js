@@ -4,8 +4,11 @@ var path    =  require('path')
   , express =  require('express')
   , hbs     =  require('hbs')
   , log     =  require('npmlog')
+  , config  =  require('./config')
   , app     =  express()
   , PORT    =  3000;
+
+log.level = config[config.mode].logLevel;
 
 require('./views/init')();
 

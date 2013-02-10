@@ -16,4 +16,3 @@ module.exports = function logRequest(req, res, next) {
   log.http('request', renderMethod(req.method), req.url);
   next();
 };
-

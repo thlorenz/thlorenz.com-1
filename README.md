@@ -95,6 +95,9 @@ log.info('server', 'listening on ', PORT);
 </html>
 ```
 
+Loading the `bundle.js` script in the head is not the best idea since it blocks the page from loading, so we will fix
+that later once we create a `scripts` partial.
+
 ### build.js
 
 Create bundle.js target folder
@@ -288,3 +291,6 @@ app
   .set('views', path.join(__dirname, 'views'))
   .use(require('./middleware/log-request'))
 ```
+
+[browse code at this stage](https://github.com/thlorenz/thlorenz.com/tree/2fc64a50f6fa71f96465a3fb7966d64029b8fe41)
+

@@ -3,7 +3,9 @@
 var hbs         =  require('hbs')
   , path        =  require('path')
   , fs          =  require('fs')
-  , partialsDir =  path.join(__dirname, 'partials');
+  , log = require('npmlog')
+  , partialsDir =  path.join(__dirname, 'partials')
+  ;
 
 function getPartialName(filepath) {
   var filename = path.basename(filepath)
@@ -24,4 +26,5 @@ module.exports = function initViews() {
       
       hbs.registerPartial(getPartialName(p), content);
     });
+    log.verbose('views-init', 'registered partials', Object.keys(hbs.handlebars.partials));
 };
