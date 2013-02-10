@@ -188,6 +188,20 @@ module.exports = {
 };
 ```
 
+They are injected into the partial via a small change to our `index.js` route which now looks as follows:
+
+```js
+'use strict';
+var config = require('../config');
+
+module.exports = function (app) {
+  app.get('/', function (req, res) {
+    res.locals = config[config.mode];
+    res.render('index');
+  });
+};
+```
+
 We register our partials via a simple script that runs on server startup:
 
 ```js
