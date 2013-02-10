@@ -157,3 +157,81 @@ Pull all `app.get` invocations into separate modules inside a `routes` folder.
 
 This simplifies `app.js` and results in a clear project structure, [browse code after the change](https://github.com/thlorenz/thlorenz.com/tree/b88e696017edc652845787dfa22e7085c72ddb30).
 
+## Using partials
+
+Create head partial that takes styles via the passed context.
+
+```html
+<meta charset=utf-8 />
+<title>thlorenz.com</title>
+<meta http-equiv="content-type" content="text/html" />
+
+{{#each styles}}
+  <link rel="stylesheet" href="/css/{{ this }}" type="text/css" media="screen" charset="utf-8"0>
+{{/each}}
+```
+
+The styles get resolved via a config that we implement as follows:
+
+```js
+'use strict';
+
+module.exports = {
+    dev: {
+      styles: [ 'bootstrap-responsive.css', 'bootstrap.css' ]
+    }
+  , prod: {
+      styles: [ 'bootstrap-responsive.min.css', 'bootstrap.min.css' ]
+    }
+    // TODO: configurable via commandline and default to prod
+  , mode: 'dev'
+};
+```
+
+We register our partials via a simple script that runs on server startup:
+
+```js
+'use strict';
+
+var hbs         =  require('hbs')
+  , path        =  require('path')
+  , fs          =  require('fs')
+  , partialsDir =  path.join(__dirname, 'partials');
+
+function getPartialName(filepath) {
+  var filename = path.basename(filepath)
+    , extension = path.extname(filename);
+
+  return filename.slice(0, -extension.length);
+}
+
+module.exports = function initViews() {
+  // All functions are sync since this needs to finish before server starts up, i.e. blocking is desired
+
+   fs
+    .readdirSync(partialsDir)
+    .filter(function (f) { return path.extname(f) === '.hbs'; })
+    .forEach(function (p) {
+      var content = fs.readFileSync(path.join(partialsDir, p), 'utf-8')
+        , partialName = getPartialName(p);
+      
+      hbs.registerPartial(getPartialName(p), content);
+    });
+};
+```
+
+Since there is not much going on on our page at this point our `index.hbs` becomes rather simple:
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  {{> head }}
+</head>
+<body>
+  <h1>thlorenz.com</h1>
+</body>
+</html>
+```
+
+For more details [browse the code at that stage](https://github.com/thlorenz/thlorenz.com/tree/7a18542a360c4b3cdb3bc60118f92f4e849ccce0).

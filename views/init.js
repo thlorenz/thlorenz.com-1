@@ -25,5 +25,3 @@ module.exports = function initViews() {
       hbs.registerPartial(getPartialName(p), content);
     });
 };
-
-module.exports();
