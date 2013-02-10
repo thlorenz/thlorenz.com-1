@@ -24,19 +24,11 @@
   <section class="row">
       <nav class="sidebar offset1 span3">
         <ul class="nav">
-        {{#if model.blog }}
-          {{> blog_nav }}
-        {{/if}}
-        {{#if model.github }}
-          {{> github_nav }}
-        {{/if}}
-        {{#if model.about }}
-          {{> about_nav }}
-        {{/if}}
+          {{{ compile sidebar model.sidebar }}}
         </ul>
       </nav>
       <article class="span5">
-        <h2> Main content</h2>
+        {{{ compile content model.content }}}
       </article>
     </div>
   </section>

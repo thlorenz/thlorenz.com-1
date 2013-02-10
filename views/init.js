@@ -27,4 +27,6 @@ module.exports = function initViews() {
       hbs.registerPartial(getPartialName(p), content);
     });
     log.verbose('views-init', 'registered partials', Object.keys(hbs.handlebars.partials));
+
+  require('./helpers/compile-partial');
 };

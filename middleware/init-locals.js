@@ -6,7 +6,7 @@ var config = require('../config')
 module.exports = function initLocals(req, res, next) {
   // clone here to prevent config to be affected by additions/changes to res.locals inside routes
   res.locals = clone(config[config.mode], false);
-  res.locals.model = {};
+  res.locals.model = { sidebar: { }, content: { }};
   next();
 };
 
