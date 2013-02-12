@@ -1,16 +1,33 @@
 'use strict';
+/*global window */
 
 var $ = require('jquery')
   , $sidebar
-  , $content;
+  , $content
+  ;
 
-function render(res) {
-  if (res.sidebar && res.sidebar !== $sidebar.html()) $sidebar.html(res.sidebar);
-  if (res.content && res.content !== $content.html()) $content.html(res.content);
+function update(sidebar, content) {
+  if (sidebar && sidebar !== $sidebar.html()) $sidebar.html(sidebar);
+  if (content && content !== $content.html()) $content.html(content);
+}
+
+function render(history, url, res) {
+  update(res.sidebar, res.content);
+  history.pushState({sidebar: res.sidebar, content: res.content }, null, url);
 }  
 
 $(function () {
-  console.log('ready');
+
+  var history = window.history;
+  // TODO: bail if history api is not supported
+
+
+  window.onpopstate = function (args) { 
+    var state = args.state;
+    if (!state) return;
+    update(state.sidebar, state.content); 
+  };
+
   $sidebar = $('.main .sidebar > ul');
   $content = $('.main .content');
 
@@ -21,7 +38,7 @@ $(function () {
           url: url
         , dataType: 'json'
         })
-        .success(render)
+        .success(function (res) { render(history, url, res); })
         .error(function () { console.log('error', arguments); })
         ;
       return false;
