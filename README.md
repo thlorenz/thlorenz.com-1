@@ -407,6 +407,10 @@ var $ = require('jquery')
   , $content
   ;
 
+function browserSupportsHistoryApi(history) {
+  return !!(history && history.pushState);
+}
+
 function update(sidebar, content) {
   if (sidebar && sidebar !== $sidebar.html()) $sidebar.html(sidebar);
   if (content && content !== $content.html()) $content.html(content);
@@ -419,7 +423,7 @@ function render(history, url, res) {
 
 $(function () {
   var history = window.history;
-  // TODO: bail if history api is not supported
+  if (!browserSupportsHistoryApi(history)) return;
 
   window.onpopstate = function (args) { 
     var state = args.state;
@@ -446,7 +450,7 @@ $(function () {
 ```
 
 Every time a link in the sidebar is clicked, we perform an xhr request instead to obtain a json object that of the
-following shape: `{ sidebar: 'html string', content: 'html string' }.
+following shape: `{ sidebar: 'html string', content: 'html string' }`.
 
 If either property is present, we swap out the related html in the dom as well as pushing this object to the browser's
 history: `history.pushstate(..)`. When the backbutton is pressed, `window.onpopstate` fires, which includes the pushed
@@ -460,9 +464,9 @@ functional in those browsers as well. Additionally this should help search engin
 But how does the server know when to send just rendered html (i.e. when we directly navigate to `http://.../blog/post1`)
 and when to send json (i.e. when we make an xhr request to the exact same url)?
 
-The short answer is [**Accept Header**](http://shiflett.org/blog/2011/may/the-accept-header). We let express do the
+The short answer is: [**Accept Header**](http://shiflett.org/blog/2011/may/the-accept-header). We let express do the
 grunt work for us in figuring out which data type the browser prefers to receive via the [`req.accepts` method](http://expressjs.com/api.html#req.accepts).
-Depending on the result, we send either the rendered html of the entire page, or just a json which includes the html
+Depending on the result, we send either the rendered html of the entire page, or just json which includes the html
 snippets of the parts of the page that need replacing.
 
 ```js
