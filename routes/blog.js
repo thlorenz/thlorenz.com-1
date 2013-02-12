@@ -1,5 +1,6 @@
 'use strict';
-var log = require('npmlog');
+var log = require('npmlog')
+  , send = require('../send');
 
 module.exports = function (app) {
   app
@@ -10,26 +11,6 @@ module.exports = function (app) {
     })
     .get('/blog/:post', function (req, res) {
       log.verbose('blog', 'getting post', req.params.post);
-
-      var prefersHtml = req.accepts('html, json') === 'html';
-      
-      res.locals.sidebar = 'blog_nav';
-      res.locals.content = 'blog_content';
-
-      res.locals.model.content.title = req.params.post;
-
-      if (prefersHtml) return res.render('index');
-
-      res.json(json(res.locals.model, res.locals.sidebar, res.locals.content));
+      send(req, res, { content: { title: req.params.post } }, 'blog_nav', 'blog_content');
     });
 };
-
-var compilePartial = require('../views/utils/compile-partial');
-
-function json(model, sidebarTmpl, contentTmpl) {
-  var data = {};
-  if (sidebarTmpl) data.sidebar = compilePartial(sidebarTmpl)(model.sidebar);
-  if (contentTmpl) data.content = compilePartial(contentTmpl)(model.content);
-  return data;
-}
-
