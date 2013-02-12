@@ -9,6 +9,6 @@ function json(model, sidebarTmpl, contentTmpl) {
   return data;
 }
 
-module.exports = function sendJson(req, res, model, sidebarTmpl, contentTmpl) {
+module.exports = function sendJson(res, model, sidebarTmpl, contentTmpl) {
   res.json(json(model, sidebarTmpl, contentTmpl));
 };

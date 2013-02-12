@@ -7,5 +7,5 @@ module.exports = function send(req, res, model, sidebarTmpl, contentTmpl) {
   var prefersHtml = req.accepts('html, json') === 'html'
     , sendHtmlOrJson = prefersHtml ? sendHtml : sendJson;
 
-   sendHtmlOrJson(req, res, model, sidebarTmpl, contentTmpl);
+   sendHtmlOrJson(res, model, sidebarTmpl, contentTmpl);
 };
