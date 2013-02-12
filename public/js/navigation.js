@@ -6,6 +6,10 @@ var $ = require('jquery')
   , $content
   ;
 
+function browserSupportsHistoryApi(history) {
+  return !!(history && history.pushState);
+}
+
 function update(sidebar, content) {
   if (sidebar && sidebar !== $sidebar.html()) $sidebar.html(sidebar);
   if (content && content !== $content.html()) $content.html(content);
@@ -17,10 +21,8 @@ function render(history, url, res) {
 }  
 
 $(function () {
-
   var history = window.history;
-  // TODO: bail if history api is not supported
-
+  if (!browserSupportsHistoryApi(history)) return;
 
   window.onpopstate = function (args) { 
     var state = args.state;
@@ -43,5 +45,4 @@ $(function () {
         ;
       return false;
     });
-
 });
