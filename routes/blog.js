@@ -11,19 +11,18 @@ module.exports = function (app) {
     .get('/blog/:post', function (req, res) {
       log.verbose('blog', 'getting post', req.params.post);
 
-      var wantsHtml = req.accepts('html, json') === 'html';
+      var prefersHtml = req.accepts('html, json') === 'html';
       
-        res.locals.sidebar = 'blog_nav';
-        res.locals.content = 'blog_content';
+      res.locals.sidebar = 'blog_nav';
+      res.locals.content = 'blog_content';
 
-        res.locals.model.content.title = req.params.post;
+      res.locals.model.content.title = req.params.post;
 
-      if (wantsHtml) return res.render('index');
+      if (prefersHtml) return res.render('index');
 
       res.json(json(res.locals.model, res.locals.sidebar, res.locals.content));
     });
 };
-
 
 var compilePartial = require('../views/utils/compile-partial');
 
