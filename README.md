@@ -388,3 +388,119 @@ module.exports = function initLocals(req, res, next) {
 ```
 
 The code now [looks like this](https://github.com/thlorenz/thlorenz.com/tree/d0710545dc52ccdbd2b2122989af42c68e35a622).
+
+## Using pushstate to improve user experience
+
+In order to avoid refreshing the entire page every time the user looks at another blog post, we will load the post's
+html via json and replace only part of the page with it. We will use the [history api]
+(https://developer.mozilla.org/en-US/docs/DOM/Manipulating_the_browser_history) in order to update the url and keep back
+and forward buttons working as usual.
+
+The first step is to introduce manual navigation handling:
+
+```js
+'use strict';
+/*global window */
+
+var $ = require('jquery')
+  , $sidebar
+  , $content
+  ;
+
+function update(sidebar, content) {
+  if (sidebar && sidebar !== $sidebar.html()) $sidebar.html(sidebar);
+  if (content && content !== $content.html()) $content.html(content);
+}
+
+function render(history, url, res) {
+  update(res.sidebar, res.content);
+  history.pushState({sidebar: res.sidebar, content: res.content }, null, url);
+}  
+
+$(function () {
+  var history = window.history;
+  // TODO: bail if history api is not supported
+
+  window.onpopstate = function (args) { 
+    var state = args.state;
+    if (!state) return;
+    update(state.sidebar, state.content); 
+  };
+
+  $sidebar = $('.main .sidebar > ul');
+  $content = $('.main .content');
+
+  $('.main .sidebar')
+    .on('click', 'a', function (event) {
+      var url = event.target.href;
+      $.ajax({
+          url: url
+        , dataType: 'json'
+        })
+        .success(function (res) { render(history, url, res); })
+        .error(function () { console.log('error', arguments); })
+        ;
+      return false;
+    });
+});
+```
+
+Every time a link in the sidebar is clicked, we perform an xhr request instead to obtain a json object that of the
+following shape: `{ sidebar: 'html string', content: 'html string' }.
+
+If either property is present, we swap out the related html in the dom as well as pushing this object to the browser's
+history: `history.pushstate(..)`. When the backbutton is pressed, `window.onpopstate` fires, which includes the pushed
+state as one of the passed arguments. We then use this information to update the dom to the previous state without needing 
+to request anything from the server.
+
+The nice thing is that for browsers that don't support the history api, we will just not override the anchor clicks and
+the links will be handled as usual with the only downside that the entire page is refreshed. However, our page is fully
+functional in those browsers as well. Additionally this should help search engines to find all content of our page.
+
+But how does the server know when to send just rendered html (i.e. when we directly navigate to `http://.../blog/post1`)
+and when to send json (i.e. when we make an xhr request to the exact same url)?
+
+The short answer is [**Accept Header**](http://shiflett.org/blog/2011/may/the-accept-header). We let express do the
+grunt work for us in figuring out which data type the browser prefers to receive via the [`req.accepts` method](http://expressjs.com/api.html#req.accepts).
+Depending on the result, we send either the rendered html of the entire page, or just a json which includes the html
+snippets of the parts of the page that need replacing.
+
+```js
+'use strict';
+var log = require('npmlog');
+
+module.exports = function (app) {
+  app
+
+    [..]
+
+    .get('/blog/:post', function (req, res) {
+      log.verbose('blog', 'getting post', req.params.post);
+
+      var prefersHtml = req.accepts('html, json') === 'html';
+      
+      res.locals.sidebar = 'blog_nav';
+      res.locals.content = 'blog_content';
+
+      res.locals.model.content.title = req.params.post;
+
+      if (prefersHtml) return res.render('index');
+
+      res.json(json(res.locals.model, res.locals.sidebar, res.locals.content));
+    });
+};
+
+var compilePartial = require('../views/utils/compile-partial');
+
+function json(model, sidebarTmpl, contentTmpl) {
+  var data = {};
+  if (sidebarTmpl) data.sidebar = compilePartial(sidebarTmpl)(model.sidebar);
+  if (contentTmpl) data.content = compilePartial(contentTmpl)(model.content);
+  return data;
+}
+```
+
+Obviously more optimizations are possible, i.e. we don't need to replace the sidebar if just the blog post changed, but
+for now we'll keep it simple.
+
+In order to understand this better, you can [browse the code at this stage](https://github.com/thlorenz/thlorenz.com/tree/25d3c290d63e7b0b9d28b2641af4fd423d1c9b3f).
