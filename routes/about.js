@@ -2,7 +2,6 @@
 
 module.exports = function (app) {
   app.get('/about', function (req, res) {
-    res.locals.model.about = {};
     res.locals.sidebar = 'about_nav';
     res.locals.content = 'about_content';
     res.render('index');

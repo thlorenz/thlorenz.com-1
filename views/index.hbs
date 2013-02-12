@@ -21,14 +21,14 @@
     </div>
   </nav>
 
-  <section class="row">
+  <section class="row main">
       <nav class="sidebar offset1 span3">
         <ul class="nav">
-          {{{ compile sidebar model.sidebar }}}
+          {{{ exec sidebar model.sidebar }}}
         </ul>
       </nav>
-      <article class="span5">
-        {{{ compile content model.content }}}
+      <article class="content span5">
+        {{{ exec content model.content }}}
       </article>
     </div>
   </section>

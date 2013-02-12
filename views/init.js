@@ -28,5 +28,5 @@ module.exports = function initViews() {
     });
     log.verbose('views-init', 'registered partials', Object.keys(hbs.handlebars.partials));
 
-  require('./helpers/compile-partial');
+  require('./helpers/exec-partial');
 };

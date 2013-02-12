@@ -14,6 +14,7 @@ var createBundle = module.exports = function (debug) {
       , exports :  null
       , depends :  { jquery : '$' }
     }))
+    .addEntry('./public/js/navigation.js')
     .addEntry('./public/js/entry.js')
     .bundle()
     ;

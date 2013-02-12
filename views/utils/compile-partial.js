@@ -1,4 +1,4 @@
-'use strict'; ,lj
+'use strict';
 var hbs = require('hbs')
   , log = require('npmlog')
   , config = require('../../config')
@@ -16,7 +16,7 @@ function compilePartial(name) {
   return compiledPartials[name] = hbs.handlebars.compile(partial);
 }
 
-hbs.registerHelper('compile', function (name, model) {
-  var compiled = (config.mode !== 'dev' && compiledPartials[name]) || compilePartial(name);
-  return compiled(model); 
-});
+module.exports = function compiledPartial(name) {
+  return (config.mode !== 'dev' && compiledPartials[name]) || compilePartial(name);
+};
+
