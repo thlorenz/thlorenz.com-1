@@ -508,3 +508,7 @@ Obviously more optimizations are possible, i.e. we don't need to replace the sid
 for now we'll keep it simple.
 
 In order to understand this better, you can [browse the code at this stage](https://github.com/thlorenz/thlorenz.com/tree/25d3c290d63e7b0b9d28b2641af4fd423d1c9b3f).
+
+After pulling the code for the different send handlers out of the blog route, the code got restructured quite a bit. You
+can inspect the [updated version](https://github.com/thlorenz/thlorenz.com/tree/55e0a44589d5e35a328714e6a6a8fcb7d69dd61a).
+
