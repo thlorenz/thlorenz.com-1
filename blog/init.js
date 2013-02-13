@@ -8,7 +8,12 @@ var fs         =  require('fs')
   , exists     =  fs.exists || path.exists
   , root       =  path.join(__dirname, '..')
   , blogRoot   =  path.join(root, 'thlorenz.com-blog')
+  , lastUpdate
+  , postsNames
+  , posts
+  , firstPost
   ;
+
 /**
  * Copies srcFile to tgtFile without checking if paths are valid
  * 
@@ -87,22 +92,65 @@ function copyStyles(styles, cb) {
   });
 }
 
-function init(cb) {
+function handlePostUpdate (metadata) {
+    metadata.forEach(function (meta) {
+      postsNames.push(meta.name);
+      posts[meta.name] = meta;
+      log.verbose('blog', 'Providing: %s\n', meta.name, meta.metadata);
+    });
+
+    log.info('blog', 'updated posts, now have:', postsNames);
+
+    // TODO: get newest post here (e.g., sort by date first)
+    firstPost = metadata[0];
+    lastUpdate = new Date();
+}
+
+function initPosts (cb) {
+  log.info('blog', 'init posts', 'started');
+
+  posts = {};
+  postsNames = [];
+  
+  provider.provideAll(function (err, metadata) {
+    if (err) { log.error('blog', err); return cb(err); }
+    handlePostUpdate(metadata);
+    cb();
+  });
+}
+
+function updatePosts (cb) {
+  log.info('blog', 'updating posts since', lastUpdate);
+
+  provider.provideUpdatedSince(lastUpdate, function (err, metadata) {
+    if (err) { log.error('blog', err); return cb(err); }
+    handlePostUpdate(metadata);
+    cb();
+  });
+}
+
+function update(cb) {
 
   gitPull(function (err) {
     if (err) return cb(err);
+    // don't copy styles if we already updated the blog before
+    if (lastUpdate) return updateBlogPosts();
 
     provider
       .provideFrom(blogRoot)
       .getStylesFiles(function (err, styles) {
-        copyStyles(styles, onStylesCopied);
+        copyStyles(styles, updateBlogPosts);
       });
   });
 
-  function onStylesCopied(err) {
-    cb(err);
+  function updateBlogPosts(err) {
+    if (err) return cb(err);
+    (lastUpdate ? updatePosts : initPosts)(cb);
   }
 }
 
-init(function (err) { console.log('inited', err); });
+update(function (err) { 
+  console.log('inited', err); 
+  console.log('posts', postsNames);
+});
 
