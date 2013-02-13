@@ -10,7 +10,7 @@ module.exports = {
         , 'blog/code.css'
         , 'blog/code-fixes.css'
       ]
-    , logLevel: 'verbose'
+    , logLevel: 'silly'
     }
   , prod: {
       styles: [ 

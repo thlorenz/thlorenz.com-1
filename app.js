@@ -6,6 +6,7 @@ var path    =  require('path')
   , log     =  require('npmlog')
   , config  =  require('./config')
   , app     =  express()
+  , blog    =  require('./blog/provider')
   , PORT    =  3000;
 
 log.level = config[config.mode].logLevel;
@@ -29,5 +30,10 @@ require('./routes/about')(app);
 // Fall back to static file server only after all our custom matches failed
 app.use(express.static(path.join(__dirname, 'public')));
 
-var server = app.listen(PORT);
-log.info('server', 'listening on', server.address());
+
+blog.update(function (err) {
+  if (err) return;
+
+  var server = app.listen(PORT);
+  log.info('server', 'listening on', server.address());
+});

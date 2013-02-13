@@ -36,6 +36,9 @@ $(function () {
   $('.main .sidebar')
     .on('click', 'a', function (event) {
       var url = event.target.href;
+      // TODO: if target is not <a> find parent <a>
+      console.log('target', event.target);
+      console.log('requesting', url);
       $.ajax({
           url: url
         , dataType: 'json'

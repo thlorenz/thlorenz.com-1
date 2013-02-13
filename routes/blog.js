@@ -1,16 +1,16 @@
 'use strict';
-var log = require('npmlog')
-  , send = require('../send');
+var log  =  require('npmlog')
+  , send =  require('../send')
+  , blog =  require('../blog/provider')
+  ;
 
 module.exports = function (app) {
   app
     .get('/blog', function (req, res) {
-      res.locals.sidebar = 'blog_nav';
-      res.locals.content = 'blog_content';
-      res.render('index');
+      send(req, res, { sidebar: blog.getMetadata() }, 'blog_nav', 'blog_content');
     })
     .get('/blog/:post', function (req, res) {
       log.verbose('blog', 'getting post', req.params.post);
-      send(req, res, { content: { title: req.params.post } }, 'blog_nav', 'blog_content');
+      send(req, res, { sidebar: blog.getMetadata(), content: blog.getPost(req.params.post) }, 'blog_nav', 'blog_content');
     });
 };

@@ -129,7 +129,7 @@ function updatePosts (cb) {
   });
 }
 
-function update(cb) {
+exports.update = function (cb) {
 
   gitPull(function (err) {
     if (err) return cb(err);
@@ -147,10 +147,14 @@ function update(cb) {
     if (err) return cb(err);
     (lastUpdate ? updatePosts : initPosts)(cb);
   }
-}
+};
 
-update(function (err) { 
-  console.log('inited', err); 
-  console.log('posts', postsNames);
-});
+exports.getMetadata = function () {
+  return Object.keys(posts).map(function (key) { return posts[key].metadata; });
+};
 
+exports.getPost = function (postName) {
+  var post = (postName && posts[postName]) ? posts[postName] : firstPost;
+  log.info('blog', 'returning for post: %s', post);
+  return post;
+};

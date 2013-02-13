@@ -24,11 +24,19 @@
   <section class="row main">
       <nav class="sidebar offset1 span3">
         <ul class="nav">
-          {{{ exec sidebar model.sidebar }}}
+          {{#if model }}
+          {{#if model.sidebar}}
+            {{{ exec sidebar model.sidebar }}}
+          {{/if}}
+          {{/if}}
         </ul>
       </nav>
-      <article class="content span5">
-        {{{ exec content model.content }}}
+      <article class="content span12">
+        {{#if model }}
+        {{#if model.content}}
+          {{{ exec content model.content }}}
+        {{/if}}
+        {{/if}}
       </article>
     </div>
   </section>
