@@ -20,14 +20,37 @@ section .sidebar {
   border-bottom: 1px solid #eee;
 }
 section .sidebar {
-  padding: 0 10px 0 10px; 
+  padding: 5px 10px 0 10px; 
   background: white;
   border-radius: 5px;
-  margin-bottom: 10px;
+  margin-bottom: 25px;
 }
 
+section .sidebar ul {
+  margin-bottom: 0;
+}
 section .sidebar li {
-  line-height: 18px;
+  line-height: 16px;
+}
+
+section .sidebar li h4 {
+  font-size: 16px;
+}
+
+section .sidebar li p {
+  font-size: 12px;
+}
+
+
+section .sidebar a {
+  color:#131392;
+  cursor:pointer;
+  text-shadow: rgba(109, 91, 141, 0.4) 0px 0px 0px;
+  text-decoration:none;
+}
+
+section .sidebar :hover {
+  color: rgb(50, 50, 180);
 }
 
 .blog-post h1 {
@@ -49,13 +72,3 @@ section .sidebar li {
 
 }
 
-.sidebar a {
-  color:#131392;
-  cursor:pointer;
-  text-shadow: rgba(109, 91, 141, 0.4) 0px 0px 0px;
-  text-decoration:none;
-}
-
-.sidebar :hover {
-  color: rgb(50, 50, 180);
-}
