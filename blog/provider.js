@@ -11,6 +11,7 @@ var fs         =  require('fs')
   , lastUpdate
   , postsNames
   , posts
+  , postsMetadataSortedByCurrentness
   , firstPost
   ;
 
@@ -108,6 +109,19 @@ function lastCreatedPost() {
   return lastCreated;
 }
 
+function postsMetadata () {
+  return Object.keys(posts)
+    .map(function (key) { return posts[key].metadata; });
+}
+
+function getMetadataSortedByCurrentness() {
+  function byCurrentness (a, b) { 
+    return new Date(a.created) > new Date(b.created) ? -1 : 1; 
+  }
+  return postsMetadata().sort(byCurrentness);
+}
+
+
 function handlePostUpdate (metadata) {
     metadata.forEach(function (meta) {
       postsNames.push(meta.name);
@@ -119,6 +133,7 @@ function handlePostUpdate (metadata) {
 
     firstPost = lastCreatedPost(); 
     lastUpdate = new Date();
+    postsMetadataSortedByCurrentness = getMetadataSortedByCurrentness();
 }
 
 function initPosts (cb) {
@@ -165,7 +180,7 @@ exports.update = function (cb) {
 };
 
 exports.getMetadata = function () {
-  return Object.keys(posts).map(function (key) { return posts[key].metadata; });
+  return postsMetadataSortedByCurrentness;
 };
 
 exports.getPost = function (postName) {

@@ -15,11 +15,11 @@ function adapt(metadata) {
 module.exports = function (app) {
   app
     .get('/blog', function (req, res) {
-
       res.redirect('/blog/' + blog.getPost().name);
     })
     .get('/blog/:post', function (req, res) {
       log.verbose('blog', 'getting post', req.params.post);
-      send(req, res, { sidebar: adapt(blog.getMetadata()), content: blog.getPost(req.params.post) }, 'blog_nav', 'blog_content');
+      var model = { sidebar: adapt(blog.getMetadata()), content: blog.getPost(req.params.post) };
+      send(req, res, model, 'blog_nav', 'blog_content');
     });
 };
