@@ -102,6 +102,7 @@ function handlePostUpdate (metadata) {
     log.info('blog', 'updated posts, now have:', postsNames);
 
     // TODO: get newest post here (e.g., sort by date first)
+    // also sort post most recent first
     firstPost = metadata[0];
     lastUpdate = new Date();
 }

@@ -13,7 +13,7 @@
     "www.thlorenz.com"
   ],
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon --ext '.js|.hbs' app.js"
   },
   "repository": {
     "type": "git",
@@ -35,7 +35,8 @@
     "browserify-shim": "~0.6.0",
     "ansicolors": "~0.2.1",
     "clone": "~0.1.5",
-    "dog": "~0.1.1"
+    "dog": "~0.1.1",
+    "moment": "~2.0.0"
   },
   "devDependencies": {
     "nodemon": "~0.7.2"

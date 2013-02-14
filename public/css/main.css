@@ -1,5 +1,14 @@
+body {
+  background: rgba(27, 27, 27, 0.93);
+}
+
 nav .main {
   padding-top: 20px;
+  padding-left: 10px;
+}
+
+.navbar h1 {
+  padding-left: 15px;
 }
 
 section.main {
@@ -12,7 +21,9 @@ section .sidebar {
 }
 section .sidebar {
   padding: 0 10px 0 10px; 
-  background: rgb(245, 241, 237);
+  background: white;
+  border-radius: 5px;
+  margin-bottom: 10px;
 }
 
 section .sidebar li {
