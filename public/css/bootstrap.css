@@ -3900,7 +3900,7 @@ input[type="submit"].btn.btn-mini {
 .nav > li > a:hover,
 .nav > li > a:focus {
   text-decoration: none;
-  background-color: #eeeeee;
+  color: rgb(50, 50, 180);
 }
 
 .nav > li > a > img {
