@@ -38,11 +38,11 @@ function copyFile(srcFile, tgtFile, cb) {
 }
 
 function gitClone (cb) {
-  log.info('blog', 'git clone', 'started');
 
   fs.exists(blogRoot, function (exists) {
     if (exists) { cb(); return; }
 
+    log.info('blog', 'git clone', 'started');
     exec('cd ' + root + ' && git clone git://github.com/thlorenz/thlorenz.com-blog.git', function (err, res) {
       if (err) { log.error('blog', 'git clone', err); cb(err); return; }
       
@@ -92,6 +92,22 @@ function copyStyles(styles, cb) {
   });
 }
 
+function lastCreatedPost() {
+  var record = new Date(0)
+    , lastCreated = null;
+
+  Object.keys(posts).forEach(function (k) {
+    var post = posts[k]
+      , d = new Date(post.metadata.created);
+    if (d > record) {
+      record = d;
+      lastCreated = post;
+    }
+  });
+
+  return lastCreated;
+}
+
 function handlePostUpdate (metadata) {
     metadata.forEach(function (meta) {
       postsNames.push(meta.name);
@@ -101,9 +117,7 @@ function handlePostUpdate (metadata) {
 
     log.info('blog', 'updated posts, now have:', postsNames);
 
-    // TODO: get newest post here (e.g., sort by date first)
-    // also sort post most recent first
-    firstPost = metadata[0];
+    firstPost = lastCreatedPost(); 
     lastUpdate = new Date();
 }
 
