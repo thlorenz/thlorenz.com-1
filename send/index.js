@@ -15,6 +15,8 @@ var sendJson = require('./json')
  * @param contentTmpl {String} name of the template to be used for the content area of the page
  */
 module.exports = function send(req, res, model, sidebarTmpl, contentTmpl) {
+  model = model || { sidebar: {}, content: {} };
+
   var prefersHtml = req.accepts('html, json') === 'html'
     , sendHtmlOrJson = prefersHtml ? sendHtml : sendJson;
 

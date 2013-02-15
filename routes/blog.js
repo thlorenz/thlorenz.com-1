@@ -20,6 +20,6 @@ module.exports = function (app) {
     .get('/blog/:post', function (req, res) {
       log.verbose('blog', 'getting post', req.params.post);
       var model = { sidebar: adapt(blog.getMetadata()), content: blog.getPost(req.params.post) };
-      send(req, res, model, 'blog_nav', 'blog_content');
+      send(req, res, model, 'blog_nav', 'blog_post');
     });
 };

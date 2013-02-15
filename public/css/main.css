@@ -20,7 +20,7 @@ section .sidebar {
   border-bottom: 1px solid #eee;
 }
 section .sidebar {
-  padding: 5px 10px 0 10px; 
+  padding: 0px 10px 0 10px; 
   background: white;
   border-radius: 5px;
   margin-bottom: 25px;
@@ -45,11 +45,11 @@ section .sidebar li p {
 section .sidebar a {
   color:#131392;
   cursor:pointer;
-  text-shadow: rgba(109, 91, 141, 0.4) 0px 0px 0px;
+  text-shadow: rgba(109, 91, 141, 0.4) 0 0 0;
   text-decoration:none;
 }
 
-section .sidebar :hover {
+section .sidebar a:hover {
   color: rgb(50, 50, 180);
 }
 
@@ -69,6 +69,44 @@ section .sidebar :hover {
   font-size: 30px;
   font-weight: inherit;
   font-style: inherit;
-
 }
 
+.content {
+  background: rgb(255, 252, 252);
+  border-radius: 5px;
+}
+.about-me section {
+  padding     :  5px;
+  margin-left :  0px;
+  font-family :  Helvetica, arial, freesans, clean, sans-serif;
+  font-size   :  14px;
+  line-height :  1.6;
+}
+.about-me ul {
+  list-style: none;
+  margin: 10px;
+}
+.about-me li {
+  padding: 5px;
+  margin: 5px;
+  height: 50px;
+}
+.about-me .stackoverflow img,
+ section li.stackoverflow img {
+  width: 170px;
+  height: 47px;
+}
+.about-me .linkedin img {
+  width: 168px;
+  height: 37px;
+}
+.about-me .geeklist {
+  background     :  antiqueWhite;
+  width          :  159px;
+  padding-top    :  6px;
+  padding-bottom :  0px;
+  margin-left    :  10px;
+}
+.about-me .wordpress img {
+  width: 170px;
+}
