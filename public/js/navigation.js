@@ -20,6 +20,17 @@ function render(history, url, res) {
   history.pushState({sidebar: res.sidebar, content: res.content }, null, url);
 }  
 
+function handleNavigation (history, url) {
+  $.ajax({
+      url: url
+    , dataType: 'json'
+    })
+    .success(function (res) { render(history, url, res); })
+    .error(function () { console.log('error', arguments); })
+    ;
+  return false;
+}
+
 $(function () {
   var history = window.history;
   if (!browserSupportsHistoryApi(history)) return;
@@ -34,15 +45,7 @@ $(function () {
   $content = $('.main .content');
 
   $('.main .sidebar')
-    .on('click', 'a', function (event) {
-      var url = this.href;
-      $.ajax({
-          url: url
-        , dataType: 'json'
-        })
-        .success(function (res) { render(history, url, res); })
-        .error(function () { console.log('error', arguments); })
-        ;
-      return false;
-    });
+    .on('click', 'a', function(event) { return handleNavigation(history, this.href); });
+  $('.main.nav')
+    .on('click', 'a', function(event) { return handleNavigation(history, this.href); });
 });
