@@ -1,5 +1,5 @@
 {{#each this}}
-<li>
+<li {{#if active }}class="active"{{/if}}>
   <a href="/blog/{{ name }}">
     <h4>{{ title }} </h4>
     <p>{{ created  }}</p>
