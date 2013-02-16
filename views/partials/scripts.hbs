@@ -1,1 +1,9 @@
+{{#each this.model.prescripts }}
+<script type="text/javascript" src="this"></script>
+{{/each}}
+
 <script type="text/javascript" src="/js/build/bundle.js"></script>
+
+{{#each this.model.postscripts }}
+<script type="text/javascript" src="{{ this }}"></script>
+{{/each}}

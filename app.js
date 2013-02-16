@@ -24,6 +24,7 @@ require('./routes/index')(app);
 require('./routes/bundle')(app);
 require('./routes/favicon')(app);
 require('./routes/blog')(app);
+require('./routes/projects')(app);
 require('./routes/about')(app);
 
 // Fall back to static file server only after all our custom matches failed
