@@ -16,6 +16,7 @@ var sendJson = require('./json')
  */
 module.exports = function send(req, res, model, sidebarTmpl, contentTmpl) {
   model = model || { sidebar: {}, content: {} };
+  model.content = model.content || {};
 
   var prefersHtml = req.accepts('html, json') === 'html'
     , sendHtmlOrJson = prefersHtml ? sendHtml : sendJson;

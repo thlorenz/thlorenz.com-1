@@ -1,2 +1,7 @@
-<li><a href="/about/me"><h4>about me</h4></a></li>
-<li><a href="/about/projects"><h4>projects</h4></a></li>
+{{#each this}}
+<li {{#if active }}class="active"{{/if}}>
+  <a href="{{ url }}">
+    <h4>{{ title }}</h4>
+  </a>
+</li>
+{{/each}}
