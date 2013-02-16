@@ -4,6 +4,7 @@
 var $ = require('jquery')
   , $sidebar
   , $content
+  , navigatedListeners = []
   ;
 
 function browserSupportsHistoryApi(history) {
@@ -25,7 +26,12 @@ function handleNavigation (history, url) {
       url: url
     , dataType: 'json'
     })
-    .success(function (res) { render(history, url, res); })
+    .success(function (res) { 
+      render(history, url, res); 
+      navigatedListeners.forEach(function (fn) {
+        fn(url);  
+      });
+    })
     .error(function () { console.log('error', arguments); })
     ;
   return false;
@@ -49,3 +55,8 @@ $(function () {
   $('.main.nav')
     .on('click', 'a', function(event) { return handleNavigation(history, this.href); });
 });
+
+
+exports.onnavigated = function (fn) {
+  navigatedListeners.push(fn);
+};

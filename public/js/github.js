@@ -1,7 +1,9 @@
 'use strict';
 /*globals window*/
 
-var $ = require('jquery');
+var $ = require('jquery')
+  , navigation = require('./navigation');
+
 
 function byStarsDescending (a, b) { 
   return a.stars > b.stars ? -1 : 1; 
@@ -44,7 +46,8 @@ function onGithubRepos ($githubRepos, res) {
   $githubRepos.html(html);
 }
 
-$(function () {
+
+function loadRepos() {
   var $githubRepos = $('#github-repos');
   if (!$githubRepos.length) return;
   
@@ -53,4 +56,7 @@ $(function () {
       'https://api.github.com/users/thlorenz/repos?per_page=500&&callback=?'
     , null
     , function (res) { onGithubRepos($githubRepos, res); });
-});
+}
+
+navigation.onnavigated(loadRepos);
+loadRepos();
