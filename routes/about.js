@@ -21,7 +21,7 @@ module.exports = function (app) {
     })
     .get('/about/:what', function (req, res) {
       var what = req.params.what
-        , model = { sidebar: sidebar(what) };
+        , model = { sidebar: sidebar(what), about: true };
       send(req, res, model, 'about_nav', 'about_' + what);
     })
     ;

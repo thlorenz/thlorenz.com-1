@@ -13,9 +13,15 @@
         <h1 class="offset4">Thorsten Lorenz</h1>
         <div class="offset4">
           <ul class="nav main">
-            <li> <a href="/blog">blog</a> </li>
-            <li> <a href="/projects">projects</a> </li>
-            <li> <a href="/about">about</a> </li>
+            <li> 
+              <a {{#if model.blog}} class="active"{{/if}} href="/blog">blog</a> 
+            </li>
+            <li> 
+              <a {{#if model.projects}} class="active"{{/if}} href="/projects">projects</a> 
+            </li>
+            <li> 
+              <a {{#if model.about}} class="active"{{/if}} href="/about">about</a> 
+            </li>
           </ul>
         </div>
     </div>

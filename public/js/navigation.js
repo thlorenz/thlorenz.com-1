@@ -4,6 +4,7 @@
 var $ = require('jquery')
   , $sidebar
   , $content
+  , $mainNav
   , navigatedListeners = []
   ;
 
@@ -51,7 +52,13 @@ window.onpopstate = function (args) {
 $sidebar = $('.main .sidebar > ul');
 $content = $('.main .content');
 
+$mainNav = $('nav .main');
+
 $('.main .sidebar')
   .on('click', 'a', function(event) { return handleNavigation(history, this.href, true); });
-$('.main.nav')
-  .on('click', 'a', function(event) { return handleNavigation(history, this.href, true); });
+$mainNav
+  .on('click', 'a', function(event) { 
+    $mainNav.find('a').removeClass('active');
+    $(this).addClass('active');
+    return handleNavigation(history, this.href, true); 
+  });

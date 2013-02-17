@@ -29,6 +29,7 @@ module.exports = function (app) {
       var model = { 
           sidebar: adapt(blog.getMetadata(), postName)
         , content: blog.getPost(postName) 
+        , blog: true
       };
       send(req, res, model, 'blog_nav', 'blog_post');
     });
