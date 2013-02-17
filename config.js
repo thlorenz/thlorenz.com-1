@@ -11,6 +11,7 @@ module.exports = {
         , 'blog/code-fixes.css'
       ]
     , logLevel: 'silly'
+    , debug: true
     }
   , prod: {
       styles: [ 
@@ -22,7 +23,8 @@ module.exports = {
         , 'blog/code-fixes.css'
       ]
     , logLevel: 'info'
+    , debug: false
     }
     // TODO: configurable via commandline and default to prod
-  , mode: 'dev'
+  , mode: process.argv[0] === '--dev' ? 'dev' : 'prod'
 };
