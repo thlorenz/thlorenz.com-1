@@ -37,6 +37,9 @@ function handleNavigation (history, url) {
   return false;
 }
 
+exports.onnavigated = function (fn) {
+  navigatedListeners.push(fn);
+};
 
 if (!browserSupportsHistoryApi(window.history)) return;
 
@@ -52,7 +55,3 @@ $('.main .sidebar')
   .on('click', 'a', function(event) { return handleNavigation(history, this.href, true); });
 $('.main.nav')
   .on('click', 'a', function(event) { return handleNavigation(history, this.href, true); });
-
-exports.onnavigated = function (fn) {
-  navigatedListeners.push(fn);
-};

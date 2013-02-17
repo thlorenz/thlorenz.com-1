@@ -5,9 +5,11 @@ body {
 .navbar {
   height: 145px;
 }
+
 .navbar-inner {
   height: 140px;
 }
+
 .navbar h1 {
   padding-left: 15px;
 }
@@ -33,7 +35,7 @@ section .sidebar {
 }
 
 section .sidebar ul {
-  margin-bottom: 0;
+  margin: 10px 5px 10px 5px;
 }
 section .sidebar li {
   line-height: 16px;
@@ -47,6 +49,12 @@ section .sidebar li p {
   font-size: 12px;
 }
 
+section .sidebar li.active a,
+section .sidebar li.active a:hover  {
+  color: darkblue;
+  background-color: lightblue;
+  border-radius: 3px;
+}
 
 section .sidebar a {
   color:#131392;
