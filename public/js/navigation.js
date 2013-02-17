@@ -1,5 +1,5 @@
 'use strict';
-/*global window */
+/*jshint browser:true*/
 
 var $ = require('jquery')
   , $sidebar
@@ -37,24 +37,24 @@ function handleNavigation (history, url) {
   return false;
 }
 
-$(function () {
-  var history = window.history;
-  if (!browserSupportsHistoryApi(history)) return;
 
-  window.onpopstate = function (args) { 
-    var state = args.state;
-    if (!state) return;
-    update(state.sidebar, state.content); 
-  };
+// when user left page and hit back button, we may end up in a weird state where browser returns json, but we have not html yet
+if (!$('section').length) document.location.reload();
 
-  $sidebar = $('.main .sidebar > ul');
-  $content = $('.main .content');
+if (!browserSupportsHistoryApi(window.history)) return;
 
-  $('.main .sidebar')
-    .on('click', 'a', function(event) { return handleNavigation(history, this.href); });
-  $('.main.nav')
-    .on('click', 'a', function(event) { return handleNavigation(history, this.href); });
-});
+window.onpopstate = function (args) { 
+  if (!args.state) return;
+  handleNavigation(window.history, args.state.url, false);
+};
+
+$sidebar = $('.main .sidebar > ul');
+$content = $('.main .content');
+
+$('.main .sidebar')
+  .on('click', 'a', function(event) { return handleNavigation(history, this.href, true); });
+$('.main.nav')
+  .on('click', 'a', function(event) { return handleNavigation(history, this.href, true); });
 
 
 exports.onnavigated = function (fn) {

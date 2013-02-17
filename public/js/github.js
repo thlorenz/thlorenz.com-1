@@ -44,6 +44,7 @@ function onGithubRepos ($githubRepos, res) {
     + '</ul>';
 
   $githubRepos.html(html);
+  console.log($githubRepos);
 }
 
 

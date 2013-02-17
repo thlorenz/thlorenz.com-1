@@ -80,7 +80,9 @@ section .sidebar a:hover {
 .content {
   background: rgb(255, 252, 252);
   border-radius: 5px;
+  padding: 5px;
 }
+
 .about-me section {
   padding     :  5px;
   margin-left :  0px;
@@ -115,4 +117,11 @@ section .sidebar a:hover {
 }
 .about-me .wordpress img {
   width: 170px;
+}
+
+.doctoc-frame {
+  width: 840px;
+  height: 1000px;
+  margin: 10px;
+  border-radius: 3px;
 }
