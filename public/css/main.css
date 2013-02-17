@@ -125,3 +125,23 @@ section .sidebar a:hover {
   margin: 10px;
   border-radius: 3px;
 }
+
+.github ul {
+  list-style: none;
+}
+
+
+.github .btn {
+  float: right;
+  height: 15px;
+}
+
+.icon-github-fork {
+  background-image: url('../img/github-fork.png');
+  background-position: 0;
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  transform: rotate(180deg);
+}

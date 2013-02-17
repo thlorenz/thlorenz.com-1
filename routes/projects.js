@@ -1,6 +1,8 @@
 'use strict';
 
-var send = require('../send');
+var send = require('../send')  
+  , getRepos = require('../github/get-repos');
+
 
 function sidebar(itemName) {
   return [ 
@@ -23,6 +25,13 @@ module.exports = function (app) {
       var goto = '/projects/github';
       res.location(goto);
       res.redirect(goto);
+    })
+    .get('/projects/github', function (req, res) {
+      getRepos(function (err, repos) {
+        if (err) return send(req, res, { sidebar: sidebar('github') }, 'projects_nav', 'error');
+        var model = { sidebar: sidebar('github'), content: repos };
+        send(req, res, model, 'projects_nav', 'projects_github');
+      });
     })
     .get('/projects/:projectName', function (req, res) {
       var projectName = req.params.projectName

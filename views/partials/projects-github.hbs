@@ -1,3 +1,22 @@
-<h1>Github Repositories</h1>
+<article class="github">
+  <h1>Github Repositories</h1>
 
-<section id="github-repos"></section>
+  <ul class="nav-list">
+    {{#each this}}
+      <li > 
+        <div class="row">
+          <a href="{{this.url}}">{{this.name}}</a>
+          <a class="btn">
+            <span class="icon-github-fork"></span>
+            <span>{{this.forks}}</span>
+          </a>
+          <a class="btn">
+            <span class="icon-star"></span>
+            <span>{{this.stars}}</span>
+          </a>
+        </div>
+        <p class="row">{{this.desc}}</p>
+      </li>
+    {{/each}}
+  </ul>
+</article>
