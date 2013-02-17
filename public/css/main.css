@@ -11,7 +11,11 @@ body {
 }
 
 .navbar h1 {
-  padding-left: 15px;
+  padding-left: 0px;
+}
+
+nav .avatar {
+  padding-left: 5px;
 }
 
 nav .main {
@@ -19,30 +23,30 @@ nav .main {
   padding-left: 10px;
 }
 
+nav h1.offset3 {
+  padding-left: 68px;
+}
+
+nav div.offset3 {
+  padding-left: 45px;
+}
+
 section.main {
-  padding-left: 20px;
+  padding-left: 10px;
 }
 
 section .sidebar {
-  border-right: 1px solid #eee;
-  border-bottom: 1px solid #eee;
-}
-section .sidebar {
-  padding: 0 10px 0 10px; 
-  background: white;
-  border-radius: 5px;
   margin-bottom: 25px;
+  padding-left: 12px;
 }
 
-section .sidebar ul {
-  margin: 10px 5px 10px 5px;
-}
 section .sidebar li {
   line-height: 16px;
 }
 
 section .sidebar li h4 {
   font-size: 16px;
+  font-weight: normal;
 }
 
 section .sidebar li p {
@@ -50,22 +54,21 @@ section .sidebar li p {
 }
 
 section .sidebar a {
-  color:#131392;
+  color: #999;
   cursor:pointer;
-  text-shadow: rgba(109, 91, 141, 0.4) 0 0 0;
+  text-shadow: #69F5BD 0 0 0;
   text-decoration:none;
 }
 
 section .sidebar a:hover {
-  color: rgb(50, 50, 180);
+  background-color: #1B1B1B;
 }
 
 section .sidebar li.active a,
 section .sidebar li.active a:hover  {
-  color: darkblue;
-  background-color: lightblue;
-  border-radius: 3px;
-  text-shadow: rgba(109, 91, 141, 0.4) 0 0 0;
+  color: white;
+  background-color: inherit;
+  text-shadow: black 0 0 0;
 }
 
 .blog-post h1 {
