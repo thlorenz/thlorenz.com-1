@@ -1,6 +1,8 @@
 'use strict';
 
-var request = require('request');
+var request = require('request')
+  , log = require('npmlog');
+
 
 function byStarsDescending (a, b) { 
   return a.stars > b.stars ? -1 : 1; 
@@ -17,11 +19,13 @@ module.exports = function getRepos(cb) {
       , sortedRepos = ownRepos.map(
           function (x) {
               return { 
-                  name  :  x.name
-                , url   :  x.html_url
-                , desc  :  x.description
-                , stars :  x.watchers_count
-                , forks :  x.forks
+                  name    :  x.name
+                , url     :  x.html_url
+                , desc    :  x.description
+                , stars   :  x.watchers_count
+                , forks   :  x.forks
+                , starUrl :  x.html_url + '/stargazers'
+                , forkUrl :  x.html_url + '/network'
               };
             }
           )

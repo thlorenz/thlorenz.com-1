@@ -136,12 +136,22 @@ section .sidebar a:hover {
   height: 15px;
 }
 
+.github .repo-name {
+  font-size: 18px;
+  text-shadow: rgba(109, 91, 141, 0.4) 2px 2px 4px;
+  text-shadow: 3px;
+}
+
+.github a.repo-name:hover {
+  text-decoration: none;
+}
+
 .icon-github-fork {
   background-image: url('../img/github-fork.png');
-  background-position: 0;
-  -webkit-transform: rotate(180deg);
-  -moz-transform: rotate(180deg);
-  -ms-transform: rotate(180deg);
-  -o-transform: rotate(180deg);
-  transform: rotate(180deg);
+  background-position: 0 0;
+  -webkit-transform: rotate(180deg);  
+     -moz-transform: rotate(180deg);
+      -ms-transform: rotate(180deg);
+       -o-transform: rotate(180deg);
+          transform: rotate(180deg);
 }

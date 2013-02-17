@@ -1,7 +1,15 @@
 'use strict';
 var sendJson = require('./json')
   , sendHtml = require('./html')
+  , log = require('npmlog')
   ;
+
+function prefersHtml(req) {
+  log.info('send', 'accept headers', req.accepted);
+  var hasNoAcceptHeaders = !(req.accepted && req.accepted.length);
+  if (hasNoAcceptHeaders) return true;
+  return req.accepts('html, json') === 'html';
+}
 
 /**
  * Renders the page as html or sends a JSON response based on the requests's accept headers.
@@ -20,8 +28,7 @@ module.exports = function send(req, res, model, sidebarTmpl, contentTmpl) {
   model.prescripts = model.prescripts || [];
   model.postscripts = model.postscripts || [];
 
-  var prefersHtml = req.accepts('html, json') === 'html'
-    , sendHtmlOrJson = prefersHtml ? sendHtml : sendJson;
+  var sendHtmlOrJson = prefersHtml(req) ? sendHtml : sendJson;
 
-   sendHtmlOrJson(res, model, sidebarTmpl, contentTmpl);
+  sendHtmlOrJson(res, model, sidebarTmpl, contentTmpl);
 };

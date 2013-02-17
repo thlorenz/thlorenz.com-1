@@ -1,16 +1,14 @@
 <article class="github">
-  <h1>Github Repositories</h1>
-
   <ul class="nav-list">
     {{#each this}}
       <li > 
         <div class="row">
-          <a href="{{this.url}}">{{this.name}}</a>
-          <a class="btn">
+          <a class="repo-name" href="{{this.url}}">{{this.name}}</a>
+          <a class="btn" href="{{this.forkUrl}}">
             <span class="icon-github-fork"></span>
             <span>{{this.forks}}</span>
           </a>
-          <a class="btn">
+          <a class="btn star" href="{{this.starUrl}}">
             <span class="icon-star"></span>
             <span>{{this.stars}}</span>
           </a>

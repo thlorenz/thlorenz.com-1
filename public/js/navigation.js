@@ -32,20 +32,17 @@ function handleNavigation (history, url) {
         fn(url);  
       });
     })
-    .error(function () { console.log('error', arguments); })
-    ;
+    .error(function () { console.log('error', arguments); });
+
   return false;
 }
 
-
-// when user left page and hit back button, we may end up in a weird state where browser returns json, but we have not html yet
-if (!$('section').length) document.location.reload();
 
 if (!browserSupportsHistoryApi(window.history)) return;
 
 window.onpopstate = function (args) { 
   if (!args.state) return;
-  handleNavigation(window.history, args.state.url, false);
+  update(args.state.sidebar, args.state.content);
 };
 
 $sidebar = $('.main .sidebar > ul');
@@ -55,7 +52,6 @@ $('.main .sidebar')
   .on('click', 'a', function(event) { return handleNavigation(history, this.href, true); });
 $('.main.nav')
   .on('click', 'a', function(event) { return handleNavigation(history, this.href, true); });
-
 
 exports.onnavigated = function (fn) {
   navigatedListeners.push(fn);
