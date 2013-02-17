@@ -185,6 +185,6 @@ exports.getMetadata = function () {
 
 exports.getPost = function (postName) {
   var post = (postName && posts[postName]) ? posts[postName] : firstPost;
-  log.info('blog', 'returning for post: %s', post);
+  log.info('blog', 'returning for post: %s', postName);
   return post;
 };
