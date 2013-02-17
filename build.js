@@ -2,15 +2,25 @@
 
 var browserify =  require('browserify')
   , shim       =  require('browserify-shim')
-  , bootstrap  =  'bootstrap' // use bootstrap.min in prod
+  , uglify     =  require('uglify-js')
+  , optimizer  =  uglify.uglify
   ;
+
+function minify(code) {
+  var compressor = uglify.Compressor()
+    , ast = uglify.parse(code);
+
+  ast.figure_out_scope();
+  ast.mangle_names();
+  return ast.transform(compressor).print_to_string();
+}
 
 var createBundle = module.exports = function (debug) {
   var bundled = browserify({ debug: debug })
     .use(shim({ alias: 'jquery', path: './public/js/jquery-1.8.1.min.js', exports: '$' }))
     .use(shim({ 
-        alias   :  bootstrap
-      , path    :  './public/js/' + bootstrap + '.js'
+        alias   :  'bootstrap'
+      , path    :  './public/js/bootstrap.js'
       , exports :  null
       , depends :  { jquery : '$' }
     }))
@@ -19,7 +29,7 @@ var createBundle = module.exports = function (debug) {
     .bundle()
     ;
 
-  return bundled;
+  return debug ? bundled : minify(bundled);
 };
 
 if (module.parent) return;

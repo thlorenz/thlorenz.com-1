@@ -22,8 +22,16 @@ module.exports = function getRepos(cb) {
 
   request.get('https://api.github.com/users/thlorenz/repos?per_page=500', function (err, res, body) { 
     if (err) return cb(err);
-    var repos = JSON.parse(body)
-      , ownRepos = repos.filter(
+    var repos;
+    try {
+      repos = JSON.parse(body);
+    } catch (e) {
+      log.error('github/get-repos', 'error: ', e);
+      log.silly('github/get-repos', 'body', body);
+      cb(e);
+    }
+
+    var ownRepos = repos.filter(
           function (x) {
             return !x.fork;
         })
