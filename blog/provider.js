@@ -180,6 +180,7 @@ exports.update = function (cb) {
 };
 
 exports.getMetadata = function () {
+  // this and getPost needs to be async and init Post if there are none yet
   return postsMetadataSortedByCurrentness;
 };
 
