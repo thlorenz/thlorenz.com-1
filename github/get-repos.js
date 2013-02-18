@@ -28,6 +28,7 @@ module.exports = function getRepos(cb) {
       // didn't get any repos - we could try again or just bail
       if (!repos.filter) {
         log.error('github/get-repos', 'no repos returned', repos);
+        repos = null;
         cb(new Error('github.com seems to not be able to send any repos at this point'));
       }
     } catch (e) {
