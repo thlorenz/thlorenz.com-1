@@ -17,7 +17,7 @@ module.exports = {
       styles: [ 
           'bootstrap-responsive.min.css'
         , 'bootstrap.min.css'
-        , 'main.css'
+        , 'main.min.css'
         , 'blog/blog.css'
         , 'blog/code.css'
         , 'blog/code-fixes.css'

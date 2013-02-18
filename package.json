@@ -1,6 +1,6 @@
 {
   "name": "thlorenz.com",
-  "version": "0.1.0-18",
+  "version": "0.1.0-19",
   "description": "Source of thlorenz.com website.",
   "main": "app.js",
   "engines": {
@@ -14,7 +14,13 @@
   ],
   "scripts": {
     "start": "node app.js",
-    "dev": "nodemon --ext '.js|.hbs' app.js --dev"
+    "dev": "nodemon --ext '.js|.hbs' app.js --dev",
+    "css": "cd ./public/css/ && \
+            cleancss -o bootstrap.min.css bootstrap.css && \
+            cleancss -o bootstrap-responsive.min.css bootstrap-responsive.css && \
+            cleancss -o main.min.css main.css \
+            cd ../..",
+    "deploy": "npm css && jitsu deploy"
   },
   "repository": {
     "type": "git",
@@ -42,6 +48,7 @@
     "uglify-js": "~2.2.5"
   },
   "devDependencies": {
-    "nodemon": "~0.7.2"
+    "nodemon": "~0.7.2",
+    "clean-css": "~0.10.1"
   }
 }
