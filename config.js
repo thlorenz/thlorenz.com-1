@@ -22,7 +22,7 @@ module.exports = {
         , 'blog/code.css'
         , 'blog/code-fixes.css'
       ]
-    , logLevel: 'silly'
+    , logLevel: 'info'
     , debug: false
     }
     // TODO: configurable via commandline and default to prod
