@@ -12,8 +12,7 @@ function byStarsDescending (a, b) {
 }
 
 function createRequest() {
-  // see: https://help.github.com/articles/creating-an-oauth-token-for-command-line-use
-  // and: https://github.com/dscape/ghcopy/blob/68981f04be58d0412e75e6bff83a7c993b6281e7/bin/ghcopy#L138-L145  
+  // use token to make authorized request, otherwise we'll run into exceeded API limit problem when hosted
   var req = {
       method: 'GET'
     , uri : url.format(
@@ -26,8 +25,6 @@ function createRequest() {
 
   if (!githubToken) return req;
 
-  // use token to make authorized request, otherwise we'll run into exceeded API limit problem 
-  // when running on nodejitsu
   log.silly('github', 'creating request using token [%s]', githubToken);
   req.headers = { Authorization: 'bearer ' + githubToken };
 
@@ -35,8 +32,7 @@ function createRequest() {
 }
 
 module.exports = function getRepos(cb) {
-  var cachedReposAreGood = cache && new Date() < cache.goodUntil
-    , req = createRequest();
+  var cachedReposAreGood = cache && new Date() < cache.goodUntil;
 
   if (cachedReposAreGood) {
     log.silly('github', 'serving from cache');
@@ -45,7 +41,7 @@ module.exports = function getRepos(cb) {
 
   log.silly('github', 'querying github to refresh cache');
 
-  request(req, function (err, res, body) {
+  request(createRequest(), function (err, res, body) {
     if (err) return cb(err);
     var repos;
     try {
