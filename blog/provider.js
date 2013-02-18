@@ -191,6 +191,6 @@ exports.getMetadata = function (cb) {
 exports.getPost = function (postName, cb) {
   // Assumes that getMetadata was called before and thus blog was initialized
   var post = (postName && posts[postName]) ? posts[postName] : firstPost;
-  log.info('blog', 'returning for post: %s', postName);
+  log.verbose('blog', 'returning for post: %s', postName);
   return post;
 };

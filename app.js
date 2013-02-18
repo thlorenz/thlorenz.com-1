@@ -10,6 +10,10 @@ var path    =  require('path')
   , PORT    =  3000;
 
 log.level = config[config.mode].logLevel;
+
+// don't log all http requests when are logging on info
+log.levels.http = log.levels.info - 500;
+
 log.info('app', 'args', process.argv);
 log.info('app', 'config', config[config.mode]);
 

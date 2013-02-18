@@ -5,7 +5,7 @@ var sendJson = require('./json')
   ;
 
 function prefersHtml(req) {
-  log.info('send', 'accept headers', req.accepted);
+  log.verbose('send', 'accept headers', req.accepted);
   var hasNoAcceptHeaders = !(req.accepted && req.accepted.length);
   if (hasNoAcceptHeaders) return true;
   return req.accepts('html, json') === 'html';
