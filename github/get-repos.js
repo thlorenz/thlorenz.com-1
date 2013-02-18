@@ -28,7 +28,7 @@ function createRequest() {
 
   // use token to make authorized request, otherwise we'll run into exceeded API limit problem 
   // when running on nodejitsu
-  log.silly('github', 'creating request using token');
+  log.silly('github', 'creating request using token [%s]', githubToken);
   req.headers = { Authorization: 'bearer ' + githubToken };
 
   return req;
@@ -54,7 +54,7 @@ module.exports = function getRepos(cb) {
       if (!repos.filter) {
         log.error('github/get-repos', 'no repos returned', repos);
         repos = null;
-        cb(new Error('github.com seems to not be able to send any repos at this point'));
+        return cb(new Error('github.com seems to not be able to send any repos at this point'));
       }
     } catch (e) {
       log.error('github/get-repos', 'error: ', e);
