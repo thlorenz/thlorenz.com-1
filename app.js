@@ -33,9 +33,10 @@ require('./routes/about')(app);
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-blog.update(function (err) {
-  if (err) return;
 
-  var server = app.listen(PORT);
-  log.info('server', 'listening on', server.address());
+var server = app.listen(PORT);
+log.info('server', 'listening on', server.address());
+
+blog.update(function (err) {
+  if (err) log.error('app', 'blog update caused error', err);
 });

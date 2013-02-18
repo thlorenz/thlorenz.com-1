@@ -1,6 +1,6 @@
 {
   "name": "thlorenz.com",
-  "version": "0.1.0-10",
+  "version": "0.1.0-12",
   "description": "Source of thlorenz.com website.",
   "main": "app.js",
   "engines": {
@@ -13,7 +13,7 @@
     "www.thlorenz.com"
   ],
   "scripts": {
-    "start": "node app",
+    "start": "node app.js",
     "dev": "nodemon --ext '.js|.hbs' app.js --dev"
   },
   "repository": {
