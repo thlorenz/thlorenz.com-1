@@ -13,7 +13,8 @@
     "www.thlorenz.com"
   ],
   "scripts": {
-    "start": "nodemon --ext '.js|.hbs' app.js"
+    "start": "node app",
+    "dev": "nodemon --ext '.js|.hbs' app.js --dev"
   },
   "repository": {
     "type": "git",

@@ -10,6 +10,8 @@ var path    =  require('path')
   , PORT    =  3000;
 
 log.level = config[config.mode].logLevel;
+log.info('app', 'args', process.argv);
+log.info('app', 'config', config[config.mode]);
 
 require('./views/init')();
 

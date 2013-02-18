@@ -6,8 +6,9 @@ var build = require('../build')
 
 module.exports = function (app) {
   app.get('/js/build/bundle.js', function (req, res) {
-    var shouldRebuild = !bundled || config.debug;
-    if (shouldRebuild) bundled = build(config.debug);
+    var debug = config[config.mode].debug
+      , shouldRebuild = !bundled || debug;
+    if (shouldRebuild) bundled = build(debug);
 
     res.set('Content-Type', 'application/javascript');
     res.send(200, bundled);
