@@ -15,5 +15,6 @@ tmp
 thlorenz.com-blog/
 
 /public/js/build
+token.json
 node_modules/
 npm-debug.log
