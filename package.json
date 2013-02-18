@@ -15,11 +15,7 @@
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon --ext '.js|.hbs' app.js --dev",
-    "css": "cd ./public/css/ && \
-            cleancss -o bootstrap.min.css bootstrap.css && \
-            cleancss -o bootstrap-responsive.min.css bootstrap-responsive.css && \
-            cleancss -o main.min.css main.css \
-            cd ../..",
+    "css": "cd ./public/css/ && cleancss -o bootstrap.min.css bootstrap.css && cleancss -o bootstrap-responsive.min.css bootstrap-responsive.css && cleancss -o main.min.css main.css cd ../..",
     "deploy": "npm css && jitsu deploy"
   },
   "repository": {
