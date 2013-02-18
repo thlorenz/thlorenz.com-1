@@ -36,7 +36,3 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 var server = app.listen(PORT);
 log.info('server', 'listening on', server.address());
-
-blog.update(function (err) {
-  if (err) log.error('app', 'blog update caused error', err);
-});

@@ -20,17 +20,30 @@ function adapt(metadata, postName) {
 module.exports = function (app) {
   app
     .get('/blog', function (req, res) {
-      res.redirect('/blog/' + blog.getPost().name);
+      blog.getMetadata(function (err, metadata) {
+        if (err) {
+          log.error('blog', 'error getting blog metadata, redirecting to about page', err);
+          return send(req, res, { }, 'projects_nav', 'error');
+        }
+        res.redirect('/blog/' + blog.getPost().name);
+      });
     })
     .get('/blog/:post', function (req, res) {
       var postName = req.params.post;
       log.verbose('blog', 'getting post', postName);
 
-      var model = { 
-          sidebar: adapt(blog.getMetadata(), postName)
-        , content: blog.getPost(postName) 
-        , blog: true
-      };
-      send(req, res, model, 'blog_nav', 'blog_post');
+      blog.getMetadata(function (err, metadata) {
+        if (err) {
+          log.error('blog', 'error getting blog metadata, redirecting to about page', err);
+          return send(req, res, { }, 'projects_nav', 'error');
+        }
+
+        var model = { 
+            sidebar: adapt(metadata, postName)
+          , content: blog.getPost(postName) 
+          , blog: true
+        };
+        send(req, res, model, 'blog_nav', 'blog_post');
+      });
     });
 };
