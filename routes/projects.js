@@ -29,6 +29,7 @@ module.exports = function (app) {
     .get('/projects/github', function (req, res) {
       getRepos(function (err, repos) {
         if (err) return send(req, res, { sidebar: sidebar('github') }, 'projects_nav', 'error');
+
         var model = { sidebar: sidebar('github'), content: repos, projects: true };
         send(req, res, model, 'projects_nav', 'projects_github');
       });

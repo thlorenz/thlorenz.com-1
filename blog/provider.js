@@ -159,7 +159,7 @@ function updatePosts (cb) {
   });
 }
 
-exports.update = function (cb) {
+var update = exports.update = function (cb) {
 
   gitPull(function (err) {
     if (err) return cb(err);
@@ -179,12 +179,17 @@ exports.update = function (cb) {
   }
 };
 
-exports.getMetadata = function () {
+exports.getMetadata = function (cb) {
   // this and getPost needs to be async and init Post if there are none yet
-  return postsMetadataSortedByCurrentness;
+  if (postsMetadataSortedByCurrentness) return cb(null, postsMetadataSortedByCurrentness);
+
+  update(function (err) {
+    cb(err, postsMetadataSortedByCurrentness);
+  });
 };
 
-exports.getPost = function (postName) {
+exports.getPost = function (postName, cb) {
+  // Assumes that getMetadata was called before and thus blog was initialized
   var post = (postName && posts[postName]) ? posts[postName] : firstPost;
   log.info('blog', 'returning for post: %s', postName);
   return post;
