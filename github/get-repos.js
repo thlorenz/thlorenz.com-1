@@ -25,6 +25,11 @@ module.exports = function getRepos(cb) {
     var repos;
     try {
       repos = JSON.parse(body);
+      // didn't get any repos - we could try again or just bail
+      if (!repos.filter) {
+        log.error('github/get-repos', 'no repos returned', repos);
+        cb(new Error('github.com seems to not be able to send any repos at this point'));
+      }
     } catch (e) {
       log.error('github/get-repos', 'error: ', e);
       log.silly('github/get-repos', 'body', body);
