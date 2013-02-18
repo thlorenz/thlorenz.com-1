@@ -1,6 +1,6 @@
 {
   "name": "thlorenz.com",
-  "version": "0.1.0-21",
+  "version": "0.1.0-22",
   "description": "Source of thlorenz.com website.",
   "main": "app.js",
   "engines": {
