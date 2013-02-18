@@ -45,7 +45,6 @@ module.exports = function getRepos(cb) {
 
   log.silly('github', 'querying github to refresh cache');
 
-  // request.get('https://api.github.com/users/thlorenz/repos?per_page=500', function (err, res, body) { 
   request(req, function (err, res, body) {
     if (err) return cb(err);
     var repos;
