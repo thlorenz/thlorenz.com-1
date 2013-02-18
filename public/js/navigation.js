@@ -52,7 +52,10 @@ exports.onnavigated = function (fn) {
 if (!browserSupportsHistoryApi(window.history)) return;
 
 window.onpopstate = function (args) { 
-  if (!args.state) return;
+  if (!args.state) { 
+    return handleNavigation(window.history, window.location.href);     
+  }
+
   trackCurrentLocation();
   update(args.state.sidebar, args.state.content);
 };
