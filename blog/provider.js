@@ -205,7 +205,6 @@ var update = exports.update = function (cb) {
 };
 
 exports.getMetadata = function (cb) {
-  // this and getPost needs to be async and init Post if there are none yet
   if (postsMetadataSortedByCurrentness) return cb(null, postsMetadataSortedByCurrentness);
 
   update(function (err) {
