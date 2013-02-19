@@ -1,6 +1,6 @@
 {
   "name": "thlorenz.com",
-  "version": "0.2.0-7",
+  "version": "0.2.0-9",
   "description": "Source of thlorenz.com website.",
   "main": "app.js",
   "engines": {
@@ -41,10 +41,10 @@
     "moment": "~2.0.0",
     "request": "~2.12.0",
     "uglify-js": "~2.2.5",
-    "dog": "~0.2.0"
+    "dog": "~0.2.0",
+    "clean-css": "~0.10.1"
   },
   "devDependencies": {
-    "nodemon": "~0.7.2",
-    "clean-css": "~0.10.1"
+    "nodemon": "~0.7.2"
   }
 }
