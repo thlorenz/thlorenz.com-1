@@ -5,14 +5,18 @@ var fs         =  require('fs')
   , exec       =  require('child_process').exec
   , log        =  require('npmlog')
   , provider   =  require('dog').provider
+  , CleanCSS   =  require('clean-css')
+  , config     =  require('../config')
   , exists     =  fs.exists || path.exists
   , root       =  path.join(__dirname, '..')
   , blogRoot   =  path.join(root, 'thlorenz.com-blog')
+  , blogStyles =  path.join(root, 'public', 'css', 'blog')
   , lastUpdate
   , postsNames
   , posts
   , postsMetadataSortedByCurrentness
   , firstPost
+  , blogStyles
   ;
 
 /**
@@ -68,18 +72,17 @@ function gitPull (cb) {
   });
 }
 
-function initStyles (cb) {
+// TODO: styles stuff into separate module
+function concatenateStyles (cb) {
   log.info('blog', 'init styles', 'started');
   provider.concatenateStyles(function (err, css) {
     if (err) { log.error('blog', 'init styles',  err); return cb(err); }
-
     cb(null, css);
   });
 }
 
 function copyStyles(styles, cb) {
-  var blogStyles = path.join(root, 'public', 'css', 'blog')
-    , tasks = styles.length
+  var tasks = styles.length
     , abort = false;
 
   styles.forEach(function (style) {
@@ -90,6 +93,30 @@ function copyStyles(styles, cb) {
       if (err) { abort = true; return cb(err); }
       if (!--tasks) return cb(); 
     });
+  });
+}
+
+function initStyles (cb) {
+  if (config.mode === 'dev') {
+    return provider.getStylesFiles(function (err, styles) {
+      if (err) return cb(err);
+      copyStyles(styles, cb);
+      });
+  }
+
+  // production mode
+  concatenateStyles(function (err, css) {
+    if (err) return cb(err);
+    try {
+      var minifiedCss = CleanCSS.process(css);
+      fs.writeFile(path.join(blogStyles, 'blog.min.css'), minifiedCss, 'utf-8', function (err) {
+        if (err) return cb(err);
+        cb();
+      });
+      cb(null);
+    } catch (e) {
+      cb(e);
+    }
   });
 }
 
@@ -166,11 +193,9 @@ var update = exports.update = function (cb) {
     // don't copy styles if we already updated the blog before
     if (lastUpdate) return updateBlogPosts();
 
-    provider
-      .provideFrom(blogRoot)
-      .getStylesFiles(function (err, styles) {
-        copyStyles(styles, updateBlogPosts);
-      });
+    provider.provideFrom(blogRoot);
+    initStyles(updateBlogPosts);
+
   });
 
   function updateBlogPosts(err) {
