@@ -9,6 +9,7 @@ module.exports = {
         , 'blog/blog.css'
         , 'blog/code.css'
         , 'blog/code-fixes.css'
+        , 'blog/peacock-tango.css'
       ]
     , logLevel: 'silly'
     , debug: true
@@ -21,6 +22,7 @@ module.exports = {
         , 'blog/blog.css'
         , 'blog/code.css'
         , 'blog/code-fixes.css'
+        , 'blog/peacock-tango.css'
       ]
     , logLevel: 'info'
     , debug: false
