@@ -19,6 +19,7 @@ function adapt(metadata, postName) {
 
 module.exports = function (app) {
   app
+
     .get('/blog', function (req, res) {
       blog.getMetadata(function (err, metadata) {
         if (err) {
@@ -28,6 +29,7 @@ module.exports = function (app) {
         res.redirect('/blog/' + blog.getPost().name);
       });
     })
+
     .get('/blog/:post', function (req, res) {
       var postName = req.params.post;
       log.verbose('blog', 'getting post', postName);
@@ -44,6 +46,21 @@ module.exports = function (app) {
           , blog: true
         };
         send(req, res, model, 'blog_nav', 'blog_post');
+      });
+    })
+
+    // gitub hook to cause blog to update whenever a new post was published
+    .post('/blog/pushed', function (req, res) {
+      log.info('blog', 'blog post was pushed');
+      blog.update(function (err) {
+        if (err) { 
+          log.error('blog', err); 
+          res.writeHead(500);
+          return res.end();
+        }
+
+        res.writeHead(200, { 'Content-Length': 0 });
+        res.end();
       });
     });
 };
