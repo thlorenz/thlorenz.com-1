@@ -2,6 +2,7 @@
 var log  =  require('npmlog')
   , send =  require('../send')
   , blog =  require('../blog/provider')
+  , config = require('../config')
   , moment = require('moment')
   ;
 
@@ -19,7 +20,6 @@ function adapt(metadata, postName) {
 
 module.exports = function (app) {
   app
-
     .get('/blog', function (req, res) {
       blog.getMetadata(function (err, metadata) {
         if (err) {
@@ -27,6 +27,13 @@ module.exports = function (app) {
           return send(req, res, { }, 'projects_nav', 'error');
         }
         res.redirect('/blog/' + blog.getPost().name);
+      });
+    })
+    
+    .get('/feed', function (req, res) {
+      blog.getRssFeed(function (feed) {
+        res.set({ charset: 'UTF-8' , 'Content-Type': 'text/xml' });
+        res.send(200, feed);
       });
     })
 
@@ -48,7 +55,7 @@ module.exports = function (app) {
         send(req, res, model, 'blog_nav', 'blog_post');
       });
     })
-
+    
     // gitub hook to cause blog to update whenever a new post was published
     .post('/blog/pushed', function (req, res) {
       log.info('blog', 'blog post was pushed');
@@ -62,5 +69,7 @@ module.exports = function (app) {
         res.writeHead(200, { 'Content-Length': 0 });
         res.end();
       });
-    });
+    })
+    ;
+
 };

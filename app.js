@@ -35,9 +35,7 @@ require('./routes/projects')(app);
 require('./routes/about')(app);
 
 // Fall back to static file server only after all our custom matches failed
-app
-  .use(express.staticCache())
-  .use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 
 

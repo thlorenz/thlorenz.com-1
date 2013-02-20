@@ -23,4 +23,5 @@ module.exports = {
     , debug: false
     }
   , mode: (process.argv.length > 2 && process.argv[2] === '--dev') ? 'dev' : 'prod'
+  , siteUrl : 'http://thlorenz.com'
 };

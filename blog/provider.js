@@ -7,6 +7,7 @@ var fs         =  require('fs')
   , provider   =  require('dog').provider
   , CleanCSS   =  require('clean-css')
   , config     =  require('../config')
+  , rssFeed    =  require('./rss-feed')
   , exists     =  fs.exists || path.exists
   , root       =  path.join(__dirname, '..')
   , blogRoot   =  path.join(root, 'thlorenz.com-blog')
@@ -195,7 +196,6 @@ var update = exports.update = function (cb) {
 
     provider.provideFrom(blogRoot);
     initStyles(updateBlogPosts);
-
   });
 
   function updateBlogPosts(err) {
@@ -204,7 +204,7 @@ var update = exports.update = function (cb) {
   }
 };
 
-exports.getMetadata = function (cb) {
+var getMetadata = exports.getMetadata = function (cb) {
   if (postsMetadataSortedByCurrentness) return cb(null, postsMetadataSortedByCurrentness);
 
   update(function (err) {
@@ -212,9 +212,32 @@ exports.getMetadata = function (cb) {
   });
 };
 
-exports.getPost = function (postName, cb) {
+exports.getPost = function (postName) {
   // Assumes that getMetadata was called before and thus blog was initialized
   var post = (postName && posts[postName]) ? posts[postName] : firstPost;
   log.verbose('blog', 'returning for post: %s', postName);
   return post;
+};
+
+exports.getRssFeed = function (cb) {
+  function feedPosts() {
+    var postsArr = Object.keys(posts).map(function (k) { return posts[k]; });
+    cb(rssFeed(postsArr));
+  }
+
+  // TODO: discovered here that dog's updated since seems to never return
+  if (postsMetadataSortedByCurrentness) return feedPosts();
+
+  // ensure that blog is initialized before accessing posts
+  update(function (err) {
+    if (err) {
+      log.error('blog', 'updating blog when getting rss feed - returning empty feed', err);
+      return cb(rssFeed([]));
+    }
+    if (!posts) {
+      log.warn('blog', 'no posts after updating blog - returning empty feed');
+      return cb(rssFeed([]));
+    }
+    feedPosts();
+  });  
 };
