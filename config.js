@@ -3,8 +3,7 @@
 module.exports = {
     dev: {
       styles: [ 
-          'bootstrap-responsive.css'
-        , 'bootstrap.css'
+          'bootstrap.css'
         , 'main.css'
         , 'blog/blog.css'
         , 'blog/code.css'
@@ -16,8 +15,7 @@ module.exports = {
     }
   , prod: {
       styles: [ 
-          'bootstrap-responsive.min.css'
-        , 'bootstrap.min.css'
+          'bootstrap.min.css'
         , 'main.min.css'
         , 'blog/blog.min.css'
       ]

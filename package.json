@@ -1,6 +1,6 @@
 {
   "name": "thlorenz.com",
-  "version": "0.2.0-9",
+  "version": "0.2.0-11",
   "description": "Source of thlorenz.com website.",
   "main": "app.js",
   "engines": {
@@ -15,7 +15,7 @@
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon --ext '.js|.hbs' app.js --dev",
-    "css": "cd ./public/css/ && cleancss -o bootstrap.min.css bootstrap.css && cleancss -o bootstrap-responsive.min.css bootstrap-responsive.css && cleancss -o main.min.css main.css cd ../..",
+    "css": "cd ./public/css/ && cleancss -o bootstrap.min.css bootstrap.css && cleancss -o main.min.css main.css cd ../..",
     "deploy": "npm run css && jitsu deploy"
   },
   "repository": {

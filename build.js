@@ -18,14 +18,7 @@ function minify(code) {
 var createBundle = module.exports = function (debug) {
   var bundled = browserify({ debug: debug })
     .use(shim({ alias: 'jquery', path: './public/js/jquery-1.8.1.min.js', exports: '$' }))
-    .use(shim({ 
-        alias   :  'bootstrap'
-      , path    :  './public/js/bootstrap.js'
-      , exports :  null
-      , depends :  { jquery : '$' }
-    }))
     .addEntry('./public/js/navigation.js')
-    .addEntry('./public/js/entry.js')
     .bundle()
     ;
 
