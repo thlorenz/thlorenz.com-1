@@ -22,6 +22,7 @@ require('./views/init')();
 app
   .set('view engine', 'hbs')
   .set('views', path.join(__dirname, 'views'))
+  .use(express.compress())
   .use(require('./middleware/init-locals'))
   .use(require('./middleware/log-request'))
   ;
@@ -34,7 +35,9 @@ require('./routes/projects')(app);
 require('./routes/about')(app);
 
 // Fall back to static file server only after all our custom matches failed
-app.use(express.static(path.join(__dirname, 'public')));
+app
+  .use(express.staticCache())
+  .use(express.static(path.join(__dirname, 'public')));
 
 
 
