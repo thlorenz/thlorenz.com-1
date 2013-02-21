@@ -26,6 +26,15 @@ nav .main {
   color: white;
 }
 
+.navbar .feed {
+  background-image: url(../img/rss-black.png);
+  background-repeat: no-repeat;
+  height: 30px;
+  margin-top: -45px;
+  display: block;
+  float: right;
+}
+
 nav h1.offset3 {
   padding-left: 68px;
 }

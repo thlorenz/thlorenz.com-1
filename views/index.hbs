@@ -10,20 +10,25 @@
         <div class="span2 avatar">
           <img src="/img/avatar.jpg">
         </div>
-        <h1 class="offset4">Thorsten Lorenz</h1>
-        <div class="offset4">
-          <ul class="nav main">
-            <li> 
-              <a {{#if model.blog}} class="active"{{/if}} href="/blog">blog</a> 
-            </li>
-            <li> 
-              <a {{#if model.projects}} class="active"{{/if}} href="/projects">projects</a> 
-            </li>
-            <li> 
-              <a {{#if model.about}} class="active"{{/if}} href="/about">about</a> 
-            </li>
-          </ul>
+        <div class="offset4 row">
+          <div>
+            <h1>Thorsten Lorenz</h1>
+            <a href="/feed" class="feed span1"></a>
+          </div>
+          <div>
+            <ul class="nav main">
+              <li> 
+                <a {{#if model.blog}} class="active"{{/if}} href="/blog">blog</a> 
+              </li>
+              <li> 
+                <a {{#if model.projects}} class="active"{{/if}} href="/projects">projects</a> 
+              </li>
+              <li> 
+                <a {{#if model.about}} class="active"{{/if}} href="/about">about</a> 
+              </li>
+            </ul>
         </div>
+      </div>
     </div>
   </nav>
 
