@@ -10,7 +10,7 @@ module.exports = function createFeed(posts) {
       , description :  'JavaScript, nodejs and other goodies'
       , feed_url    :  siteUrl + '/blog/rss.xml'
       , site_url    :  siteUrl
-      , image_url   :  siteUrl + '/img/favicon.ico'
+      , image_url   :  siteUrl + '/img/avatar.jpg'
       , author      :  'Thorsten Lorenz'
     }
     , (posts || []).map(function (x) {
