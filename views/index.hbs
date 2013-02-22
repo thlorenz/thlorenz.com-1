@@ -5,53 +5,54 @@
 </head>
 <body>
 
-  <nav class="navbar navbar-inverse row">
-    <div class="navbar-inner">
-        <div class="span2 avatar">
-          <img src="/img/avatar.jpg">
-        </div>
-        <div class="offset4 row">
-          <div>
-            <h1>Thorsten Lorenz</h1>
-            <a href="/feed" class="feed span1"></a>
+  <div class="wrapper">
+    <nav class="navbar navbar-inverse row">
+      <div class="navbar-inner">
+          <div class="span avatar">
+            <img src="/img/avatar.jpg">
           </div>
-          <div>
-            <ul class="nav main">
-              <li> 
-                <a {{#if model.blog}} class="active"{{/if}} href="/blog">blog</a> 
-              </li>
-              <li> 
-                <a {{#if model.projects}} class="active"{{/if}} href="/projects">projects</a> 
-              </li>
-              <li> 
-                <a {{#if model.about}} class="active"{{/if}} href="/about">about</a> 
-              </li>
-            </ul>
+          <div class="offset4 row">
+            <div>
+              <h1>Thorsten Lorenz</h1>
+              <a href="/feed" class="feed span1"></a>
+            </div>
+            <div>
+              <ul class="nav main">
+                <li> 
+                  <a {{#if model.blog}} class="active"{{/if}} href="/blog">blog</a> 
+                </li>
+                <li> 
+                  <a {{#if model.projects}} class="active"{{/if}} href="/projects">projects</a> 
+                </li>
+                <li> 
+                  <a {{#if model.about}} class="active"{{/if}} href="/about">about</a> 
+                </li>
+              </ul>
+          </div>
         </div>
       </div>
-    </div>
-  </nav>
+    </nav>
 
-  <section class="row main">
-      <nav class="sidebar span4">
-        <ul class="nav nav-list">
+    <section class="row main">
+        <nav class="sidebar span4">
+          <ul class="nav nav-list">
+            {{#if model }}
+            {{#if model.sidebar}}
+              {{{ exec sidebar model.sidebar }}}
+            {{/if}}
+            {{/if}}
+          </ul>
+        </nav>
+        <article class="content span11">
           {{#if model }}
-          {{#if model.sidebar}}
-            {{{ exec sidebar model.sidebar }}}
+          {{#if model.content}}
+            {{{ exec content model.content }}}
           {{/if}}
           {{/if}}
-        </ul>
-      </nav>
-      <article class="content span11">
-        {{#if model }}
-        {{#if model.content}}
-          {{{ exec content model.content }}}
-        {{/if}}
-        {{/if}}
-      </article>
-    </div>
-  </section>
-</div>
+        </article>
+      </div>
+    </section>
+  </div>
 
 </body>
 {{> scripts }}

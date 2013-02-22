@@ -2,6 +2,14 @@ body {
   background: rgba(27, 27, 27, 0.93);
 }
 
+.wrapper {
+  width: 1214px;
+  overflow-x: auto;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
 .navbar {
   height: 145px;
 }
@@ -12,10 +20,12 @@ body {
 
 .navbar h1 {
   padding-left: 0px;
+  color: #777777;
 }
 
 nav .avatar {
-  padding-left: 5px;
+  width: 140px;
+  margin-left: 0;
 }
 
 nav .main {
@@ -30,9 +40,10 @@ nav .main {
   background-image: url(../img/rss-black.png);
   background-repeat: no-repeat;
   height: 30px;
-  margin-top: -45px;
+  margin-top: 25px;
   display: block;
   float: right;
+  margin-right: -35px;
 }
 
 nav h1.offset3 {
@@ -44,12 +55,10 @@ nav div.offset3 {
 }
 
 section.main {
-  padding-left: 10px;
 }
 
 section .sidebar {
-  margin-bottom: 25px;
-  padding-left: 12px;
+  padding-left: 8px;
 }
 
 section .sidebar li {
