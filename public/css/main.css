@@ -3,8 +3,7 @@ body {
 }
 
 .wrapper {
-  width: 1214px;
-  overflow-x: auto;
+  width: 1220px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -25,11 +24,12 @@ body {
 
 nav .avatar {
   width: 140px;
-  margin-left: 0;
+  margin-left: -18px;
 }
 
 nav .main {
   padding-top: 20px;
+  padding-left: 22px;
 }
 
 .navbar-inverse .brand, .navbar-inverse .nav > li > a.active {
@@ -51,14 +51,7 @@ nav h1.offset3 {
 }
 
 nav div.offset3 {
-  padding-left: 45px;
-}
-
-section.main {
-}
-
-section .sidebar {
-  padding-left: 8px;
+  padding-left: 63px;
 }
 
 section .sidebar li {
@@ -155,6 +148,11 @@ section .sidebar li.active a:hover  {
   border-radius: 3px;
 }
 
+article.github {
+  padding-left: 26px;
+  padding-right: 26px;
+}
+
 .github ul {
   list-style: none;
 }
@@ -162,7 +160,12 @@ section .sidebar li.active a:hover  {
 
 .github ul li {
   margin: 30px 0 30px 0;
+ }
+
+.github ul li p {
+  margin: 5px 120px 10px 0;
 }
+
 
 .github .btn {
   float: right;
