@@ -16,37 +16,8 @@ function minify(code) {
   return ast.transform(compressor).print_to_string();
 }
 
-var through = require('through')
-  , path       = require('path')
-  , format = require('util').format;
-
-function wrap(content, id) {
-  return JSON.stringify(format('Function("%s\n//@ sourceURL=%s")', content, id));
-}
-
-function addSourceMaps(file) {
-  var content = ''
-    , id = path.basename(file);
-  
-  return through(
-      function write(buf) {
-        content += buf;
-      }
-    , function end() {
-        var sourceMapped = wrap(content, id);
-
-        if (id === 'navigation.js') console.log(content);
-        this.queue(sourceMapped);
-        this.queue(null);
-      }
-  );
-
-}
-
 var createBundle = module.exports = function (debug, cb) {
   var inst = browserify();
-  inst.transform(addSourceMaps);
-
   shim(inst, {
       jquery: { path: './public/js/jquery-1.8.1.min.js', exports: '$' }
   })
@@ -54,9 +25,8 @@ var createBundle = module.exports = function (debug, cb) {
   .bundle(function (err, src) {
     if (err) log.error('build', err);
     var bundled = debug ? src : minify(src);
-    cb(err, src);
+    cb(err, bundled);
   });
-
 };
 
 if (module.parent) return;
