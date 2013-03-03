@@ -43,7 +43,8 @@
     "clean-css": "~0.10.1",
     "rss": "0.0.4",
     "browserify-shim": "~2.0.3",
-    "browserify": "~2.4.0"
+    "browserify": "~2.4.0",
+    "through": "~2.2.1"
   },
   "devDependencies": {
     "nodemon": "~0.7.2"
