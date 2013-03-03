@@ -3,6 +3,7 @@
 var browserify =  require('browserify')
   , shim       =  require('browserify-shim')
   , uglify     =  require('uglify-js')
+  , log        =  require('npmlog')
   , optimizer  =  uglify.uglify
   ;
 
@@ -15,14 +16,17 @@ function minify(code) {
   return ast.transform(compressor).print_to_string();
 }
 
-var createBundle = module.exports = function (debug) {
-  var bundled = browserify({ debug: debug })
-    .use(shim({ alias: 'jquery', path: './public/js/jquery-1.8.1.min.js', exports: '$' }))
-    .addEntry('./public/js/navigation.js')
-    .bundle()
-    ;
+var createBundle = module.exports = function (debug, cb) {
+  shim(browserify(), {
+      jquery: { path: './public/js/jquery-1.8.1.min.js', exports: '$' }
+  })
+  .require(require.resolve('./public/js/navigation.js'), { entry: true })
+  .bundle(function (err, src) {
+    if (err) log.error('build', err);
+   //var bundled = debug ? src : minify(src);
+    cb(err, src);
+  });
 
-  return debug ? bundled : minify(bundled);
 };
 
 if (module.parent) return;
@@ -32,4 +36,7 @@ var path = require('path')
   , fs = require('fs')
   , bundlePath = path.join(__dirname, 'public', 'js', 'build', 'bundle.js');
 
-fs.writeFileSync(bundlePath, createBundle(true), 'utf-8');
+createBundle(false, function (err, bundled) {
+  if (err) return;
+  fs.writeFileSync(bundlePath, bundled, 'utf-8');
+});

@@ -49,6 +49,7 @@ exports.onnavigated = function (fn) {
   navigatedListeners.push(fn);
 };
 
+(function() {
 if (!browserSupportsHistoryApi(window.history)) return;
 
 window.onpopstate = function (args) { 
@@ -74,3 +75,4 @@ $mainNav
     $(this).addClass('active');
     return handleNavigation(history, this.href, true); 
   });
+})();
