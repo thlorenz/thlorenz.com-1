@@ -12,6 +12,11 @@ function sidebar(itemName) {
     , active: itemName === 'github'
     }
   , {
+      title: 'scriptie-talkie'
+    , url: '/projects/scriptie_talkie'
+    , active: itemName === 'scriptie-talkie'
+    }
+  , {
       title: 'doctoc'
     , url: '/projects/doctoc'
     , active: itemName === 'doctoc'

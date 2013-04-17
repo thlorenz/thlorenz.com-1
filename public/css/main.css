@@ -144,10 +144,10 @@ section .sidebar li.active a:hover  {
   width: 170px;
 }
 
-.doctoc-frame {
-  width: 840px;
+.doctoc-frame,
+.scriptie-talkie-frame {
+  width: 857px;
   height: 1000px;
-  margin: 10px;
   border-radius: 3px;
 }
 
