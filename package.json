@@ -39,11 +39,11 @@
     "moment": "~2.0.0",
     "request": "~2.12.0",
     "uglify-js": "~2.2.5",
-    "dog": "~0.2.0",
     "clean-css": "~0.10.1",
     "rss": "0.0.4",
     "browserify-shim": "~2.0.3",
-    "browserify": "~2.12.0"
+    "browserify": "~2.12.0",
+    "dog": "~0.3.0"
   },
   "devDependencies": {
     "nodemon": "~0.7.2"
