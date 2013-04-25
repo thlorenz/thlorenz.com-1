@@ -103,6 +103,16 @@ section .sidebar li.active a:hover  {
   font-style: inherit;
 }
 
+textarea.scriptie-talkie-container {
+  visibility: hidden;
+}
+
+.scriptie-talkie-container {
+  border        :  3px solid #504D4D;
+  border-radius :  5px;
+  width         :  805px !important;
+}
+
 .content {
   background: rgb(255, 252, 252);
   border-radius: 5px;
