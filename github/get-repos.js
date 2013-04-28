@@ -25,9 +25,14 @@ function createRequest() {
 
   if (!githubToken) return req;
 
-  log.silly('github', 'creating request using token [%s]', githubToken);
-  req.headers = { Authorization: 'bearer ' + githubToken };
+  req.headers = { 
+      Authorization: 'bearer ' + githubToken
+      // wtf github!!! totally useless in this case
+      // http://developer.github.com/v3/#user-agent-required
+    , 'User-Agent': 'thlorenz-com/1.0' 
+  };
 
+  log.silly('github/createRequest', req);
   return req;
 }
 
