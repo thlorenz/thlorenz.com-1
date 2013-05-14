@@ -1,28 +1,9 @@
 'use strict';
 
-var send = require('../send')  
-  , getRepos = require('../github/get-repos');
+var send     =  require('../send')
+  , getRepos =  require('../github/get-repos')
+  , sidebar  =  require('./projects-sidebar');
 
-
-function sidebar(itemName) {
-  return [ 
-    {
-      title: 'github'
-    , url: '/projects/github'
-    , active: itemName === 'github'
-    }
-  , {
-      title: 'scriptie-talkie'
-    , url: '/projects/scriptie_talkie'
-    , active: itemName === 'scriptie-talkie'
-    }
-  , {
-      title: 'doctoc'
-    , url: '/projects/doctoc'
-    , active: itemName === 'doctoc'
-    }
-  ];
-}
 
 module.exports = function (app) {
   app

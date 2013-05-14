@@ -3,7 +3,7 @@
 var hbs         =  require('hbs')
   , path        =  require('path')
   , fs          =  require('fs')
-  , log = require('npmlog')
+  , log         =  require('npmlog')
   , partialsDir =  path.join(__dirname, 'partials')
   ;
 

@@ -33,6 +33,7 @@ require('./routes/favicon')(app);
 require('./routes/blog')(app);
 require('./routes/projects')(app);
 require('./routes/about')(app);
+require('./routes/sitemap')(app);
 
 // Fall back to static file server only after all our custom matches failed
 app.use(express.static(path.join(__dirname, 'public')));

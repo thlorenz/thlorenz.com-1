@@ -3,20 +3,8 @@ var log  =  require('npmlog')
   , send =  require('../send')
   , blog =  require('../blog/provider')
   , config = require('../config')
-  , moment = require('moment')
+  , sidebar = require('./blog-sidebar')
   ;
-
-function adapt(metadata, postName) {
-  return metadata.map(function (x) {
-    var d = moment(x.created);
-    return { 
-        title: x.title
-      , name: x.name
-      , created: d.format('dddd, MMMM Do YYYY')
-      , active: x.name === postName 
-    };
-  });
-}
 
 module.exports = function (app) {
   app
@@ -48,7 +36,7 @@ module.exports = function (app) {
         }
 
         var model = { 
-            sidebar: adapt(metadata, postName)
+            sidebar: sidebar(metadata, postName)
           , content: blog.getPost(postName) 
           , blog: true
         };
