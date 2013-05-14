@@ -23,7 +23,7 @@ module.exports = function (app) {
           log.error('blog', 'error getting blog metadata, returning empty in sitemap', err);
           blogposts = [];
         } else {
-          blogposts = blogSidebar(metadata, null).map(function (x) { return x.name; });
+          blogposts = blogSidebar(metadata, null);
         }
         var xml = sitemapFn({ projects: urls, blogposts: blogposts });
 
