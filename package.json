@@ -1,6 +1,6 @@
 {
   "name": "thlorenz.com",
-  "version": "0.3.0-10",
+  "version": "0.3.0-13",
   "description": "Source of thlorenz.com website.",
   "main": "app.js",
   "engines": {
@@ -43,7 +43,7 @@
     "rss": "0.0.4",
     "browserify-shim": "~2.0.3",
     "browserify": "~2.12.0",
-    "dog": "~0.3.0"
+    "dog": "~0.3.1"
   },
   "devDependencies": {
     "nodemon": "~0.7.2",
