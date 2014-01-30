@@ -73,7 +73,7 @@ section .sidebar li p {
 section .sidebar a {
   color: #999;
   cursor:pointer;
-  text-shadow: #69F5BD 0 0 0;
+  text-shadow: none;
   text-decoration:none;
 }
 
@@ -203,4 +203,45 @@ article.github {
       -ms-transform: rotate(180deg);
        -o-transform: rotate(180deg);
           transform: rotate(180deg);
+}
+
+/* blog post style overrides */
+
+.blog-post {
+  background: white;
+  padding: 20px;
+  margin: 5px;
+  border-radius: 5px;
+  font-size: 16px;
+  line-height: 24px;
+  font-family: Helvetica Neue, Helvetica, Arial, Tahoma, FreeSans, sans-serif;
+}
+
+.blog-post li {
+  margin: 4px 0 4px 0;
+}
+
+.blog-post p > code,
+.blog-post li > code {
+  background: #F0F8F7;
+  padding: 0px 5px 0px 5px;
+  position: relative;
+  font-family: monospace;
+  border: 1px solid #C4DBDA;
+}
+
+article.blog-post img {
+  -moz-box-shadow:  2px 2px 5px #F5EAEA;
+  -webkit-box-shadow: 2px 2px 5px #F5EAEA;
+  box-shadow:  2px 2px 5px #F5EAEA;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+article.blog-post .highlight,
+article.blog-post pre .syntaxhighlighter {
+  -moz-box-shadow: 2px 2px 5px #CCC;
+  -webkit-box-shadow: 2px 2px 5px #CCC;
+  box-shadow: 2px 2px 5px #CCC;
 }
