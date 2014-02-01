@@ -85,23 +85,6 @@ section .sidebar li.active a:hover  {
   text-shadow: black 0 0 0;
 }
 
-.blog-post h1 {
-  background: #f3efcd;
-  border-top: 1px;
-  border-left: 1px;
-  border-right: 1px;
-  border-bottom: 1px;
-  border-color: #e2ddb7;
-  border-style: solid;
-  border-radius: 3px 3px 1px 1px;
-  text-shadow: 2px 2px 3px #999;
-  -moz-box-shadow: 2px 2px 5px #888;
-  -webkit-box-shadow: 2px 2px 5px #888;
-  box-shadow: 2px 2px 5px #888;
-  font-size: 30px;
-  font-weight: inherit;
-  font-style: inherit;
-}
 
 textarea.scriptie-talkie-container {
   visibility: hidden;
@@ -244,4 +227,30 @@ article.blog-post pre .syntaxhighlighter {
   -moz-box-shadow: 2px 2px 5px #CCC;
   -webkit-box-shadow: 2px 2px 5px #CCC;
   box-shadow: 2px 2px 5px #CCC;
+}
+
+.blog-post span.updated,
+.blog-post span.created {
+  padding-top: 0;
+}
+
+article.blog-post h1 {
+  background: #DAECF9;
+  border-left: 0;
+  border-top: 0;
+  border-right: 0;
+  border-bottom: 1px;
+  border-color: #3C3D53;
+  
+  border-radius: 3px 3px 1px 1px;
+  padding: 10px;
+  -moz-box-shadow: 2px 2px 5px #888;
+  -webkit-box-shadow: 2px 2px 5px #888;
+  box-shadow: 2px 2px 5px #888;
+  
+  text-shadow: 1px 1px 2px #999;
+   
+  font-size: 30px;
+  font-weight: inherit;
+  font-style: inherit;
 }
