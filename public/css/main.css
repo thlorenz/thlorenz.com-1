@@ -190,13 +190,13 @@ article.github {
 
 /* blog post style overrides */
 
-.blog-post {
+article.blog-post {
   background: white;
   padding: 20px;
   margin: 5px;
   border-radius: 5px;
-  font-size: 16px;
-  line-height: 24px;
+  font-size: 14px;
+  line-height: 22px;
   font-family: Helvetica Neue, Helvetica, Arial, Tahoma, FreeSans, sans-serif;
 }
 
@@ -253,4 +253,7 @@ article.blog-post h1 {
   font-size: 30px;
   font-weight: inherit;
   font-style: inherit;
+}
+article.blog-post p {
+  margin: 0 0 14px;
 }
