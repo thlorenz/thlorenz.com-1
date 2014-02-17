@@ -4,36 +4,12 @@ var request = require('request')
   , log = require('npmlog')
   , moment = require('moment')
   , url = require('url')
+  , requestAllPages = require('request-all-pages')
   , cache;
 
 
 function byStarsDescending (a, b) { 
   return a.stars > b.stars ? -1 : 1; 
-}
-
-function createRequest() {
-  // use token to make authorized request, otherwise we'll run into exceeded API limit problem when hosted
-  var req = {
-      method: 'GET'
-    , uri : url.format(
-      { protocol: 'https'
-      , hostname: 'api.github.com'
-      , pathname: '/users/thlorenz/repos?per_page=500'
-      })
-    }
-  , githubToken = process.env.GITHUB_TOKEN;
-
-  if (!githubToken) return req;
-
-  req.headers = { 
-      Authorization: 'bearer ' + githubToken
-      // wtf github!!! totally useless in this case
-      // http://developer.github.com/v3/#user-agent-required
-    , 'User-Agent': 'thlorenz-com/1.0' 
-  };
-
-  log.silly('github/createRequest', req);
-  return req;
 }
 
 module.exports = function getRepos(cb) {
@@ -46,11 +22,32 @@ module.exports = function getRepos(cb) {
 
   log.silly('github', 'querying github to refresh cache');
 
-  request(createRequest(), function (err, res, body) {
+  var githubToken = process.env.GITHUB_TOKEN;
+  if (!githubToken) {
+    log.warn('github/get-repos', 'no github token, returning');
+    cb();
+  }
+
+  var requestOpts = {
+      uri: 'https://api.github.com/users/thlorenz/repos'
+    , json: true
+    , body: {}
+    , headers: { 
+        Authorization: 'bearer ' + githubToken
+      , 'user-agent': 'request-all-pages' 
+      } 
+    };
+
+  requestAllPages(requestOpts, { startPage: 1, pagesPer: 100 }, function (err, pages) {
     if (err) return cb(err);
-    var repos;
+
+    var repos
     try {
-      repos = JSON.parse(body);
+      repos = pages
+        .reduce(
+          function (acc, page) { return acc.concat(page.body) }
+        , []);
+
       // didn't get any repos - we could try again or just bail
       if (!repos.filter) {
         log.error('github/get-repos', 'no repos returned', repos);
@@ -59,7 +56,7 @@ module.exports = function getRepos(cb) {
       }
     } catch (e) {
       log.error('github/get-repos', 'error: ', e);
-      log.silly('github/get-repos', 'body', body);
+      log.silly('github/get-repos', 'repos', repos);
       cb(e);
     }
 
